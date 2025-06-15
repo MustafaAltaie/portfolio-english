@@ -5,7 +5,7 @@
     height: 60vh;
 }
 .lightMode .mainImageWrapper > img {
-    filter: brightness(135%)
+    filter: brightness(140%) contrast(80%);
 }
 .profileWrapper {
     border-top: solid 0.5px;

@@ -13,9 +13,10 @@ const Educations = () => {
             {/* Educations */}
             <div className='educationWrapper flex flex-col lg:flex-row lg:flex-wrap'>
                 {/* card */}
-                <div className='educationCard border-thin-2 backdrop-blur-sm p-5 rounded-3xl'>
-                    <p className='border-b-thin pb-2 mb-2 text-sm'>Sweden - Linkoping</p>
-                    <div className='flex items-center gap-4 pb-2 mb-2 border-b-thin'>
+                <div className='educationCard border-thin-2 backdrop-blur-sm p-5 relative'>
+                    <p className='educationDate text-sm absolute'>2023 - 2025</p>
+                    <p className='border-b-thin pb-4 mb-4 text-sm'>Sweden - Linkoping</p>
+                    <div className='flex items-center gap-4 pb-4 mb-4 border-b-thin'>
                         <Image
                             src='/images/chas.png'
                             alt='Alrafidain'
@@ -31,9 +32,10 @@ const Educations = () => {
                     <p className='text-sm'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta numquam similique facilis necessitatibus? Nesciunt, maiores facere. Earum iusto perferendis voluptatem ullam ipsum, unde ut quisquam maxime, voluptatibus porro perspiciatis aperiam!</p>
                 </div>
                 {/* card */}
-                <div className='educationCard border-thin-2 backdrop-blur-sm p-5 rounded-3xl'>
-                    <p className='border-b-thin pb-2 mb-2 text-sm'>Iraq - Baghdad</p>
-                    <div className='flex items-center gap-4 pb-2 mb-2 border-b-thin'>
+                <div className='educationCard border-thin-2 backdrop-blur-sm p-5 relative'>
+                    <p className='educationDate text-sm absolute'>2011 - 2015</p>
+                    <p className='border-b-thin pb-4 mb-4 text-sm'>Iraq - Baghdad</p>
+                    <div className='flex items-center gap-4 pb-4 mb-4 border-b-thin'>
                         <Image
                             src='/images/rafidain.png'
                             alt='Alrafidain'

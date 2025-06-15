@@ -7,12 +7,12 @@ import { UserCircleIcon } from '@heroicons/react/24/solid';
 const Section1 = () => {
     return (
         <section className='section1 overflow-x-hidden flex flex-col lg:flex-row pt-10'>
-            <div className="mainImageWrapper flexCenter overflow-hidden lg:w-1/2 lg:mt-10">
+            <div className="mainImageWrapper flex items-end justify-center overflow-hidden lg:w-1/2 lg:mt-10">
                 <Image
                     className='lg:object-cover'
                     src='/images/empty.png'
                     alt='homeImage'
-                    width={400}
+                    width={350}
                     height={400}
                     priority
                 />

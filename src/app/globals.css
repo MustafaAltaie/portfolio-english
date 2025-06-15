@@ -57,13 +57,13 @@ body.lightMode,
     border: solid 0.7px #ffffff22;
 }
 .lightMode .border-thin-2 {
-    border: solid 0.7px #00000022;
+    border: solid 0.7px #00000044;
 }
 .darkMode .border-b-thin {
     border-bottom: solid 0.7px #ffffff44;
 }
 .lightMode .border-b-thin {
-    border-bottom: solid 0.7px #00000022;
+    border-bottom: solid 0.7px #00000044;
 }
 
 .noTouchAction {
