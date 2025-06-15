@@ -1,0 +1,49 @@
+'use client';
+import React, { useEffect, useState } from 'react';
+
+const Home = () => {
+  const points = '0,20 30,0 35,75 40,10 100,20';
+  const [maxY, setMaxY] = useState(0);
+  const [maxX, setMaxX] = useState(0);
+  const [minY, setMinY] = useState(0);
+  const [minX, setMinX] = useState(0);
+
+  useEffect(() => {
+    const yValues = points
+      .split(' ')           // ['10,20', '30,15', '35,55', '40,10']
+      .map(pair => Number(pair.split(',')[1])); // [20, 15, 55, 10]
+
+    const maxYV = Math.max(...yValues); // 55
+    const minYV = Math.min(...yValues);
+    setMaxY(maxYV);
+    setMinY(minYV);
+
+    const xValues = points
+      .split(' ')
+      .map(pair => Number(pair.split(',')[0]));
+
+    const maxXV = Math.max(...xValues);
+    const minXV = Math.min(...xValues);
+    setMaxX(maxXV);
+    setMinX(minXV);
+  }, []);
+
+
+  return (
+    <main>
+      <h1 className="text-3xl underline font-bold mt-9 bg-zinc-200 p-2 border-b-amber-700">
+        Hello world!
+      </h1>
+      <svg width={maxX + minX} height={maxY + minY} style={{ border: '1px solid #ccc' }}>
+        <polyline
+          fill="none"
+          stroke="#f0f"
+          strokeWidth="0.2"
+          points={points}
+        />
+      </svg>
+    </main>
+  )
+}
+
+export default Home;

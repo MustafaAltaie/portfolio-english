@@ -1,1 +1,71 @@
 @import "tailwindcss";
+
+* {
+    box-sizing: border-box;
+}
+
+body.darkMode,
+.darkMode .profileWrapper {
+    background-color: #111;
+}
+body.lightMode,
+.lightMode .profileWrapper {
+    background-color: #eee;
+}
+
+.darkMode header,
+.darkMode section {
+    background-image:
+    radial-gradient(circle at 0% 20%, #057, transparent 40%),
+    radial-gradient(circle at 120% 70%, #057, transparent 40%);
+    background-attachment: fixed;
+    background-position: top;
+    background-repeat: no-repeat;
+    background-color: #111;
+    color: #aaa;
+}
+.lightMode header,
+.lightMode section {
+    background-image:
+    radial-gradient(circle at 0% 20%, #cef, transparent 40%),
+    radial-gradient(circle at 100% 70%, #cef, transparent 40%);
+    background-attachment: fixed;
+    background-position: top;
+    background-repeat: no-repeat;
+    background-color: #eee;
+    color: #000;
+}
+
+.flexCenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.centeredY {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.darkMode .border-thin {
+    border: solid 0.7px #ffffffaa;
+}
+.lightMode .border-thin {
+    border: solid 0.7px #000000aa;
+}
+.darkMode .border-thin-2 {
+    border: solid 0.7px #ffffff22;
+}
+.lightMode .border-thin-2 {
+    border: solid 0.7px #00000022;
+}
+.darkMode .border-b-thin {
+    border-bottom: solid 0.7px #ffffff44;
+}
+.lightMode .border-b-thin {
+    border-bottom: solid 0.7px #00000022;
+}
+
+.noTouchAction {
+    touch-action: manipulation;
+}

@@ -1,11 +1,16 @@
-import React from 'react';
+'use client';
+
+import Header from "./components/Header/Header";
+import Profile from "./components/Profile/Profile";
+import Educations from "./components/Educations/Educations";
 
 const Home = () => {
+
   return (
     <main>
-      <h1 className="text-3xl underline font-bold mt-9 bg-zinc-200 p-2 border-b-amber-700">
-        Hello world!
-      </h1>
+      <Header />
+      <Profile />
+      <Educations />
     </main>
   )
 }

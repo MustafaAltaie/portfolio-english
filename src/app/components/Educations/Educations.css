@@ -1,0 +1,32 @@
+.educations {
+    background-image: url('/images/education.png');
+    background-attachment: fixed;
+    background-position: center;
+    background-size: 80% 50%;
+    background-repeat: no-repeat;
+}
+.darkMode .educations {
+    color: #aaa;
+}
+.lightMode .educations {
+    color: #000;
+}
+.educationWrapper {
+    gap: 20px;
+}
+.darkMode .educationCard {
+    background-color: #77777722;
+}
+.lightMode .educationCard {
+    background-color: #ffffff77;
+}
+
+
+@media (min-width: 1024px) {
+    .educations {
+        background-size: 30% 80%;
+    }
+    .educationCard {
+        width: calc(100%/2 - 20px/2)
+    }
+}
