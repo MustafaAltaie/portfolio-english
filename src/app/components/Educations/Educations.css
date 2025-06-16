@@ -1,15 +1,5 @@
 .educations {
     background-image: url('/images/education.png');
-    background-attachment: fixed;
-    background-position: center;
-    background-size: 80% 50%;
-    background-repeat: no-repeat;
-}
-.darkMode .educations {
-    color: #aaa;
-}
-.lightMode .educations {
-    color: #000;
 }
 .educationWrapper {
     gap: 20px;
@@ -65,8 +55,9 @@
 
 
 @media (min-width: 1024px) {
-    .educations {
-        background-size: 30% 80%;
+    .educationWrapper {
+        width: 80%;
+        margin: 0 auto;
     }
     .educationCard {
         width: calc(100%/2 - 20px/2)

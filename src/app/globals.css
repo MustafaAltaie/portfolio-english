@@ -2,36 +2,20 @@
 
 * {
     box-sizing: border-box;
+    letter-spacing: 0.3px;
 }
 
 body.darkMode,
-.darkMode .profileWrapper {
-    background-color: #111;
-}
-body.lightMode,
-.lightMode .profileWrapper {
-    background-color: #eee;
-}
-
+.darkMode .profileWrapper,
 .darkMode header,
 .darkMode section {
-    background-image:
-    radial-gradient(circle at 0% 20%, #057, transparent 40%),
-    radial-gradient(circle at 120% 70%, #057, transparent 40%);
-    background-attachment: fixed;
-    background-position: top;
-    background-repeat: no-repeat;
     background-color: #111;
     color: #aaa;
 }
+body.lightMode,
+.lightMode .profileWrapper,
 .lightMode header,
 .lightMode section {
-    background-image:
-    radial-gradient(circle at 0% 20%, #cef, transparent 40%),
-    radial-gradient(circle at 100% 70%, #cef, transparent 40%);
-    background-attachment: fixed;
-    background-position: top;
-    background-repeat: no-repeat;
     background-color: #eee;
     color: #000;
 }
@@ -68,4 +52,17 @@ body.lightMode,
 
 .noTouchAction {
     touch-action: manipulation;
+}
+
+.bg-url-fixed {
+    background-attachment: fixed;
+    background-position: center;
+    background-size: 80% 50%;
+    background-repeat: no-repeat;
+}
+
+@media (min-width: 1024px) {
+    .bg-url-fixed {
+        background-size: 30% 80%;
+    }
 }

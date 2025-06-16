@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 const Educations = () => {
     return (
-        <div className='educations p-7 flex flex-col gap-5'>
+        <div className='educations p-7 flex flex-col gap-5 border-b-thin bg-url-fixed pb-10'>
             <div className='flex items-center gap-2'>
                 <AcademicCapIcon className='w-7 text-yellow-600' />
                 <h1 className='text-2xl text-yellow-600'>Educations</h1>
@@ -26,7 +26,7 @@ const Educations = () => {
                         />
                         <div>
                             <h1 className='text-xl text-blue-500'>Chas-Academy</h1>
-                            <h3 className='text-lg text-yellow-600'>Two-year vocational program in Fullstack JavaScript Development</h3>
+                            <h3 className='text-sm text-yellow-600'>Two-year vocational program in Fullstack JavaScript Development</h3>
                         </div>
                     </div>
                     <p className='text-sm'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta numquam similique facilis necessitatibus? Nesciunt, maiores facere. Earum iusto perferendis voluptatem ullam ipsum, unde ut quisquam maxime, voluptatibus porro perspiciatis aperiam!</p>
@@ -45,7 +45,7 @@ const Educations = () => {
                         />
                         <div>
                             <h1 className='text-xl text-blue-500'>Alrafidain University</h1>
-                            <h3 className='text-lg text-yellow-600'>Bachalor's Degree in computer technique engineering.</h3>
+                            <h3 className='text-sm text-yellow-600'>Bachalor's Degree in computer techniques engineering.</h3>
                         </div>
                     </div>
                     <p className='text-sm'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta numquam similique facilis necessitatibus? Nesciunt, maiores facere. Earum iusto perferendis voluptatem ullam ipsum, unde ut quisquam maxime, voluptatibus porro perspiciatis aperiam!</p>
