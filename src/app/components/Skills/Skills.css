@@ -1,0 +1,49 @@
+.skills {
+    background-image: url('/images/skills.png');
+    overflow-x: hidden;
+}
+.skills img {
+    min-width: 25px;
+}
+.frontendSkillWrapper,
+.backendSkillWrapper,
+.otherSkillWrapper {
+    gap: 10px;
+}
+.frontendSkillWrapper .skillCard,
+.backendSkillWrapper .skillCard,
+.otherSkillWrapper .skillCard {
+    width: calc(100%/3 - 20px/3);
+}
+.darkMode .skillCard {
+    background-color: #ffffff11;
+    border-left: solid 5px #555;
+}
+.lightMode .skillCard {
+    background-color: #00000011;
+    border-left: solid 5px #aaa;
+}
+.darkMode .skillLevel {
+    background: #ffffff11;
+}
+.darkMode .skillLevel > div {
+    background: oklch(68.1% 0.162 75.834);
+}
+.lightMode .skillLevel {
+    background: #00000022;
+}
+.lightMode .skillLevel > div {
+    background: #07a;
+}
+
+@media (min-width: 1024px) {
+    .frontendSkillWrapper .skillCard {
+        width: calc(100%/9 - 80px/9);
+    }
+    .backendSkillWrapper .skillCard {
+        width: calc(100%/5 - 40px/5);
+    }
+    .otherSkillWrapper .skillCard {
+        width: calc(100%/6 - 50px/6);
+    }
+}
