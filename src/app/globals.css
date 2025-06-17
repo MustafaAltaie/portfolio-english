@@ -63,6 +63,6 @@ body.lightMode,
 
 @media (min-width: 1024px) {
     .bg-url-fixed {
-        background-size: 30% 80%;
+        background-size: 30% 60%;
     }
 }

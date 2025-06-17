@@ -16,7 +16,7 @@
     width: calc(100%/3 - 20px/3);
 }
 .darkMode .skillCard {
-    background-color: #ffffff11;
+    background-color: #ffffff1a;
     border-left: solid 5px #555;
 }
 .lightMode .skillCard {
@@ -24,7 +24,7 @@
     border-left: solid 5px #aaa;
 }
 .darkMode .skillLevel {
-    background: #ffffff11;
+    background: #ffffff22;
 }
 .darkMode .skillLevel > div {
     background: #960;

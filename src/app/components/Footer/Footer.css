@@ -1,0 +1,40 @@
+footer {
+    overflow-x: hidden;
+}
+footer *:not(span):not(button):not(i):not(li) {
+    color: #aaa;
+}
+.lightMode footer .border-b-thin {
+    border-bottom: solid 0.7px #ffffff44;
+}
+.darkMode footer {
+    border-top: solid 0.5px #ffffff77;
+}
+.fotterUpper > div > div {
+    background: #a40;
+}
+footer span {
+    color: #d70;
+    white-space: nowrap;
+}
+footer form > input,
+footer form > textarea {
+    border: solid 0.7px #ffffff77;
+    resize: none;
+    outline: none;
+}
+footer li {
+    color: #888;
+    border-left: solid 2px #555;
+    cursor: pointer;
+}
+
+@media (min-width: 1204px) {
+    footer > div {
+        width: 80%;
+        margin: 0 auto;
+    }
+    footer * {
+        font-size: 12px;
+    }
+}

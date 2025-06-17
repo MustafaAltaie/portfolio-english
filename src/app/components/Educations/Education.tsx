@@ -9,7 +9,7 @@ interface EducationProps {
 
 const Education = ({ education }: EducationProps) => {
     return (
-        <div className='educationCard border-thin-2 backdrop-blur-sm p-5 relative'>
+        <section className='educationCard border-thin-2 backdrop-blur-sm p-5 relative'>
             <p className='educationDate text-sm absolute'>{education.dateFrom} - {education.dateTo}</p>
             <p className='border-b-thin pb-4 mb-4 text-sm'>Sweden - Linkoping</p>
             <div className='flex items-center gap-4 pb-4 mb-4 border-b-thin'>
@@ -29,7 +29,7 @@ const Education = ({ education }: EducationProps) => {
             </div>
             <p className='text-sm'>{education.description}</p>
             <button className='ml-auto flex items-end gap-2 mt-2 text-neutral-500'>See the attchment <ArrowLongRightIcon className='w-5' /></button>
-        </div>
+        </section>
     )
 }
 

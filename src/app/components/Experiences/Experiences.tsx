@@ -48,7 +48,7 @@ const Experiences = () => {
         },
     ]);
     return (
-        <div className='experiences p-7 flex flex-col gap-5 bg-url-fixed pb-10 border-b-thin'>
+        <section className='experiences p-7 flex flex-col gap-5 bg-url-fixed pb-10 border-b-thin'>
             <div className='flex gap-2'>
                 <BriefcaseIcon className='w-7 text-yellow-600' />
                 <h1 className='text-yellow-600 text-2xl'>Experiences</h1>
@@ -74,7 +74,7 @@ const Experiences = () => {
                 </div>
                 )}
             </div>
-        </div>
+        </section>
     )
 }
 
