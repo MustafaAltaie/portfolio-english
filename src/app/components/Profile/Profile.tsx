@@ -3,6 +3,7 @@ import React from 'react';
 import Image from 'next/image';
 import './Profile.css';
 import { UserCircleIcon } from '@heroicons/react/24/solid';
+import { motion } from 'framer-motion';
 
 const Section1 = () => {
     return (
@@ -22,7 +23,12 @@ const Section1 = () => {
                     <h1><UserCircleIcon className='w-7 text-yellow-600' /></h1>
                     <span className='text-2xl text-yellow-600'>Profile</span>
                 </div>
-                <p>I am a fullstack JavaScript developer focused on building scalable and responsive web applications using Next.js with TypeScript and the MERN stack (MongoDB, Express, React, Node.js). I write clean, optimized code that follows best practices, and I work with modern tools like Tailwind CSS, Next.js, and TypeScript. I am always eager to learn new technologies and quickly adapt to new challenges.</p>
+                <motion.p
+                    initial={{ opacity: 0, x: -50 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.8 }}
+                    viewport={{ once: true, amount: 0 }}
+                >I am a fullstack JavaScript developer focused on building scalable and responsive web applications using Next.js with TypeScript and the MERN stack (MongoDB, Express, React, Node.js). I write clean, optimized code that follows best practices, and I work with modern tools like Tailwind CSS, Next.js, and TypeScript. I am always eager to learn new technologies and quickly adapt to new challenges.</motion.p>
             </div>
         </section>
     )

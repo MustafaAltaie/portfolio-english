@@ -1,18 +1,10 @@
 'use client';
 import React, { useState } from 'react';
 import './Experiences.css';
-import { BriefcaseIcon, ArrowLongRightIcon } from '@heroicons/react/24/solid';
+import { BriefcaseIcon } from '@heroicons/react/24/solid';
+import Experience from './Experience';
 
-interface Exp {
-    id?: string
-    dateFrom: string
-    dateTo?: string
-    title: string
-    company: string
-    location: string
-    description: string
-    techStack: string[]
-}
+import { Exp } from '../../../../types/Experiences';
 
 const Experiences = () => {
     const [expObj] = useState<Exp[]>([
@@ -57,21 +49,7 @@ const Experiences = () => {
             <div className='expWrapper flex flex-col lg:flex-row lg:flex-wrap'>
                 {/* Card */}
                 {expObj.map((exp: Exp) => 
-                <div key={exp.id} className='experienceCard flex flex-col gap-2 p-5 rounded-xl backdrop-blur-sm'>
-                    <div className='flex gap-5 items-end justify-between'>
-                        <BriefcaseIcon className='w-7 bg-blue-600 text-white rounded-full p-1.5' />
-                        <p className='text-sm text-blue-500 font-bold'>{exp.dateFrom} - {exp.dateTo ? exp.dateTo : 'Ongoing'}</p>
-                    </div>
-                    <p>{exp.title} in <span className='italic'>{exp.company}</span></p>
-                    <p className='text-yellow-600'>{exp.location}</p>
-                    <p className='text-sm text-neutral-500'>{exp.description}</p>
-                    <p className='mt-1 text-sm flex items-end gap-1'>I worked with the following tech stack <ArrowLongRightIcon className='w-4' /></p>
-                    <div className='flex flex-wrap gap-2'>
-                        {exp.techStack.map((tech: string) => 
-                        <p key={tech} className='expTech px-2 py-1 rounded-xl text-sm'>{tech}</p>
-                        )}
-                    </div>
-                </div>
+                    <Experience key={exp.id} exp={exp} />
                 )}
             </div>
         </section>

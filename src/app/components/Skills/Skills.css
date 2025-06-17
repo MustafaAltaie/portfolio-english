@@ -28,6 +28,9 @@
 .darkMode .skillLevel {
     background: #ffffff22;
 }
+.skillLevel > div {
+    height: 100%;
+}
 .darkMode .skillLevel > div {
     background: #960;
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { FSkill } from '../../../../../types/Skills';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 interface SkillProps {
     skill: FSkill
@@ -20,7 +21,12 @@ const Skill = React.memo(({ skill }: SkillProps) => {
                 <h1 className='text-sm'>{skill.title}</h1>
             </div>
             <div className='skillLevel w-full h-1'>
-                <div style={{ width: `${skill.level}%`, height: '100%' }}></div>
+                <motion.div
+                    initial={{ width: 0 }}
+                    whileInView={{ width: `${skill.level}%` }}
+                    transition={{ duration: 0.7, ease:'linear' }}
+                    viewport={{ once: true, amount: 0.9 }}
+                ></motion.div>
             </div>
         </div>
     )
