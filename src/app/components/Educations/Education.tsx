@@ -11,7 +11,7 @@ interface EducationProps {
 const Education = ({ education }: EducationProps) => {
     return (
         <motion.div
-            className='educationCard border-thin-2 backdrop-blur-sm p-5 relative'
+            className='educationCard border-thin-2 backdrop-blur-sm p-5 relative flex flex-col justify-between'
             initial={{ opacity: 0, x: -100 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
@@ -35,7 +35,7 @@ const Education = ({ education }: EducationProps) => {
                 </div>
             </div>
             <p className='text-sm'>{education.description}</p>
-            <button className='ml-auto flex items-end gap-2 mt-2 text-neutral-500'>See the attchment <ArrowLongRightIcon className='w-5' /></button>
+            <button className='ml-auto flex items-end gap-2 mt-2 text-blue-500'>See the attchment <ArrowLongRightIcon className='w-5' /></button>
         </motion.div>
     )
 }

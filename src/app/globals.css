@@ -61,6 +61,31 @@ body.lightMode,
     background-repeat: no-repeat;
 }
 
+
+/* Settings */
+form {
+    overflow-y: hidden;
+    transition: 0.5s;
+}
+.formInnerDiv {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+form input,
+form textarea {
+    border: solid 0.5px;
+    border-radius: 10px;
+    resize: none;
+    padding: 10px;
+}
+form button {
+    background: #07d;
+    color: #fff;
+    padding: 10px;
+    border-radius: 10px;
+}
+
 @media (min-width: 1024px) {
     .bg-url-fixed {
         background-size: 30% 60%;

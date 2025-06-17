@@ -6,15 +6,9 @@
 }
 .darkMode .experienceCard {
     background-color: #222222dd;
-    background-image:
-    radial-gradient(circle at 90% 0%, #0077bb55, transparent 30%),
-    radial-gradient(circle at 0% 50%, #bb770055, transparent 20%);
 }
 .lightMode .experienceCard {
     background-color: #eaeaeadd;
-    background-image:
-    radial-gradient(circle at 70% -20%, #00aaff33, transparent 30%),
-    radial-gradient(circle at 0% 50%, #ffaa0033, transparent 20%);
     border: solid 0.7px #00000055;
 }
 .darkMode .expTech {
