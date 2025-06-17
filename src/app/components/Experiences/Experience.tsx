@@ -10,7 +10,7 @@ interface ExperienceProps {
 const Experience = ({ exp }: ExperienceProps) => {
     return (
         <motion.div
-            className='experienceCard flex flex-col gap-2 p-5 rounded-xl backdrop-blur-sm'
+            className='experienceCard flex flex-col gap-2 p-5 rounded-xl'
             initial={{ opacity: 0, scale: 0.7 }}
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8 }}

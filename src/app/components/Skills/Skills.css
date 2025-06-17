@@ -16,12 +16,12 @@
     width: calc(100%/3 - 20px/3);
 }
 .darkMode .skillCard {
-    background-color: #222;
+    background-color: #151515;
     border: solid 0.7px #555;
     border-left: solid 5px #555;
 }
 .lightMode .skillCard {
-    background-color: #ddd;
+    background-color: #e1e1e1;
     border: solid 0.7px #aaa;
     border-left: solid 5px #aaa;
 }
