@@ -1,9 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Educations.css';
 import { AcademicCapIcon } from '@heroicons/react/24/solid';
-import Image from 'next/image';
+import { EducationType } from '../../../../types/Educations';
+import Education from './Education';
 
 const Educations = () => {
+    const [educationObj, setEducationObj] = useState<EducationType[]>([
+        {
+            id: '1',
+            location: 'Sweden - Linkoping',
+            dateFrom: '2023',
+            dateTo: '2025',
+            school: 'Chas-Academy',
+            title: 'Two-year vocational program in Fullstack JavaScript Development',
+            description: 'I completed a two-year full-time vocational program in Fullstack JavaScript Development at Chas Academy (remote). The program was conducted in both Swedish and English.',
+            imageLink: '/images/chas.png',
+            link: '',
+        },
+        {
+            id: '2',
+            location: 'Iraq - Baghdad',
+            dateFrom: '2011',
+            dateTo: '2015',
+            school: 'Alrafidain University',
+            title: "Bachalor's Degree in computer techniques engineering.",
+            description: "I studied for four years at the Faculty of Computer Engineering. The degree has been validated and recognized in Sweden by the Swedish Council for Higher Education (UHR), and is equivalent to a Bachelor's degree in Computer Engineering.",
+            imageLink: '/images/rafidain.png',
+            link: '',
+        },
+    ]);
+
     return (
         <div className='educations p-7 flex flex-col gap-5 border-b-thin bg-url-fixed pb-10'>
             <div className='flex items-center gap-2'>
@@ -13,43 +39,8 @@ const Educations = () => {
             {/* Educations */}
             <div className='educationWrapper flex flex-col lg:flex-row lg:flex-wrap'>
                 {/* card */}
-                <div className='educationCard border-thin-2 backdrop-blur-sm p-5 relative'>
-                    <p className='educationDate text-sm absolute'>2023 - 2025</p>
-                    <p className='border-b-thin pb-4 mb-4 text-sm'>Sweden - Linkoping</p>
-                    <div className='flex items-center gap-4 pb-4 mb-4 border-b-thin'>
-                        <Image
-                            src='/images/chas.png'
-                            alt='Alrafidain'
-                            width={50}
-                            height={50}
-                            priority
-                        />
-                        <div>
-                            <h1 className='text-xl text-blue-500'>Chas-Academy</h1>
-                            <h3 className='text-sm text-yellow-600'>Two-year vocational program in Fullstack JavaScript Development</h3>
-                        </div>
-                    </div>
-                    <p className='text-sm'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta numquam similique facilis necessitatibus? Nesciunt, maiores facere. Earum iusto perferendis voluptatem ullam ipsum, unde ut quisquam maxime, voluptatibus porro perspiciatis aperiam!</p>
-                </div>
-                {/* card */}
-                <div className='educationCard border-thin-2 backdrop-blur-sm p-5 relative'>
-                    <p className='educationDate text-sm absolute'>2011 - 2015</p>
-                    <p className='border-b-thin pb-4 mb-4 text-sm'>Iraq - Baghdad</p>
-                    <div className='flex items-center gap-4 pb-4 mb-4 border-b-thin'>
-                        <Image
-                            src='/images/rafidain.png'
-                            alt='Alrafidain'
-                            width={50}
-                            height={50}
-                            priority
-                        />
-                        <div>
-                            <h1 className='text-xl text-blue-500'>Alrafidain University</h1>
-                            <h3 className='text-sm text-yellow-600'>Bachalor's Degree in computer techniques engineering.</h3>
-                        </div>
-                    </div>
-                    <p className='text-sm'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta numquam similique facilis necessitatibus? Nesciunt, maiores facere. Earum iusto perferendis voluptatem ullam ipsum, unde ut quisquam maxime, voluptatibus porro perspiciatis aperiam!</p>
-                </div>
+                {educationObj.map(education =>
+                <Education key={education.id} education={education} />)}
             </div>
         </div>
     )
