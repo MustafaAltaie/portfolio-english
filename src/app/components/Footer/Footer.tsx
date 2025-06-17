@@ -60,8 +60,8 @@ const Footer = () => {
                 <div className='border-b-thin pb-2 mb-2'>
                     <p className='mb-3'><span>You can find all relevant documents below.</span></p>
                     <ul className='flex flex-col gap-2'>
-                        <li className='italic pl-1'>Bachalor's Degree</li>
-                        <li className='italic pl-1'>Validated Bachalor's Degree</li>
+                        <li className='italic pl-1'>Bachalors Degree</li>
+                        <li className='italic pl-1'>Validated Bachalors Degree</li>
                         <li className='italic pl-1'>Swedish Vocational Program (Full stack JS)</li>
                         <li className='italic pl-1'>Resume (CV)</li>
                         <li className='italic pl-1'>Personal Letter</li>
@@ -71,7 +71,7 @@ const Footer = () => {
                 <div className='lg:flex lg:gap-20 pb-2 lg:pb-0 border-b-thin'>
                     <div className='lg:w-1/2 lg:flex lg:flex-col lg:justify-center'>
                         <p className='mb-2 pb-2 border-b-thin'>Dedicated to delivering top results, always eager to grow through new challenges — available for remote or on-site opportunities.</p>
-                        <p className='mb-2'>Have an idea or a job opportunity? Don’t hesitate to get in touch — I'm fluent in
+                        <p className='mb-2'>Have an idea or a job opportunity? Do not hesitate to get in touch — I am fluent in
                             <span> English, </span>
                             <span>Swedish</span> and
                             <span> Arabic.</span>

@@ -4,7 +4,7 @@ import Skill from './Skill';
 import { FSkill } from '../../../../../types/Skills';
 
 const Backend = () => {
-    const [backend, setBackend] = useState<FSkill[]>([
+    const [backend] = useState<FSkill[]>([
         {
             id: '1',
             image: '/images/tech-icons/node.png',

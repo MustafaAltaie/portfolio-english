@@ -22,7 +22,7 @@ const Section1 = () => {
                     <h1><UserCircleIcon className='w-7 text-yellow-600' /></h1>
                     <span className='text-2xl text-yellow-600'>Profile</span>
                 </div>
-                <p>I’m a fullstack JavaScript developer focused on building scalable and responsive web applications using Next.js with TypeScript and the MERN stack (MongoDB, Express, React, Node.js). I write clean, optimized code that follows best practices, and I work with modern tools like Tailwind CSS, Next.js, and TypeScript. I'm always eager to learn new technologies and quickly adapt to new challenges.</p>
+                <p>I am a fullstack JavaScript developer focused on building scalable and responsive web applications using Next.js with TypeScript and the MERN stack (MongoDB, Express, React, Node.js). I write clean, optimized code that follows best practices, and I work with modern tools like Tailwind CSS, Next.js, and TypeScript. I am always eager to learn new technologies and quickly adapt to new challenges.</p>
             </div>
         </section>
     )

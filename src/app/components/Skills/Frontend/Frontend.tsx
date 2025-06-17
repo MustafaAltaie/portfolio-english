@@ -4,7 +4,7 @@ import { FSkill } from '../../../../../types/Skills';
 import Skill from './Skill';
 
 const Frontend = () => {
-    const [frontend, setFrontend] = useState<FSkill[]>([
+    const [frontend] = useState<FSkill[]>([
         {
             id: '1',
             image: '/images/tech-icons/html.png',

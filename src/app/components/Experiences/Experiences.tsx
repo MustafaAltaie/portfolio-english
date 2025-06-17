@@ -15,7 +15,7 @@ interface Exp {
 }
 
 const Experiences = () => {
-    const [expObj, setExpObj] = useState<Exp[]>([
+    const [expObj] = useState<Exp[]>([
         {
             id: '1',
             dateFrom: '2023-10',

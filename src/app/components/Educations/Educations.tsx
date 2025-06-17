@@ -5,7 +5,7 @@ import { EducationType } from '../../../../types/Educations';
 import Education from './Education';
 
 const Educations = () => {
-    const [educationObj, setEducationObj] = useState<EducationType[]>([
+    const [educationObj] = useState<EducationType[]>([
         {
             id: '1',
             location: 'Sweden - Linkoping',
