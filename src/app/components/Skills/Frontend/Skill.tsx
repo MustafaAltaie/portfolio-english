@@ -9,7 +9,7 @@ interface SkillProps {
 
 const Skill = React.memo(({ skill }: SkillProps) => {
     return (
-        <div className='skillCard p-3 flex flex-col gap-2 rounded-sm backdrop-blur-sm'>
+        <div className='skillCard p-3 flex flex-col gap-2 rounded-sm'>
             <div className='flex gap-1 items-center'>
                 <Image
                     src={skill.image}
