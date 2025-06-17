@@ -27,7 +27,7 @@
     background: #ffffff11;
 }
 .darkMode .skillLevel > div {
-    background: oklch(68.1% 0.162 75.834);
+    background: #960;
 }
 .lightMode .skillLevel {
     background: #00000022;
@@ -37,8 +37,12 @@
 }
 
 @media (min-width: 1024px) {
+    .skills {
+        width: 80%;
+        margin: 0 auto;
+    }
     .frontendSkillWrapper .skillCard {
-        width: calc(100%/9 - 80px/9);
+        width: calc(100%/5 - 40px/5);
     }
     .backendSkillWrapper .skillCard {
         width: calc(100%/5 - 40px/5);

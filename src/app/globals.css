@@ -57,7 +57,7 @@ body.lightMode,
 .bg-url-fixed {
     background-attachment: fixed;
     background-position: center;
-    background-size: 80% 50%;
+    background-size: 80% 35%;
     background-repeat: no-repeat;
 }
 
