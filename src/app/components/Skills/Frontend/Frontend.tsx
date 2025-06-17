@@ -15,7 +15,7 @@ const Frontend = () => {
             id: '2',
             image: '/images/tech-icons/css.png',
             title: 'CSS3',
-            level: 50,
+            level: 85,
         },
         {
             id: '3',
