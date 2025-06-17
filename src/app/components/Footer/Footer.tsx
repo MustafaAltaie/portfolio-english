@@ -60,39 +60,39 @@ const Footer = () => {
                 <div className='border-b-thin pb-2 mb-2'>
                     <p className='mb-3'><span>You can find all relevant documents below.</span></p>
                     <ul className='flex flex-col gap-2'>
-                        <li className='italic pl-1'>Bachalors Degree</li>
-                        <li className='italic pl-1'>Validated Bachalors Degree</li>
-                        <li className='italic pl-1'>Swedish Vocational Program (Full stack JS)</li>
-                        <li className='italic pl-1'>Resume (CV)</li>
-                        <li className='italic pl-1'>Personal Letter</li>
+                        <li className='italic pl-1 text-sm'>Bachalors Degree</li>
+                        <li className='italic pl-1 text-sm'>Validated Bachalors Degree</li>
+                        <li className='italic pl-1 text-sm'>Swedish Vocational Program (Full stack JS)</li>
+                        <li className='italic pl-1 text-sm'>Resume (CV)</li>
+                        <li className='italic pl-1 text-sm'>Personal Letter</li>
                     </ul>
                 </div>
                 {/* Middle */}
                 <div className='lg:flex lg:gap-20 pb-2 lg:pb-0 border-b-thin'>
                     <div className='lg:w-1/2 lg:flex lg:flex-col lg:justify-center'>
-                        <p className='mb-2 pb-2 border-b-thin'>Dedicated to delivering top results, always eager to grow through new challenges — available for remote or on-site opportunities.</p>
-                        <p className='mb-2'>Have an idea or a job opportunity? Do not hesitate to get in touch — I am fluent in
+                        <p className='mb-2 pb-2 border-b-thin text-sm'>Dedicated to delivering top results, always eager to grow through new challenges — available for remote or on-site opportunities.</p>
+                        <p className='mb-2 text-sm'>Have an idea or a job opportunity? Do not hesitate to get in touch — I am fluent in
                             <span> English, </span>
                             <span>Swedish</span> and
                             <span> Arabic.</span>
                         </p>
                     </div>
                     <form onSubmit={handleSendMessage} className='flex flex-col gap-1 mb-2 lg:w-1/2'>
-                        <input className='p-2 rounded-lg lg:p-1' type="text" name='name' placeholder='Name' value={message.name} onChange={handlePrepareMessage} />
-                        <input className='p-2 rounded-lg lg:p-1' type="text" name='email' placeholder='Email' value={message.email} onChange={handlePrepareMessage} />
-                        <textarea className='p-2 rounded-lg lg:p-1' name="message" placeholder='Message' value={message.message} onChange={handlePrepareMessage}></textarea>
-                        <button type='submit' className='bg-blue-800 p-2 text-white rounded-lg'>Send</button>
+                        <input className='p-2 rounded-lg lg:p-1 text-sm' type="text" name='name' placeholder='Name' value={message.name} onChange={handlePrepareMessage} />
+                        <input className='p-2 rounded-lg lg:p-1 text-sm' type="text" name='email' placeholder='Email' value={message.email} onChange={handlePrepareMessage} />
+                        <textarea className='p-2 rounded-lg lg:p-1 text-sm' name="message" placeholder='Message' value={message.message} onChange={handlePrepareMessage}></textarea>
+                        <button type='submit' className='bg-blue-800 p-2 text-white rounded-lg text-sm'>Send</button>
                     </form>
                 </div>
                 {/* Lower */}
                 <div>
-                    <p className='border-b-thin pb-2 mt-2'>This portfolio is built using modern technologies such as
+                    <p className='border-b-thin pb-2 mt-2 text-sm'>This portfolio is built using modern technologies such as
                         <span> Next.js, </span>
                         <span>TypeScript, </span>
                         <span>RTK-Query </span>and
                         <span> Resend.</span>
                     </p>
-                    <h5 className='pb-5 pt-3 text-center'>© 2025 Mustafa Altaie. Alla rättigheter förbehållna.</h5>
+                    <h5 className='pb-5 pt-3 text-center text-sm'>© 2025 Mustafa Altaie. Alla rättigheter förbehållna.</h5>
                 </div>
             </div>
         </footer>
