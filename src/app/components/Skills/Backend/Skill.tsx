@@ -26,4 +26,6 @@ const Skill = React.memo(({ skill }: SkillProps) => {
     )
 });
 
+Skill.displayName = 'Skill';
+
 export default Skill;
