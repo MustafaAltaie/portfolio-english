@@ -15,7 +15,7 @@ const Skill = ({ skill }: SkillProps) => {
                     alt='Image'
                     width={20}
                     height={20}
-                    priority
+                    loading='lazy'
                 />
                 <h1 className='text-sm'>{skill.title}</h1>
             </div>
