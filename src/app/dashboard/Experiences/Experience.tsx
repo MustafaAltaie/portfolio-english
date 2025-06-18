@@ -1,22 +1,22 @@
 import React from 'react';
 import { BriefcaseIcon, ArrowLongRightIcon } from '@heroicons/react/24/solid';
 import { Exp } from '../../../../types/Experiences';
-import { motion } from 'framer-motion';
+import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 
 interface ExperienceProps {
     exp: Exp
+    setObj: React.Dispatch<React.SetStateAction<Exp>>
+    setForm: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const Experience = ({ exp }: ExperienceProps) => {
+const Experience = ({ exp, setObj, setForm }: ExperienceProps) => {
     return (
-        <motion.div
-            className='experienceCard border-thin-2 flex flex-col gap-2 p-5 rounded-xl'
-            initial={{ opacity: 0, scale: 0.7 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true, amount: 0.2 }}
-        >
-            <div className='flex gap-5 items-end justify-between'>
+        <div className='experienceCard border-thin-2 flex flex-col gap-2 p-5 rounded-xl'>
+            <div className='flex gap-5 items-center justify-between'>
+                <div className='flex gap-5'>
+                    <PencilIcon className='w-5' onClick={() => {setForm(true); setObj(exp)}} />
+                    <TrashIcon className='w-5' />
+                </div>
                 <BriefcaseIcon className='w-7 bg-blue-600 text-white rounded-full p-1.5' />
                 <p className='text-sm text-blue-500 font-bold'>{exp.dateFrom} - {exp.dateTo ? exp.dateTo : 'Ongoing'}</p>
             </div>
@@ -29,7 +29,7 @@ const Experience = ({ exp }: ExperienceProps) => {
                 <p key={tech} className='expTech px-2 py-1 rounded-xl text-sm'>{tech}</p>
                 )}
             </div>
-        </motion.div>
+        </div>
     )
 }
 

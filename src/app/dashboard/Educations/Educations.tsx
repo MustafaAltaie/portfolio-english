@@ -1,8 +1,10 @@
+'use client';
 import React, { useState } from 'react';
-import './Educations.css';
+import '../../components/Educations/Educations.css';
 import { AcademicCapIcon } from '@heroicons/react/24/solid';
 import { EducationType } from '../../../../types/Educations';
 import Education from './Education';
+import Form from './Form';
 
 const Educations = () => {
     const [educationObj] = useState<EducationType[]>([
@@ -29,6 +31,22 @@ const Educations = () => {
             docLink: '',
         },
     ]);
+    const [form, setForm] = useState(false);
+    const [obj, setObj] = useState<EducationType>({
+        id: '',
+        location: '',
+        dateFrom: '',
+        dateTo: '',
+        school: '',
+        title: '',
+        description: '',
+        logoLink: '',
+        docLink: '',
+    });
+
+    const prepareObj = (edu: EducationType) => {
+        setObj(edu);
+    }
 
     return (
         <section className='educations p-7 flex flex-col gap-5 border-b-thin bg-url-fixed pb-10'>
@@ -36,12 +54,17 @@ const Educations = () => {
                 <AcademicCapIcon className='w-7 text-yellow-600' />
                 <h1 className='text-2xl text-yellow-600'>Educations</h1>
             </div>
-            {/* Educations */}
             <div className='educationWrapper flex flex-col lg:flex-row lg:flex-wrap'>
-                {/* card */}
                 {educationObj.map(education =>
-                <Education key={education.id} education={education} />)}
+                <Education
+                    key={education.id}
+                    education={education}
+                    setForm={setForm}
+                    prepareObj={prepareObj}
+                />)}
             </div>
+            <h1 className={`transition-all w-5 h-5 flexCenter pb-2 mx-auto text-4xl ${form ? 'rotate-45' : ''}`} onClick={() => setForm(!form)}>+</h1>
+            <Form form={form} setObj={setObj} obj={obj} />
         </section>
     )
 }

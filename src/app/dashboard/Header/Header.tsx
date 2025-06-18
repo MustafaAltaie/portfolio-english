@@ -1,6 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import './Header.css';
+import '../../components/Header/Header.css';
 import { SunIcon, MoonIcon } from '@heroicons/react/24/solid';
 
 const Header = () => {

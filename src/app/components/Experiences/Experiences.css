@@ -1,5 +1,6 @@
 .experiences {
     background-image: url('/images/experience.png');
+    overflow-x: hidden;
 }
 .expWrapper {
     gap: 20px;

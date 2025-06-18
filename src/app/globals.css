@@ -3,6 +3,7 @@
 * {
     box-sizing: border-box;
     letter-spacing: 0.3px;
+    outline: none;
 }
 
 body.darkMode,
@@ -63,27 +64,102 @@ body.lightMode,
 
 
 /* Settings */
+.darkMode form *:not(label):not(button) {
+    color: #fff;
+}
+.lightMode form *:not(label):not(button) {
+    color: #000;
+}
 form {
-    overflow-y: hidden;
+    overflow: hidden;
     transition: 0.5s;
+}
+.darkMode form {
+    background: #111111aa;
+}
+.lightMode form {
+    background: #eeeeeecc;
 }
 .formInnerDiv {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
+    padding: 0 5px;
 }
 form input,
 form textarea {
+    border-bottom: solid 0.5px;
+    resize: none;
+    padding: 5px;
+}
+form textarea {
     border: solid 0.5px;
     border-radius: 10px;
-    resize: none;
-    padding: 10px;
 }
 form button {
-    background: #07d;
+    background: #07a;
     color: #fff;
     padding: 10px;
     border-radius: 10px;
+}
+.activeFormButton {
+    background: #5d5;
+    color: black;
+}
+.formImageWrapper {
+    max-width: 30px;
+    max-height: 30px;
+    overflow: hidden;
+}
+.formImageWrapper > img {
+    width: 100%;
+    height: 100%;
+}
+
+.formInnerDiv > label {
+    display: flex;
+    flex-direction: column;
+}
+.darkMode form label {
+    color: #0bf;
+}
+.lightMode form label {
+    color: #06a;
+}
+form label > input {
+    transform: translateY(-5px);
+}
+form input[type='file'] {
+    display: none;
+}
+.labelImage {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.labelImage > img {
+    pointer-events: none;
+}
+.inputButton {
+    display: flex;
+    gap: 20px;
+}
+.inputButton > input,
+.inputButton > button {
+    width: 50%;
+}
+.formTechWrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px 0;
+}
+.formTechWrapper > div {
+    border: dashed 0.7px;
+    padding: 5px 10px;
+    border-radius: 10px;
+    display: flex;
+    gap: 5px;
 }
 
 @media (min-width: 1024px) {
