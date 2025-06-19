@@ -12,7 +12,10 @@
 }
 .frontendSkillWrapper .skillCard,
 .backendSkillWrapper .skillCard,
-.otherSkillWrapper .skillCard {
+.otherSkillWrapper .skillCard,
+.frontendSkillWrapper .skillCardTemp,
+.backendSkillWrapper .skillCardTemp,
+.otherSkillWrapper .skillCardTemp {
     width: calc(100%/3 - 20px/3);
 }
 .darkMode .skillCard {
@@ -28,6 +31,10 @@
 .darkMode .skillLevel {
     background: #ffffff22;
 }
+.skillLevel {
+    overflow: hidden;
+    border-radius: 5px;
+}
 .skillLevel > div {
     height: 100%;
 }
@@ -40,19 +47,41 @@
 .lightMode .skillLevel > div {
     background: #07a;
 }
+.darkMode .skillCardTemp {
+    background-color: #000;
+    border: dashed 0.7px;
+    border-left: solid 5px #555;
+}
+.lightMode .skillCardTemp {
+    background-color: #fff;
+    border: dashed 0.7px;
+    border-left: solid 5px #aaa;
+}
+
+
+/* Settings */
+.darkMode .skillSettingsWrapper > div {
+    background: #333333dd;
+}
+.lightMode .skillSettingsWrapper > div {
+    background: #eeeeeedd;
+}
 
 @media (min-width: 1024px) {
     .skills {
         width: 80%;
         margin: 0 auto;
     }
-    .frontendSkillWrapper .skillCard {
+    .frontendSkillWrapper .skillCard,
+    .frontendSkillWrapper .skillCardTemp {
         width: calc(100%/5 - 40px/5);
     }
-    .backendSkillWrapper .skillCard {
+    .backendSkillWrapper .skillCard,
+    .backendSkillWrapper .skillCardTemp {
         width: calc(100%/5 - 40px/5);
     }
-    .otherSkillWrapper .skillCard {
+    .otherSkillWrapper .skillCard,
+    .otherSkillWrapper .skillCardTemp {
         width: calc(100%/6 - 50px/6);
     }
 }

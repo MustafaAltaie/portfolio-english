@@ -1,6 +1,6 @@
 export interface FSkill {
     id?: string
-    image: string
+    imageLink?: string
     title: string
-    level: number
+    level: number | string
 }

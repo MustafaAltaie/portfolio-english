@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import Skill from './Skill';
+import Skill from '../Skill';
 import { FSkill } from '../../../../../types/Skills';
 
 const Backend = () => {

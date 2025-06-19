@@ -1,7 +1,7 @@
 'use cLient';
 import React, { useState } from 'react';
 import { FSkill } from '../../../../../types/Skills';
-import Skill from './Skill';
+import Skill from '../Skill';
 
 const Frontend = () => {
     const [frontend] = useState<FSkill[]>([

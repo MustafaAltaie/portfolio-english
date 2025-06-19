@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { FSkill } from '../../../../../types/Skills';
-import Skill from './Skill';
+import Skill from '../Skill';
 
 const Other = () => {
     const [other] = useState<FSkill[]>([
