@@ -7,31 +7,31 @@ const Backend = () => {
     const [backend] = useState<FSkill[]>([
         {
             id: '1',
-            image: '/images/tech-icons/node.png',
+            imageLink: '/images/tech-icons/node.png',
             title: 'Node.js',
             level: 80,
         },
         {
             id: '2',
-            image: '/images/tech-icons/next.png',
+            imageLink: '/images/tech-icons/next.png',
             title: 'Next.js',
             level: 70,
         },
         {
             id: '3',
-            image: '/images/tech-icons/mongo.png',
+            imageLink: '/images/tech-icons/mongo.png',
             title: 'MongoDB',
             level: 80,
         },
         {
             id: '4',
-            image: '/images/tech-icons/postgres.png',
+            imageLink: '/images/tech-icons/postgres.png',
             title: 'PostgreSQL',
             level: 60,
         },
         {
             id: '5',
-            image: '/images/tech-icons/express.png',
+            imageLink: '/images/tech-icons/express.png',
             title: 'Express.js',
             level: 80,
         },
