@@ -18,6 +18,20 @@ const Form = ({ form, obj, setObj }: FormProps) => {
     useEffect(() => {
         const currentForm = formRef.current;
         if (!currentForm) return;
+
+        const clearObj = () => {
+            setObj({
+                id: '',
+                dateFrom: '',
+                dateTo: '',
+                title: '',
+                company: '',
+                location: '',
+                description: '',
+                techStack: []
+            });
+        }
+
         if (form) {
             currentForm.style.height = `${currentForm.scrollHeight}px`;
             const timeout = setTimeout(() => {
@@ -35,19 +49,6 @@ const Form = ({ form, obj, setObj }: FormProps) => {
         setObj(prev => ({
             ...prev, [name]: value
         }));
-    }
-
-    const clearObj = () => {
-        setObj({
-            id: '',
-            dateFrom: '',
-            dateTo: '',
-            title: '',
-            company: '',
-            location: '',
-            description: '',
-            techStack: []
-        });
     }
 
     const blinkTwice = (trimmed: string) => {

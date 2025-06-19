@@ -10,11 +10,17 @@ interface FormProps {
     fileImage: File | null
     setFileImage: React.Dispatch<React.SetStateAction<File | null>>
     clearSkillObj: () => void
+    form: boolean
 }
 
-const Form = ({ setForm, skillObj, setSkillObj, fileImage, setFileImage, clearSkillObj }: FormProps) => {
+const Form = ({ setForm, skillObj, setSkillObj, fileImage, setFileImage, clearSkillObj, form }: FormProps) => {
+
+    const handleSave = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+    }
+
     return (
-        <form>
+        <form onSubmit={handleSave} className={`${form ? 'max-h-100' : 'max-h-0'}`}>
             <h1 className='w-fit ml-auto px-5 py-2' onClick={() => {setForm(false); clearSkillObj()}}>X</h1>
             <div className="formInnerDiv">
                 <label>

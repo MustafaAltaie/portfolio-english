@@ -18,6 +18,23 @@ const Form = ({ form, setObj, obj }: FormProps) => {
     useEffect(() => {
         const currentForm = formRef.current;
         if (!currentForm) return;
+
+        const clearObj = () => {
+            setObj({
+                id: '',
+                location: '',
+                dateFrom: '',
+                dateTo: '',
+                school: '',
+                title: '',
+                description: '',
+                logoLink: '',
+                docLink: '',
+            });
+            setLogo(null);
+            setDoc(null);
+        }
+
         if (form) {
             currentForm.style.height = `${currentForm.scrollHeight}px`;
             const timeout = setTimeout(() => {
@@ -40,22 +57,6 @@ const Form = ({ form, setObj, obj }: FormProps) => {
 
     const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-    }
-
-    const clearObj = () => {
-        setObj({
-            id: '',
-            location: '',
-            dateFrom: '',
-            dateTo: '',
-            school: '',
-            title: '',
-            description: '',
-            logoLink: '',
-            docLink: '',
-        });
-        setLogo(null);
-        setDoc(null);
     }
 
     return (

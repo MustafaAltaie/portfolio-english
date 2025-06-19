@@ -82,15 +82,15 @@ const Other = () => {
                     fileImage={fileImage}
                 />}
             </div>
-            {form &&
             <Form
+                form={form}
                 setForm={setForm}
                 skillObj={skillObj}
                 setSkillObj={setSkillObj}
                 fileImage={fileImage}
                 setFileImage={setFileImage}
                 clearSkillObj={clearSkillObj}
-            />}
+            />
         </div>
     )
 }
