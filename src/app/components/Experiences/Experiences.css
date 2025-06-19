@@ -6,10 +6,10 @@
     gap: 20px;
 }
 .darkMode .experienceCard {
-    background-color: #222222dd;
+    background-color: #2a2a2acc;
 }
 .lightMode .experienceCard {
-    background-color: #eaeaeadd;
+    background-color: #ddddddaa;
     border: solid 0.7px #00000055;
 }
 .darkMode .expTech {
