@@ -1,26 +1,40 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { TrashIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import { FSkill } from '../../../../types/Skills';
 
 interface FormProps {
+    form: boolean
     setForm: React.Dispatch<React.SetStateAction<boolean>>
     skillObj: FSkill
     setSkillObj: React.Dispatch<React.SetStateAction<FSkill>>
     fileImage: File | null
     setFileImage: React.Dispatch<React.SetStateAction<File | null>>
     clearSkillObj: () => void
-    form: boolean
 }
 
-const Form = ({ setForm, skillObj, setSkillObj, fileImage, setFileImage, clearSkillObj, form }: FormProps) => {
+const Form = ({ form, setForm, skillObj, setSkillObj, fileImage, setFileImage, clearSkillObj }: FormProps) => {
+    const formRef = useRef<HTMLFormElement | null>(null);
+
+    useEffect(() => {
+        const currentForm = formRef.current;
+        if (!currentForm) return;
+        if (form) {
+            currentForm.style.height = `${currentForm.scrollHeight}px`;
+            setTimeout(() => {
+                currentForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
+        } else {
+            currentForm.style.height = '0px';
+        }
+    }, [form, formRef]);
 
     const handleSave = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
     }
 
     return (
-        <form onSubmit={handleSave} className={`${form ? 'max-h-100' : 'max-h-0'}`}>
+        <form ref={formRef} onSubmit={handleSave}>
             <h1 className='w-fit ml-auto px-5 py-2' onClick={() => {setForm(false); clearSkillObj()}}>X</h1>
             <div className="formInnerDiv">
                 <label>
