@@ -42,7 +42,7 @@ const Form = ({ form, obj, setObj }: FormProps) => {
             clearObj();
             currentForm.style.height = '0px';
         }
-    }, [form, formRef, obj.techStack.length]);
+    }, [form, formRef, obj.techStack.length, setObj]);
 
     const prepareObj = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
