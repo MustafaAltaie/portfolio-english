@@ -1,6 +1,10 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import '../../components/Footer/Footer.css';
+import SocialForm from './SocialForm';
+import { SocialObj, DocsObj } from '../../../../types/Footer';
+import { PencilIcon } from '@heroicons/react/24/outline';
+import DocForm from './DocForm';
 
 interface Message {
     name: string
@@ -14,6 +18,25 @@ const Footer = () => {
         email: '',
         message: '',
     });
+    const [social, setSocial] = useState<SocialObj>({
+        id: '',
+        linkedIn: '',
+        mobile: '',
+        email: '',
+        github: '',
+    });
+    const [socialForm, setSocialForm] = useState(false);
+    const socialFormRef = useRef<HTMLFormElement | null>(null);
+    const [docForm, setDocForm] = useState(false);
+    const DocFormRef = useRef<HTMLFormElement | null>(null);
+    const [docs, setDocs] = useState<DocsObj>({
+        id: '',
+        doc1: '',
+        doc2: '',
+        doc3: '',
+        doc4: '',
+        doc5: '',
+    });
 
     const handlePrepareMessage = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -23,6 +46,28 @@ const Footer = () => {
     }
 
     const handleSendMessage = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+    }
+
+    const prepareSocial = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setSocial(prev => ({
+            ...prev, [name]: value
+        }));
+    }
+
+    const handleSaveSocial = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+    }
+
+    const prepareDocs = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setDocs(prev => ({
+            ...prev, [name]: value
+        }));
+    }
+
+    const handleSaveDocs = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
     }
 
@@ -55,10 +100,19 @@ const Footer = () => {
                         </div>
                         <p className='text-sm'>Github</p>
                     </div>
+                    {!socialForm && <PencilIcon className='w-10 p-2 absolute right-5' onClick={() => setSocialForm(true)} />}
                 </div>
+                <SocialForm
+                    social={social}
+                    prepareSocial={prepareSocial}
+                    socialForm={socialForm}
+                    setSocialForm={setSocialForm}
+                    socialFormRef={socialFormRef}
+                    handleSaveSocial={handleSaveSocial}
+                />
                 {/* Documents */}
                 <div className='border-b-thin pb-2 mb-2'>
-                    <p className='mb-3'><span>You can find all relevant documents below.</span></p>
+                    <p className='mb-3 flex gap-3'><span>You can find all relevant documents below.</span>{!docForm && <PencilIcon className='w-5' onClick={() => setDocForm(true)} />}</p>
                     <ul className='flex flex-col gap-2'>
                         <li className='italic pl-1 text-sm'>Bachalors Degree</li>
                         <li className='italic pl-1 text-sm'>Validated Bachalors Degree</li>
@@ -67,6 +121,14 @@ const Footer = () => {
                         <li className='italic pl-1 text-sm'>Personal Letter</li>
                     </ul>
                 </div>
+                <DocForm
+                    DocFormRef={DocFormRef}
+                    handleSaveDocs={handleSaveDocs}
+                    docForm={docForm}
+                    setDocForm={setDocForm}
+                    docs={docs}
+                    prepareDocs={prepareDocs}
+                />
                 {/* Middle */}
                 <div className='lg:flex lg:gap-20 pb-2 lg:pb-0 border-b-thin'>
                     <div className='lg:w-1/2 lg:flex lg:flex-col lg:justify-center'>

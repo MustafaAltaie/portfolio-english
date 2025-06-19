@@ -28,6 +28,13 @@ footer li {
     border-left: solid 2px #555;
     cursor: pointer;
 }
+footer form {
+    background: #000 !important;
+}
+footer form input,
+footer form textarea {
+    border-bottom: solid 0.5px #ffffffaa;
+}
 
 @media (min-width: 1204px) {
     footer > div {
