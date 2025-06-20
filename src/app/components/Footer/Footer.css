@@ -10,12 +10,19 @@ footer *:not(span):not(button):not(i):not(li) {
 .darkMode footer {
     border-top: solid 0.5px #ffffff77;
 }
-.fotterUpper > div > div {
+.fotterUpper > a > div {
     background: #a40;
 }
 footer span {
     color: #d70;
     white-space: nowrap;
+}
+.darkMode form label,
+.lightMode form label {
+    color: #0bf;
+}
+.lightMode form *:not(label):not(button) {
+    color: #fff;
 }
 footer form > input,
 footer form > textarea {

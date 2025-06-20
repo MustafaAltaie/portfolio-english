@@ -2,7 +2,7 @@
 import React, { useRef, useState } from 'react';
 import '../../components/Footer/Footer.css';
 import SocialForm from './SocialForm';
-import { SocialObj, DocsObj } from '../../../../types/Footer';
+import { SocialObj } from '../../../../types/Footer';
 import { PencilIcon } from '@heroicons/react/24/outline';
 import DocForm from './DocForm';
 
@@ -12,7 +12,27 @@ interface Message {
     message: string
 }
 
+interface Social {
+    linkedIn: string
+    mobile: string
+    email: string
+    github: string
+}
+
 const Footer = () => {
+    const docList: string[] = [
+        'Bachalors Degree',
+        'Validated Bachalors Degree',
+        'Swedish Vocational Program (Full stack JS)',
+        'Resume (CV)',
+        'Personal Letter',
+    ];
+    const socialList: Social = {
+        linkedIn: 'mustafa-altaie-b35356178',
+        mobile: '+46763122455',
+        email: 'mustafaphoto111@email.com',
+        github: 'MustafaAltaie',
+    }
     const [message, setMessage] = useState<Message>({
         name: '',
         email: '',
@@ -29,14 +49,8 @@ const Footer = () => {
     const socialFormRef = useRef<HTMLFormElement | null>(null);
     const [docForm, setDocForm] = useState(false);
     const DocFormRef = useRef<HTMLFormElement | null>(null);
-    const [docs, setDocs] = useState<DocsObj>({
-        id: '',
-        doc1: '',
-        doc2: '',
-        doc3: '',
-        doc4: '',
-        doc5: '',
-    });
+    const [docName, setDocName] = useState<string>('');
+    const [docFile, setDocFile] = useState<File | null>(null);
 
     const handlePrepareMessage = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -60,13 +74,6 @@ const Footer = () => {
         e.preventDefault();
     }
 
-    const prepareDocs = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setDocs(prev => ({
-            ...prev, [name]: value
-        }));
-    }
-
     const handleSaveDocs = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
     }
@@ -76,30 +83,30 @@ const Footer = () => {
             <div>
                 {/* Upper */}
                 <div className='fotterUpper flex gap-5 justify-center p-3 lg:p-2 border-b-thin mb-2 mt-3'>
-                    <div className='flex flex-col items-center gap-1'>
+                    <a href={`https://www.linkedin.com/in/${socialList.linkedIn}`} target="_blank" rel="noopener noreferrer" className='flex flex-col items-center gap-1'>
                         <div className='w-7 h-7 flexCenter rounded-full'>
                             <i className="fa-brands fa-linkedin-in text-white text-sm"></i>
                         </div>
                         <p className='text-sm'>LinkedIn</p>
-                    </div>
-                    <div className='flex flex-col items-center gap-1'>
+                    </a>
+                    <a href={`tel:${socialList.mobile}`} rel="noopener" className='flex flex-col items-center gap-1'>
                         <div className='w-7 h-7 flexCenter rounded-full'>
                             <i className="fa-solid fa-phone text-white text-sm"></i>
                         </div>
                         <p className='text-sm'>Call me</p>
-                    </div>
-                    <div className='flex flex-col items-center gap-1'>
+                    </a>
+                    <a href={`mailto:${socialList.email}`} className='flex flex-col items-center gap-1'>
                         <div className='w-7 h-7 flexCenter rounded-full'>
                             <i className="fa-solid fa-envelope text-white text-sm"></i>
                         </div>
                         <p className='text-sm'>Email me</p>
-                    </div>
-                    <div className='flex flex-col items-center gap-1'>
+                    </a>
+                    <a href={`https://github.com/${socialList.github}`} target="_blank" rel="noopener noreferrer" className='flex flex-col items-center gap-1'>
                         <div className='w-7 h-7 flexCenter rounded-full'>
                             <i className="fa-brands fa-github text-white text-sm"></i>
                         </div>
                         <p className='text-sm'>Github</p>
-                    </div>
+                    </a>
                     {!socialForm && <PencilIcon className='w-10 p-2 absolute right-5' onClick={() => setSocialForm(true)} />}
                 </div>
                 <SocialForm
@@ -114,11 +121,7 @@ const Footer = () => {
                 <div className='border-b-thin pb-2 mb-2'>
                     <p className='mb-3 flex gap-3'><span>You can find all relevant documents below.</span>{!docForm && <PencilIcon className='w-5' onClick={() => setDocForm(true)} />}</p>
                     <ul className='flex flex-col gap-2'>
-                        <li className='italic pl-1 text-sm'>Bachalors Degree</li>
-                        <li className='italic pl-1 text-sm'>Validated Bachalors Degree</li>
-                        <li className='italic pl-1 text-sm'>Swedish Vocational Program (Full stack JS)</li>
-                        <li className='italic pl-1 text-sm'>Resume (CV)</li>
-                        <li className='italic pl-1 text-sm'>Personal Letter</li>
+                        {docList.map(doc => <li key={doc} className='italic pl-1 text-sm'>{doc}</li>)}
                     </ul>
                 </div>
                 <DocForm
@@ -126,8 +129,10 @@ const Footer = () => {
                     handleSaveDocs={handleSaveDocs}
                     docForm={docForm}
                     setDocForm={setDocForm}
-                    docs={docs}
-                    prepareDocs={prepareDocs}
+                    docName={docName}
+                    setDocName={setDocName}
+                    setDocFile={setDocFile}
+                    docFile={docFile}
                 />
                 {/* Middle */}
                 <div className='lg:flex lg:gap-20 pb-2 lg:pb-0 border-b-thin'>

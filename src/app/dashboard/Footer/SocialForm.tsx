@@ -28,8 +28,8 @@ const SocialForm = ({ social, prepareSocial, socialForm, setSocialForm, socialFo
             <XMarkIcon className='w-9 ml-auto p-2' onClick={() => setSocialForm(false)} />
             <div className="formInnerDiv">
                 <label>
-                    LinkedIn link
-                    <input type="text" placeholder='LinkedIn' name='linkedIn' value={social.linkedIn} onChange={prepareSocial} />
+                    LinkedIn
+                    <input type="text" placeholder='LinkedIn username' name='linkedIn' value={social.linkedIn} onChange={prepareSocial} />
                 </label>
                 <label>
                     Mobile
@@ -40,8 +40,8 @@ const SocialForm = ({ social, prepareSocial, socialForm, setSocialForm, socialFo
                     <input type="email" placeholder='e.g name@gmail.com' name='email' value={social.email} onChange={prepareSocial} />
                 </label>
                 <label>
-                    Github link
-                    <input type="text" placeholder='https://github.com/name' name='github' value={social.github} onChange={prepareSocial} />
+                    Github
+                    <input type="text" title='Just add the username without https://github/' placeholder='github user name' name='github' value={social.github} onChange={prepareSocial} />
                 </label>
                 <button type='submit'>Save</button>
             </div>
