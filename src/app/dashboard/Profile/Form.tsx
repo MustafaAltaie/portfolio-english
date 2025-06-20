@@ -1,4 +1,5 @@
 import React from 'react';
+import { XMarkIcon } from '@heroicons/react/24/solid';
 
 interface FormProps {
     handleSaveProfile: (e: React.FormEvent<HTMLFormElement>) => void
@@ -10,7 +11,7 @@ interface FormProps {
 const Form = ({ handleSaveProfile, text, setText, setForm }: FormProps) => {
     return (
         <form onSubmit={handleSaveProfile} className='px-1'>
-            <h1 className='mb-2 w-fit ml-auto text-xl cursor-pointer' onClick={() => setForm(false)}>X</h1>
+            <XMarkIcon className='w-5 ml-auto cursor-pointer mb-3' onClick={() => setForm(false)} />
             <div className="formInnerDiv">
                 <textarea name="" placeholder='Profile text' value={text} onChange={e => setText(e.target.value)}></textarea>
                 <button type='submit'>Save</button>

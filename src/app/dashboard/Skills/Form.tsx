@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { TrashIcon } from '@heroicons/react/24/outline';
+import { TrashIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import { FSkill } from '../../../../types/Skills';
 
@@ -35,7 +35,9 @@ const Form = ({ form, setForm, skillObj, setSkillObj, fileImage, setFileImage, c
 
     return (
         <form ref={formRef} onSubmit={handleSave}>
-            <h1 className='w-fit ml-auto px-5 py-2' onClick={() => {setForm(false); clearSkillObj()}}>X</h1>
+            <h1 className='w-fit ml-auto px-5 pt-3'>
+                <XMarkIcon className='w-5' onClick={() => {setForm(false); clearSkillObj()}} />
+            </h1>
             <div className="formInnerDiv">
                 <label>
                     Title

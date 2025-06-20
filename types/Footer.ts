@@ -5,3 +5,16 @@ export interface SocialObj {
     email?: string
     github?: string
 }
+
+export interface Social {
+    linkedIn: string
+    mobile: string
+    email: string
+    github: string
+}
+
+export interface Message {
+    name: string
+    email: string
+    message: string
+}

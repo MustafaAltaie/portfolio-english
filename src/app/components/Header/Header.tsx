@@ -36,11 +36,11 @@ const Header = () => {
                     <p className='text-lg'>Mustafa <span className='text-yellow-600'>Altaie</span></p>
                     <div className='flex gap-5 items-center'>
                         <div className="flex gap-2">
-                            <SunIcon className='w-5 text-blue-500' onClick={() => setDark(false)} />
+                            <SunIcon className='w-5 text-yellow-600' onClick={() => setDark(false)} />
                             <div onClick={() => setDark(!dark)} className="noTouchAction w-9 h-6 relative rounded-full border-thin cursor-pointer">
-                                <div className={`bg-blue-500 w-5 h-5 rounded-full centeredY transition-all ${!dark ? 'left-0.5' : 'left-3'}`}></div>
+                                <div className={`bg-yellow-600 w-5 h-5 rounded-full centeredY transition-all ${!dark ? 'left-0.5' : 'left-3'}`}></div>
                             </div>
-                            <MoonIcon className='w-5 text-blue-500' onClick={() => setDark(true)}  />
+                            <MoonIcon className='w-5 text-yellow-600' onClick={() => setDark(true)}  />
                         </div>
                         <div className="navToggle flex flex-col gap-1.5 lg:hidden" onClick={() => setHideNav(!hideNav)}>
                             <div className={`w-6 transition-all duration-500 ${!hideNav ? 'transform translate-y-2 rotate-45' : ''}`}></div>
