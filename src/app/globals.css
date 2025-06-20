@@ -92,6 +92,9 @@ form textarea {
     resize: none;
     padding: 5px;
 }
+.lightMode form *:not(button) {
+    color: #000 !important;
+}
 form textarea {
     border: solid 0.5px;
     border-radius: 10px;
