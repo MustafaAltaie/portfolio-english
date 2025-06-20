@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import '../../components/Profile/Profile.css';
 import { UserCircleIcon, PencilIcon } from '@heroicons/react/24/solid';
@@ -12,12 +12,19 @@ const Section1 = () => {
     const [createProfile] = useCreateProfileMutation();
     const { data: profile, isLoading } = useReadProfileQuery();
 
+    useEffect(() => {
+        if (!isLoading && profile) {
+            setText(profile.profile);
+        }
+    }, [profile, isLoading]);
+
     if (isLoading) return <p>...loading</p>;
 
     const handleSaveProfile = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
             await createProfile(text).unwrap();
+            setForm(false);
         } catch (err) {
             console.error(err);
             alert('Error saving profile');
@@ -50,7 +57,6 @@ const Section1 = () => {
                     text={text}
                     setText={setText}
                     setForm={setForm}
-                    profile={profile?.profile}
                 />}
             </div>
         </section>
