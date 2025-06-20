@@ -1,16 +1,27 @@
-
+'use client';
 import React, { useState } from 'react';
 import Image from 'next/image';
 import '../../components/Profile/Profile.css';
 import { UserCircleIcon, PencilIcon } from '@heroicons/react/24/solid';
 import Form from './Form';
+import { useCreateProfileMutation, useReadProfileQuery } from '../../../../features/profile/profileApi';
 
 const Section1 = () => {
     const [form, setForm] = useState(false);
     const [text, setText] = useState<string>('');
+    const [createProfile] = useCreateProfileMutation();
+    const { data: profile, isLoading } = useReadProfileQuery();
 
-    const handleSaveProfile = (e: React.FormEvent<HTMLFormElement>) => {
+    if (isLoading) return <p>...loading</p>;
+
+    const handleSaveProfile = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        try {
+            await createProfile(text).unwrap();
+        } catch (err) {
+            console.error(err);
+            alert('Error saving profile');
+        }
     }
 
     return (
@@ -32,13 +43,14 @@ const Section1 = () => {
                     {!form && <PencilIcon className='w-5 ml-5 cursor-pointer' onClick={() => setForm(true)} />}
                 </div>
                 {!form &&
-                <p>I am a fullstack JavaScript developer focused on building scalable and responsive web applications using Next.js with TypeScript and the MERN stack (MongoDB, Express, React, Node.js). I write clean, optimized code that follows best practices, and I work with modern tools like Tailwind CSS, Next.js, and TypeScript. I am always eager to learn new technologies and quickly adapt to new challenges.</p>}
+                <p>{profile?.profile}</p>}
                 {form &&
                 <Form
                     handleSaveProfile={handleSaveProfile}
                     text={text}
                     setText={setText}
                     setForm={setForm}
+                    profile={profile?.profile}
                 />}
             </div>
         </section>

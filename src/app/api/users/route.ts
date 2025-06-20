@@ -1,5 +1,5 @@
 import dbConnect from "../../../../lib/mongodb";
-import User from "../../../../lib/models/UserModel";
+import User from "../../../../lib/models/ProfileModel";
 
 export async function POST(req: Request) {
   await dbConnect();

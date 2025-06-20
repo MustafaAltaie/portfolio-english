@@ -1,4 +1,4 @@
-import User from '../../../../../lib/models/UserModel';
+import User from '../../../../../lib/models/ProfileModel';
 import dbConnect from '../../../../../lib/mongodb';
 import { NextRequest } from 'next/server';
 
