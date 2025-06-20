@@ -95,6 +95,9 @@ form textarea {
 .lightMode form *:not(button) {
     color: #000 !important;
 }
+.lightMode footer form *:not(button) {
+    color: #fff !important;
+}
 form textarea {
     border: solid 0.5px;
     border-radius: 10px;
