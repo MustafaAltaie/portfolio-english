@@ -2,31 +2,45 @@ import React from 'react';
 import Image from 'next/image';
 import { EducationType } from '../../../../types/Educations';
 import { ArrowLongRightIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { useDeleteEducationMutation, useDeleteEducationDocMutation, useDeleteEducationLogoMutation } from '../../../../features/educations/educationApi';
 
 interface EducationProps {
     education: EducationType
     setForm: React.Dispatch<React.SetStateAction<boolean>>
-    prepareObj: (edu: EducationType) => void
+    setObj: React.Dispatch<React.SetStateAction<EducationType>>
+    setOldDoc: React.Dispatch<React.SetStateAction<string | undefined>>
+    setOldLogo: React.Dispatch<React.SetStateAction<string | undefined>>
 }
 
-const Education = ({ education, setForm, prepareObj }: EducationProps) => {
+const Education = ({ education, setForm, setObj, setOldDoc, setOldLogo }: EducationProps) => {
+    const [deleteEducation] = useDeleteEducationMutation();
+    const [deleteEducationDoc] = useDeleteEducationDocMutation();
+    const [deleteEducationLogo] = useDeleteEducationLogoMutation();
+
     const handleDelete = async (id: string) => {
-        alert(id);
+        try {
+            await deleteEducation(id).unwrap();
+            education.docLink && await deleteEducationDoc(education.docLink).unwrap();
+            education.logoLink && await deleteEducationLogo(education.logoLink).unwrap();
+        } catch (err) {
+            console.error(err);
+            alert('Error deleting education');
+        }
     }
 
     return (
         <div className='educationCard border-thin-2 p-5 relative flex flex-col justify-between'>
-            <p className='educationDate text-sm absolute'>{education.dateFrom} - {education.dateTo}</p>
+            <p className='educationDate text-sm absolute'>{education.dateFrom} - {education.dateTo || 'Ongoing'}</p>
             <div className='flex gap-5 border-b-thin pb-4 mb-4'>
-                <PencilIcon className='w-5 cursor-pointer' onClick={() => {setForm(true); prepareObj(education)}} />
+                <PencilIcon className='w-5 cursor-pointer' onClick={() => {setForm(true); setObj(education); setOldDoc(education.docLink); setOldLogo(education.logoLink)}} />
                     <TrashIcon className='w-5' onClick={() => handleDelete(education.id!)} />
                 <p className='text-sm'>{education.location}</p>
             </div>
-            <div className='flex items-center gap-4 pb-4 mb-4 border-b-thin'>
+            <div className={`flex items-center gap-4 ${education.description && 'pb-4 mb-4'} ${education.description && 'border-b-thin'}`}>
                 {education.logoLink &&
                 <div>
                     <Image
-                        src={education.logoLink}
+                        src={`https://res.cloudinary.com/dswmp2omq/image/upload/v1750506429/portfolio/educations/logo/${education.logoLink}`}
                         alt='Alrafidain'
                         width={100}
                         height={100}
@@ -39,7 +53,8 @@ const Education = ({ education, setForm, prepareObj }: EducationProps) => {
                 </div>
             </div>
             <p className='text-sm'>{education.description}</p>
-            <button className='ml-auto flex items-end gap-2 mt-2 text-blue-500'>See the attchment <ArrowLongRightIcon className='w-5' /></button>
+            {education.docLink &&
+            <button className='ml-auto flex items-end gap-2 mt-2 text-blue-500'>See the attchment <ArrowLongRightIcon className='w-5' /></button>}
         </div>
     )
 }

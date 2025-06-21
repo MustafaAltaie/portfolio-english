@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { EducationType } from '../../../../types/Educations';
 import { TrashIcon } from '@heroicons/react/24/outline';
@@ -8,12 +8,15 @@ interface FormProps {
     form: boolean
     setObj: React.Dispatch<React.SetStateAction<EducationType>>
     obj: EducationType
+    handleSave: (e: React.FormEvent<HTMLFormElement>) => void
+    logo: File | null
+    setLogo: React.Dispatch<React.SetStateAction<File | null>>
+    doc: File | null
+    setDoc: React.Dispatch<React.SetStateAction<File | null>>
 }
 
-const Form = ({ form, setObj, obj }: FormProps) => {
+const Form = ({ form, setObj, obj, handleSave, logo, setLogo, doc, setDoc }: FormProps) => {
     const formRef = useRef<HTMLFormElement>(null);
-    const [logo, setLogo] = useState<File | null>(null);
-    const [doc, setDoc] = useState<File | null>(null);
 
     useEffect(() => {
         const currentForm = formRef.current;
@@ -55,10 +58,6 @@ const Form = ({ form, setObj, obj }: FormProps) => {
         }));
     }
 
-    const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-    }
-
     return (
         <form ref={formRef} onSubmit={handleSave}>
             <div className="formInnerDiv">
@@ -84,7 +83,7 @@ const Form = ({ form, setObj, obj }: FormProps) => {
                 </label>
                 <label>
                     About education
-                    <input type="text" placeholder='e.g. Educations description' name='description' value={obj.description} onChange={prepareObject} />
+                    <textarea placeholder='e.g. Educations description' name='description' value={obj.description} onChange={prepareObject}></textarea>
                 </label>
                 <div className='labelImage'>
                     <label>
@@ -104,7 +103,7 @@ const Form = ({ form, setObj, obj }: FormProps) => {
                             src={
                                 logo ?
                                 URL.createObjectURL(logo) :
-                                obj.id && obj.logoLink?.startsWith('/') ? obj.logoLink :
+                                obj.id && obj.logoLink?.startsWith('/') ? `https://res.cloudinary.com/dswmp2omq/image/upload/v1750506429/portfolio/educations/logo/${obj.logoLink}` :
                                 '/images/logo-frame.png'
                             }
                             alt="logo-frame"
@@ -132,7 +131,7 @@ const Form = ({ form, setObj, obj }: FormProps) => {
                             src={
                                 doc ?
                                 URL.createObjectURL(doc) :
-                                obj.id && obj.docLink?.startsWith('/') ? obj.docLink :
+                                obj.id && obj.docLink?.startsWith('/') ? `https://res.cloudinary.com/dswmp2omq/image/upload/v1750506429/portfolio/educations/doc/${obj.docLink}` :
                                 "/images/image-icon.png"}
                             alt="image-icon"
                             width={30}
@@ -141,7 +140,7 @@ const Form = ({ form, setObj, obj }: FormProps) => {
                     </div>
                     {doc && <TrashIcon className='w-5' onClick={() => setDoc(null)} />}
                 </div>
-                <button type='submit' className={`${(!obj.location || !obj.dateFrom || !obj.school || !obj.title) ? '' : 'activeFormButton'}`}>Save</button>
+                <button type='submit' className={`${(!obj.location || !obj.dateFrom || !obj.school || !obj.title) ? '' : 'activeFormButton'}`}>{obj.id ? 'Update' : 'Save'}</button>
             </div>
         </form>
     )

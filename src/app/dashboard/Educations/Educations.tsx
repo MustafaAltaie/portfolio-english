@@ -1,36 +1,23 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import '../../components/Educations/Educations.css';
 import { AcademicCapIcon } from '@heroicons/react/24/solid';
 import { EducationType } from '../../../../types/Educations';
 import Education from './Education';
 import Form from './Form';
+import {
+    useCreateEducationMutation,
+    useUploadEducationDocMutation,
+    useUploadEducationLogoMutation,
+    useReadEducationsQuery,
+    useUpdateEducationMutation,
+    useChangeEducationDocMutation,
+    useChangeEducationLogoMutation,
+} from '../../../../features/educations/educationApi';
 
 const Educations = () => {
-    const [educationObj] = useState<EducationType[]>([
-        {
-            id: '1',
-            location: 'Sweden - Linkoping',
-            dateFrom: '2023',
-            dateTo: '2025',
-            school: 'Chas-Academy',
-            title: 'Two-year vocational program in Fullstack JavaScript Development',
-            description: 'I completed a two-year full-time vocational program in Fullstack JavaScript Development at Chas Academy (remote). The program was conducted in both Swedish and English.',
-            logoLink: '/images/chas.png',
-            docLink: '',
-        },
-        {
-            id: '2',
-            location: 'Iraq - Baghdad',
-            dateFrom: '2011',
-            dateTo: '2015',
-            school: 'Alrafidain University',
-            title: "Bachalor's Degree in computer techniques engineering.",
-            description: "I studied for four years at the Faculty of Computer Engineering. The degree has been validated and recognized in Sweden by the Swedish Council for Higher Education (UHR), and is equivalent to a Bachelor's degree in Computer Engineering.",
-            logoLink: '/images/rafidain.png',
-            docLink: '',
-        },
-    ]);
+    const [educationList, setEducationList] = useState<EducationType[]>([]);
     const [form, setForm] = useState(false);
     const [obj, setObj] = useState<EducationType>({
         id: '',
@@ -43,9 +30,93 @@ const Educations = () => {
         logoLink: '',
         docLink: '',
     });
+    const [logo, setLogo] = useState<File | null>(null);
+    const [doc, setDoc] = useState<File | null>(null);
+    const [createEducation] = useCreateEducationMutation();
+    const [uploadEducationDoc] = useUploadEducationDocMutation();
+    const [uploadEducationLogo] = useUploadEducationLogoMutation();
+    const { data, isLoading, isError } = useReadEducationsQuery();
+    const [updateEducation] = useUpdateEducationMutation();
+    const [changeEducationDoc] = useChangeEducationDocMutation();
+    const [changeEducationLogo] = useChangeEducationLogoMutation();
+    const [oldDoc, setOldDoc] = useState<string | undefined>('');
+    const [oldLogo, setOldLogo] = useState<string | undefined>('');
 
-    const prepareObj = (edu: EducationType) => {
-        setObj(edu);
+    useEffect(() => {
+        if(!isLoading && data) {
+            console.log(data)
+            const transformed: EducationType[] = data.map(edu => ({
+                id: edu._id,
+                location: edu.location,
+                dateFrom: edu.dateFrom,
+                dateTo: edu.dateTo,
+                school: edu.school,
+                title: edu.title,
+                description: edu.description, 
+                logoLink: edu.logoLink,
+                docLink: edu.docLink,
+            }));
+            setEducationList(transformed);
+        }
+    }, [isLoading, data]);
+
+    if (isLoading) return <p>...Loading</p>
+    if (isError) return <p>Error loading educations</p>
+
+    const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        let docLink = doc?.name || obj.docLink;
+        let logoLink = logo?.name || obj.logoLink;
+        try {
+            if (doc) {
+                const ext = doc.name.includes('.') ?
+                    doc.name.substring(doc.name.lastIndexOf('.')) :
+                    '.png';
+                const newName = `${uuidv4()}${ext}`;
+                const renamedFile = new File([doc], newName, { type: doc.type });
+                const formData = new FormData();
+                docLink = newName;
+                formData.append('image', renamedFile);
+                if (obj.id && obj.docLink) {
+                    await changeEducationDoc({ formData, oldImage: oldDoc }).unwrap();
+                } else {
+                    await uploadEducationDoc(formData).unwrap();
+                }
+                console.log(`new doc: ${newName}`)
+                console.log(`old doc: ${oldDoc}`)
+            }
+            if (logo) {
+                const ext = logo.name.includes('.') ?
+                    logo.name.substring(logo.name.lastIndexOf('.')) :
+                    '.png';
+                const newName = `${uuidv4()}${ext}`;
+                const renamedFile = new File([logo], newName, { type: logo.type });
+                const formData = new FormData();
+                logoLink = newName;
+                formData.append('image', renamedFile);
+                if (obj.id && obj.logoLink) {
+                    await changeEducationLogo({ formData, oldImage: oldLogo }).unwrap();
+                } else {
+                    await uploadEducationLogo(formData).unwrap();
+                }
+                console.log(`new logo: ${newName}`)
+                console.log(`old logo: ${oldLogo}`)
+            }
+            const newEdu:EducationType = {
+                ...obj,
+                logoLink,
+                docLink,
+            }
+            if (obj.id) {
+                await updateEducation({ id: obj.id, data: newEdu }).unwrap();
+            } else {
+                await createEducation(newEdu).unwrap();
+            }
+            setForm(false);
+        } catch (err) {
+            console.log(err);
+            alert('Error saving education');
+        }
     }
 
     return (
@@ -55,16 +126,27 @@ const Educations = () => {
                 <h1 className='text-2xl text-yellow-600'>Educations</h1>
             </div>
             <div className='educationWrapper flex flex-col lg:flex-row lg:flex-wrap'>
-                {educationObj.map(education =>
+                {educationList.map(education =>
                 <Education
                     key={education.id}
                     education={education}
                     setForm={setForm}
-                    prepareObj={prepareObj}
+                    setObj={setObj}
+                    setOldDoc={setOldDoc}
+                    setOldLogo={setOldLogo}
                 />)}
             </div>
             <h1 className={`transition-all w-5 h-5 flexCenter pb-2 mx-auto text-4xl ${form ? 'rotate-45' : ''}`} onClick={() => setForm(!form)}>+</h1>
-            <Form form={form} setObj={setObj} obj={obj} />
+            <Form
+                form={form}
+                setObj={setObj}
+                obj={obj}
+                handleSave={handleSave}
+                logo={logo}
+                setLogo={setLogo}
+                doc={doc}
+                setDoc={setDoc}
+            />
         </section>
     )
 }

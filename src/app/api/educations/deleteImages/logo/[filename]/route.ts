@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import cloudinary from '../../../../../../lib/cloudinary';
+import cloudinary from '../../../../../../../lib/cloudinary';
 
 interface Props {
   params: Promise<{ filename: string }>;
@@ -11,7 +11,7 @@ export async function DELETE(
 ) {
   try {
     const { filename } = await props.params;
-    const publicId = `section2-images/${filename.split('.')[0]}`;
+    const publicId = `portfolio/educations/logo/${filename.split('.')[0]}`;
 
     const { result } = await cloudinary.uploader.destroy(publicId, {
       resource_type: 'image',

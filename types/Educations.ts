@@ -1,5 +1,6 @@
 export interface EducationType {
     id?: string
+    _id?: string
     location: string
     dateFrom: string
     dateTo?: string

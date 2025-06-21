@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import cloudinary from '../../../../../lib/cloudinary';
+import cloudinary from '../../../../../../lib/cloudinary';
 
 export async function POST(req: NextRequest) {
   const formData = await req.formData();
@@ -15,23 +15,23 @@ export async function POST(req: NextRequest) {
 
   try {
     const result = await new Promise((resolve, reject) => {
-    const stream = cloudinary.uploader.upload_stream(
-      {
-        folder: 'section2-images',
-        public_id: file.name.split('.').slice(0, -1).join(''),
-        resource_type: 'image',
-      },
-      (error, result) => {
-        if (error) {
-          console.error('❌ Cloudinary error:', error);
-          return reject(error);
+      const stream = cloudinary.uploader.upload_stream(
+        {
+          folder: 'portfolio/educations/doc',
+          public_id: file.name.split('.').slice(0, -1).join(''),
+          resource_type: 'image',
+        },
+        (error, result) => {
+          if (error) {
+            console.error('❌ Cloudinary error:', error);
+            return reject(error);
+          }
+          resolve(result);
         }
-        resolve(result);
-      }
-    );
+      );
 
-    stream.end(buffer);
-  });
+      stream.end(buffer);
+    });
 
     console.log('✅ Upload success:', result);
     return NextResponse.json({ success: true, data: result });
@@ -48,7 +48,7 @@ type CloudinaryResource = {
 export async function GET() {
   try {
     const result = await cloudinary.search
-      .expression('folder:section2-images AND resource_type:image')
+      .expression('folder:portfolio/educations/doc AND resource_type:image')
       .sort_by('public_id', 'desc')
       .max_results(30)
       .execute();

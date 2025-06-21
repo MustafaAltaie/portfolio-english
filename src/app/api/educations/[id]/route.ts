@@ -1,4 +1,4 @@
-import User from '../../../../../lib/models/ProfileModel';
+import Education from '../../../../../lib/models/EducationModel';
 import dbConnect from '../../../../../lib/mongodb';
 import { NextRequest } from 'next/server';
 
@@ -11,7 +11,7 @@ export async function PATCH(
   const data = await req.json();
 
   try {
-    const updated = await User.findByIdAndUpdate(id, data, { new: true });
+    const updated = await Education.findByIdAndUpdate(id, data, { new: true });
     if (!updated) return new Response(JSON.stringify({ message: 'Not Found' }), { status: 404 });
     return new Response(JSON.stringify(updated), { status: 200 });
   } catch (error) {
@@ -28,7 +28,7 @@ export async function DELETE(
   const { id } = await params;
 
   try {
-    const deletedItem = await User.findByIdAndDelete(id);
+    const deletedItem = await Education.findByIdAndDelete(id);
     if (!deletedItem) {
       return new Response(JSON.stringify({ message: 'Not Found' }), { status: 404 });
     }

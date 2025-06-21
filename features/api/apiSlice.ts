@@ -7,6 +7,11 @@ export const api = createApi({
   }),
   tagTypes: [
     'profile',
+    'educations',
+    'experiences',
+    'skills',
+    'social',
+    'documents',
   ],
   endpoints: () => ({}),
 });
