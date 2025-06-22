@@ -46,7 +46,7 @@ const Form = ({ obj, setObj, handleSave, formRef, prepareObj, busy }: FormProps)
     }
 
     return (
-        <form ref={formRef} onSubmit={handleSave}>
+        <form ref={formRef} onSubmit={handleSave} className='h-0'>
             <div className="formInnerDiv">
                 <label>
                     Title

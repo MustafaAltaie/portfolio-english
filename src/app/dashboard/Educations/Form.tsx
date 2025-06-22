@@ -41,11 +41,7 @@ const Form = ({ form, setObj, obj, handleSave, logo, setLogo, doc, setDoc, busy 
 
         if (form) {
             currentForm.style.height = `${currentForm.scrollHeight}px`;
-            const timeout = setTimeout(() => {
-                currentForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }, 200);
-
-            return () => clearTimeout(timeout);
+            currentForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
         } else {
             currentForm.style.height = '0px';
             clearObj();
@@ -60,7 +56,7 @@ const Form = ({ form, setObj, obj, handleSave, logo, setLogo, doc, setDoc, busy 
     }
 
     return (
-        <form ref={formRef} onSubmit={handleSave}>
+        <form ref={formRef} onSubmit={handleSave} className='h-0'>
             <div className="formInnerDiv">
                 <label>
                     School name
