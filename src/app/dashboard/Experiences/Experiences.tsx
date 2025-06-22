@@ -48,10 +48,7 @@ const Experiences = () => {
         if (!currentForm) return;
         if (form) {
             currentForm.style.height = `${currentForm.scrollHeight}px`;
-            const timeout = setTimeout(() => {
-                currentForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }, 300);
-            return () => clearTimeout(timeout);
+            currentForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
         } else {
             setObj({
                 id: '',

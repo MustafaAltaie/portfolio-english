@@ -72,6 +72,7 @@ body.lightMode,
 }
 form {
     overflow: hidden;
+    height: 0;
     transition: 0.5s;
 }
 .darkMode form {
