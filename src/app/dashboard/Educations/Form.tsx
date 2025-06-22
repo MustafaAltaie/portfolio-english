@@ -50,7 +50,7 @@ const Form = ({ form, setObj, obj, handleSave, logo, setLogo, doc, setDoc, busy 
             currentForm.style.height = '0px';
             clearObj();
         }
-    }, [form, formRef, setObj]);
+    }, [form, formRef, setObj, setLogo, setDoc]);
 
     const prepareObject = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;

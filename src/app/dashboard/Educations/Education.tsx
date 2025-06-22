@@ -22,8 +22,8 @@ const Education = ({ education, setForm, setObj, setOldDoc, setOldLogo, setBusy 
         try {
             setBusy(true);
             await deleteEducation(id).unwrap();
-            education.docLink && await deleteEducationDoc(education.docLink).unwrap();
-            education.logoLink && await deleteEducationLogo(education.logoLink).unwrap();
+            if (education.docLink) await deleteEducationDoc(education.docLink).unwrap();
+            if (education.logoLink) await deleteEducationLogo(education.logoLink).unwrap();
         } catch (err) {
             console.error(err);
             alert('Error deleting education');
