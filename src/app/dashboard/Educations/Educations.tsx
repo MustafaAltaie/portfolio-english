@@ -15,6 +15,7 @@ import {
     useChangeEducationDocMutation,
     useChangeEducationLogoMutation,
 } from '../../../../features/educations/educationApi';
+import WaitingModal from '../WaitingModal';
 
 const Educations = () => {
     const [educationList, setEducationList] = useState<EducationType[]>([]);
@@ -41,6 +42,7 @@ const Educations = () => {
     const [changeEducationLogo] = useChangeEducationLogoMutation();
     const [oldDoc, setOldDoc] = useState<string | undefined>('');
     const [oldLogo, setOldLogo] = useState<string | undefined>('');
+    const [busy, setBusy] = useState(false);
 
     useEffect(() => {
         if(!isLoading && data) {
@@ -68,6 +70,7 @@ const Educations = () => {
         let docLink = doc?.name || obj.docLink;
         let logoLink = logo?.name || obj.logoLink;
         try {
+            setBusy(true);
             if (doc) {
                 const ext = doc.name.includes('.') ?
                     doc.name.substring(doc.name.lastIndexOf('.')) :
@@ -116,11 +119,14 @@ const Educations = () => {
         } catch (err) {
             console.log(err);
             alert('Error saving education');
+        } finally {
+            setBusy(false);
         }
     }
 
     return (
         <section className='educations p-7 flex flex-col gap-5 border-b-thin bg-url-fixed pb-10'>
+            {busy && <WaitingModal />}
             <div className='flex items-center gap-2'>
                 <AcademicCapIcon className='w-7 text-yellow-600' />
                 <h1 className='text-2xl text-yellow-600'>Educations</h1>
@@ -134,6 +140,7 @@ const Educations = () => {
                     setObj={setObj}
                     setOldDoc={setOldDoc}
                     setOldLogo={setOldLogo}
+                    setBusy={setBusy}
                 />)}
             </div>
             <h1 className={`transition-all w-5 h-5 flexCenter pb-2 mx-auto text-4xl ${form ? 'rotate-45' : ''}`} onClick={() => setForm(!form)}>+</h1>
@@ -146,6 +153,7 @@ const Educations = () => {
                 setLogo={setLogo}
                 doc={doc}
                 setDoc={setDoc}
+                busy={busy}
             />
         </section>
     )

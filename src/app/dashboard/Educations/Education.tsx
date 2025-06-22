@@ -10,21 +10,25 @@ interface EducationProps {
     setObj: React.Dispatch<React.SetStateAction<EducationType>>
     setOldDoc: React.Dispatch<React.SetStateAction<string | undefined>>
     setOldLogo: React.Dispatch<React.SetStateAction<string | undefined>>
+    setBusy: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const Education = ({ education, setForm, setObj, setOldDoc, setOldLogo }: EducationProps) => {
+const Education = ({ education, setForm, setObj, setOldDoc, setOldLogo, setBusy }: EducationProps) => {
     const [deleteEducation] = useDeleteEducationMutation();
     const [deleteEducationDoc] = useDeleteEducationDocMutation();
     const [deleteEducationLogo] = useDeleteEducationLogoMutation();
 
     const handleDelete = async (id: string) => {
         try {
+            setBusy(true);
             await deleteEducation(id).unwrap();
             education.docLink && await deleteEducationDoc(education.docLink).unwrap();
             education.logoLink && await deleteEducationLogo(education.logoLink).unwrap();
         } catch (err) {
             console.error(err);
             alert('Error deleting education');
+        } finally {
+            setBusy(false);
         }
     }
 

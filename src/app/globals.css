@@ -170,6 +170,67 @@ form input[type='file'] {
     gap: 5px;
 }
 
+.centeredElement {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.loadingModal {
+    z-index: 1000;
+    position: fixed;
+    width: 300px;
+    height: 200px;
+    backdrop-filter: blur(10px);
+    border-radius: 40px;
+    flex-direction: column;
+    overflow: hidden;
+}
+.loadingModal > h1 {
+    font-weight: bold;
+}
+
+.loadingModalLight1,
+.loadingModalLight2 {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    filter: blur(50px);
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+.loadingModalLight1 {
+    background: #07f;
+    animation: moveLight1 ease-in-out infinite 5s;
+}
+.loadingModalLight2 {
+    background: #f0a;
+    animation: moveLight2 ease-in-out infinite 5s;
+}
+
+
+@keyframes moveLight1 {
+    0% {
+        left: -20%;
+    } 50% {
+        left: 80%;
+    } 100% {
+        left: -20%;
+    }
+}
+
+@keyframes moveLight2 {
+    0% {
+        left: 80%;
+    } 50% {
+        left: -20%;
+    } 100% {
+        left: 80%;
+    }
+}
+
 @media (min-width: 1024px) {
     .bg-url-fixed {
         background-size: 30% 60%;

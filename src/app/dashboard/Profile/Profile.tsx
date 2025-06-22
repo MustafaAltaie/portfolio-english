@@ -5,12 +5,14 @@ import '../../components/Profile/Profile.css';
 import { UserCircleIcon, PencilIcon } from '@heroicons/react/24/solid';
 import Form from './Form';
 import { useCreateProfileMutation, useReadProfileQuery } from '../../../../features/profile/profileApi';
+import WaitingModal from '../WaitingModal';
 
 const Section1 = () => {
     const [form, setForm] = useState(false);
     const [text, setText] = useState<string>('');
     const [createProfile] = useCreateProfileMutation();
     const { data: profile, isLoading } = useReadProfileQuery();
+    const [busy, setBusy] = useState(false);
 
     useEffect(() => {
         if (!isLoading && profile) {
@@ -18,21 +20,24 @@ const Section1 = () => {
         }
     }, [profile, isLoading]);
 
-    if (isLoading) return <p>...loading</p>;
-
     const handleSaveProfile = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
+            setBusy(true);
             await createProfile(text).unwrap();
             setForm(false);
         } catch (err) {
             console.error(err);
             alert('Error saving profile');
+        } finally {
+            setBusy(false);
         }
     }
 
     return (
         <section className='section1 overflow-x-hidden flex flex-col lg:flex-row pt-10'>
+            {isLoading && <WaitingModal />}
+            {busy && <WaitingModal />}
             <div className="mainImageWrapper flex items-end justify-center overflow-hidden lg:w-1/2">
                 <Image
                     className='lg:object-cover'

@@ -13,9 +13,10 @@ interface FormProps {
     setLogo: React.Dispatch<React.SetStateAction<File | null>>
     doc: File | null
     setDoc: React.Dispatch<React.SetStateAction<File | null>>
+    busy: boolean
 }
 
-const Form = ({ form, setObj, obj, handleSave, logo, setLogo, doc, setDoc }: FormProps) => {
+const Form = ({ form, setObj, obj, handleSave, logo, setLogo, doc, setDoc, busy }: FormProps) => {
     const formRef = useRef<HTMLFormElement>(null);
 
     useEffect(() => {
@@ -140,7 +141,12 @@ const Form = ({ form, setObj, obj, handleSave, logo, setLogo, doc, setDoc }: For
                     </div>
                     {doc && <TrashIcon className='w-5' onClick={() => setDoc(null)} />}
                 </div>
-                <button type='submit' className={`${(!obj.location || !obj.dateFrom || !obj.school || !obj.title) ? '' : 'activeFormButton'}`}>{obj.id ? 'Update' : 'Save'}</button>
+                <button
+                    type='submit'
+                    className={`${(!obj.location || !obj.dateFrom || !obj.school || !obj.title) ? '' : 'activeFormButton'}`}
+                    style={{ background: busy ? '#888' : '' }}
+                    disabled={busy}
+                >{obj.id ? 'Update' : 'Save'}</button>
             </div>
         </form>
     )
