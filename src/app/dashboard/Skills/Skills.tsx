@@ -6,8 +6,6 @@ import Backend from './Backend/Backend';
 import Other from './Other/Other';
 
 const Skills = () => {
-    
-
     return (
         <section className='skills py-7 px-3 pb-10 bg-url-fixed'>
             <div className='flex gap-2 mb-3 pb-3'>

@@ -1,47 +1,27 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FSkill } from '../../../../../types/Skills';
-import Skill from '../Skill';
+import Skill from './Skill';
+import { useReadOtherSkillsQuery } from '../../../../../features/skills/skillsApi';
 
 const Other = () => {
-    const [other] = useState<FSkill[]>([
-        {
-            id: '1',
-            imageLink: '/images/tech-icons/cicd.png',
-            title: 'CI/CD',
-            level: 60,
-        },
-        {
-            id: '2',
-            imageLink: '/images/tech-icons/github.png',
-            title: 'Github',
-            level: 70,
-        },
-        {
-            id: '3',
-            imageLink: '/images/tech-icons/postman.png',
-            title: 'Postman',
-            level: 80,
-        },
-        {
-            id: '4',
-            imageLink: '/images/tech-icons/language.png',
-            title: 'Arabic',
-            level: 95,
-        },
-        {
-            id: '5',
-            imageLink: '/images/tech-icons/language.png',
-            title: 'English',
-            level: 90,
-        },
-        {
-            id: '6',
-            imageLink: '/images/tech-icons/language.png',
-            title: 'Swedish',
-            level: 85,
+    const [other, setOther] = useState<FSkill[]>([]);
+    const { data, isLoading, isError } = useReadOtherSkillsQuery();
+
+    useEffect(() => {
+        if (data && !isLoading) {
+            const transformed: FSkill[] = data.map(skill => ({
+                id: skill._id,
+                imageLink: skill.imageLink,
+                title: skill.title,
+                level: skill.level,
+            }));
+            setOther(transformed);
         }
-    ]);
+    }, [data, isLoading]);
+
+    if (isLoading) return <p>...Loading skills</p>
+    if (isError) return <p>Error loading skills</p>
 
     return (
         <div className='mt-5'>

@@ -11,9 +11,10 @@ interface FormProps {
     fileImage: File | null
     setFileImage: React.Dispatch<React.SetStateAction<File | null>>
     clearSkillObj: () => void
+    handleSave: (e: React.FormEvent<HTMLFormElement>) => void
 }
 
-const Form = ({ form, setForm, skillObj, setSkillObj, fileImage, setFileImage, clearSkillObj }: FormProps) => {
+const Form = ({ form, setForm, skillObj, setSkillObj, fileImage, setFileImage, clearSkillObj, handleSave }: FormProps) => {
     const formRef = useRef<HTMLFormElement | null>(null);
 
     useEffect(() => {
@@ -21,17 +22,11 @@ const Form = ({ form, setForm, skillObj, setSkillObj, fileImage, setFileImage, c
         if (!currentForm) return;
         if (form) {
             currentForm.style.height = `${currentForm.scrollHeight}px`;
-            setTimeout(() => {
-                currentForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }, 100);
+            currentForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
         } else {
             currentForm.style.height = '0px';
         }
     }, [form, formRef]);
-
-    const handleSave = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-    }
 
     return (
         <form ref={formRef} onSubmit={handleSave}>
@@ -73,8 +68,8 @@ const Form = ({ form, setForm, skillObj, setSkillObj, fileImage, setFileImage, c
                             src={
                                 fileImage ?
                                 URL.createObjectURL(fileImage) :
-                                skillObj.id && skillObj.imageLink?.startsWith('/') ?
-                                skillObj.imageLink :
+                                skillObj.id && skillObj.imageLink?.startsWith('/') || skillObj.imageLink?.startsWith('http') ?
+                                `https://res.cloudinary.com/dswmp2omq/image/upload/v1750622928/portfolio/skills/${skillObj.imageLink}` :
                                 "/images/image-icon.png"}
                             alt="image-icon"
                             width={30}

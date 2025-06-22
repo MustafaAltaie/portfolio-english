@@ -1,49 +1,20 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FSkill } from '../../../../../types/Skills';
-import Skill from '../Skill';
+import Skill from './Skill';
 import Form from '../Form';
+import { v4 as uuidv4 } from 'uuid';
 import SkillTemplate from '../SkillTemplate';
+import {
+    useCreateOtherSkillMutation,
+    useReadOtherSkillsQuery,
+    // useUpdateOtherSkillMutation,
+    useUploadOtherSkillIconMutation,
+    // useChangeOtherSkillIconMutation,
+} from '../../../../../features/skills/skillsApi';
 
 const Other = () => {
-    const [other] = useState<FSkill[]>([
-        {
-            id: '1',
-            imageLink: '/images/tech-icons/cicd.png',
-            title: 'CI/CD',
-            level: 60,
-        },
-        {
-            id: '2',
-            imageLink: '/images/tech-icons/github.png',
-            title: 'Github',
-            level: 70,
-        },
-        {
-            id: '3',
-            imageLink: '/images/tech-icons/postman.png',
-            title: 'Postman',
-            level: 80,
-        },
-        {
-            id: '4',
-            imageLink: '/images/tech-icons/language.png',
-            title: 'Arabic',
-            level: 95,
-        },
-        {
-            id: '5',
-            imageLink: '/images/tech-icons/language.png',
-            title: 'English',
-            level: 90,
-        },
-        {
-            id: '6',
-            imageLink: '/images/tech-icons/language.png',
-            title: 'Swedish',
-            level: 85,
-        }
-    ]);
+    const [other, setOther] = useState<FSkill[]>([]);
     const [form, setForm] = useState(false);
     const [skillObj, setSkillObj] = useState<FSkill>({
         id: '',
@@ -52,6 +23,61 @@ const Other = () => {
         level: '',
     });
     const [fileImage, setFileImage] = useState<File | null>(null);
+    const [createOtherSkill] = useCreateOtherSkillMutation();
+    const { data, isLoading, isError } = useReadOtherSkillsQuery();
+    const [uploadOtherSkillIcon] = useUploadOtherSkillIconMutation();
+    // const [updateOtherSkill] = useUpdateOtherSkillMutation();
+    // const [changeOtherSkillIcon] = useChangeOtherSkillIconMutation();
+
+    useEffect(() => {
+        if (data && !isLoading) {
+            const transformed: FSkill[] = data.map(skill => ({
+                id: skill._id,
+                imageLink: skill.imageLink,
+                title: skill.title,
+                level: skill.level,
+            }));
+            setOther(transformed);
+        }
+    }, [data, isLoading]);
+
+    if (isLoading) return <p>...Loading skills</p>
+    if (isError) return <p>Error loading skills</p>
+
+    const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        let imageLink = fileImage?.name || skillObj.imageLink;
+        try {
+            if (fileImage) {
+                const ext = fileImage.name.includes('.') ?
+                    fileImage.name.lastIndexOf('.') :
+                    '.png';
+                const newName = `${uuidv4()}${ext}`;
+                const renamedFile = new File([fileImage], newName, { type: fileImage.type });
+                const formData = new FormData();
+                formData.append('image', renamedFile);
+                imageLink = newName;
+                if (skillObj.id) {
+                    //await changeOtherSkillIcon({ formData, oldImage: skillObj.imageLink }).unwrap();
+                } else {
+                    await uploadOtherSkillIcon(formData).unwrap();
+                }
+            }
+            const newItem: FSkill = {
+                ...skillObj,
+                imageLink
+            }
+            if (skillObj.id) {
+                //await updateOtherSkill({ id: skillObj.id, data: newItem }).unwrap();
+            } else {
+                await createOtherSkill(newItem).unwrap();
+            }
+            clearSkillObj();
+        } catch (err) {
+            console.error(err);
+            alert('Error saving skill');
+        }
+    }
 
     const clearSkillObj = () => {
         setSkillObj({
@@ -90,6 +116,7 @@ const Other = () => {
                 fileImage={fileImage}
                 setFileImage={setFileImage}
                 clearSkillObj={clearSkillObj}
+                handleSave={handleSave}
             />
         </div>
     )

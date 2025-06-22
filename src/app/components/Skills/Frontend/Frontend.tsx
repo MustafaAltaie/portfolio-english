@@ -1,65 +1,27 @@
-'use cLient';
-import React, { useState } from 'react';
+'use client';
+import React, { useEffect, useState } from 'react';
 import { FSkill } from '../../../../../types/Skills';
-import Skill from '../Skill';
+import Skill from './Skill';
+import { useReadFrontendSkillsQuery } from '../../../../../features/skills/skillsApi';
 
 const Frontend = () => {
-    const [frontend] = useState<FSkill[]>([
-        {
-            id: '1',
-            imageLink: '/images/tech-icons/html.png',
-            title: 'HTML5',
-            level: 90,
-        },
-        {
-            id: '2',
-            imageLink: '/images/tech-icons/css.png',
-            title: 'CSS3',
-            level: 85,
-        },
-        {
-            id: '3',
-            imageLink: '/images/tech-icons/js.png',
-            title: 'JavaScript',
-            level: 80,
-        },
-        {
-            id: '4',
-            imageLink: '/images/tech-icons/ts.png',
-            title: 'TypeScript',
-            level: 80,
-        },
-        {
-            id: '5',
-            imageLink: '/images/tech-icons/next.png',
-            title: 'Next.js',
-            level: 70,
-        },
-        {
-            id: '6',
-            imageLink: '/images/tech-icons/react.png',
-            title: 'React.js',
-            level: 70,
-        },
-        {
-            id: '7',
-            imageLink: '/images/tech-icons/redux.png',
-            title: 'Redux',
-            level: 80,
-        },
-        {
-            id: '8',
-            imageLink: '/images/tech-icons/vue.png',
-            title: 'Vue.js',
-            level: 50,
-        },
-        {
-            id: '9',
-            imageLink: '/images/tech-icons/tailwind.png',
-            title: 'Tailwind',
-            level: 80,
-        },
-    ]);
+    const [frontend, setFrontend] = useState<FSkill[]>([]);
+    const { data, isLoading, isError } = useReadFrontendSkillsQuery();
+        
+    useEffect(() => {
+        if (data && !isLoading) {
+            const transformed: FSkill[] = data.map(skill => ({
+                id: skill._id,
+                imageLink: skill.imageLink,
+                title: skill.title,
+                level: skill.level,
+            }));
+            setFrontend(transformed);
+        }
+    }, [data, isLoading]);
+
+    if (isLoading) return <p>...Loading skills</p>
+    if (isError) return <p>Error loading skills</p>
 
     return (
         <div>

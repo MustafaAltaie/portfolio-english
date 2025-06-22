@@ -47,16 +47,6 @@
 .lightMode .skillLevel > div {
     background: #07a;
 }
-.darkMode .skillCardTemp {
-    background-color: #000;
-    border: dashed 0.7px;
-    border-left: solid 5px #555;
-}
-.lightMode .skillCardTemp {
-    background-color: #fff;
-    border: dashed 0.7px;
-    border-left: solid 5px #aaa;
-}
 
 
 /* Settings */
@@ -65,6 +55,16 @@
 }
 .lightMode .skillSettingsWrapper > div {
     background: #eeeeeedd;
+}
+.darkMode .skillCardTemp {
+    background-color: #111;
+    border: dashed 0.7px;
+    border-left: solid 5px #555;
+}
+.lightMode .skillCardTemp {
+    background-color: #eee;
+    border: dashed 0.7px;
+    border-left: solid 5px #aaa;
 }
 
 @media (min-width: 1024px) {

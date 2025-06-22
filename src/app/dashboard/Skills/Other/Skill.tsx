@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { FSkill } from '../../../../types/Skills';
+import { FSkill } from '../../../../../types/Skills';
 import { PencilIcon, TrashIcon, EllipsisHorizontalIcon } from '@heroicons/react/24/outline';
 
 interface SkillProps {
@@ -27,7 +27,7 @@ const Skill = React.memo(({ skill, setForm, setSkillObj }: SkillProps) => {
 
     return (
         <div ref={wrapperRef} className='skillCard p-3 flex flex-col gap-2 rounded-sm relative' onClick={() => setSetting(!setting)}>
-            {!setting && <EllipsisHorizontalIcon className='w-5 absolute top-0 right-0' />}
+            {!setting && <EllipsisHorizontalIcon className='w-5 absolute top-0 right-0 pointer-events-none' />}
             {setting &&
             <div className='skillSettingsWrapper flex gap-0.5 absolute w-full h-full top-0 left-0'>
                 <div className='w-1/2 flexCenter' onClick={() => {setForm(true); setSkillObj(skill)}}>
@@ -40,7 +40,7 @@ const Skill = React.memo(({ skill, setForm, setSkillObj }: SkillProps) => {
             <div className='flex gap-1 items-center'>
                 {skill.imageLink &&
                 <Image
-                    src={skill.imageLink}
+                    src={`https://res.cloudinary.com/dswmp2omq/image/upload/v1750622928/portfolio/skills/other/${skill.imageLink}`}
                     alt='Image'
                     width={20}
                     height={20}

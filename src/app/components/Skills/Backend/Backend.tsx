@@ -1,41 +1,27 @@
 'use client';
-import React, { useState } from 'react';
-import Skill from '../Skill';
+import React, { useEffect, useState } from 'react';
+import Skill from './Skill';
 import { FSkill } from '../../../../../types/Skills';
+import { useReadBackendSkillsQuery } from '../../../../../features/skills/skillsApi';
 
 const Backend = () => {
-    const [backend] = useState<FSkill[]>([
-        {
-            id: '1',
-            imageLink: '/images/tech-icons/node.png',
-            title: 'Node.js',
-            level: 80,
-        },
-        {
-            id: '2',
-            imageLink: '/images/tech-icons/next.png',
-            title: 'Next.js',
-            level: 70,
-        },
-        {
-            id: '3',
-            imageLink: '/images/tech-icons/mongo.png',
-            title: 'MongoDB',
-            level: 80,
-        },
-        {
-            id: '4',
-            imageLink: '/images/tech-icons/postgres.png',
-            title: 'PostgreSQL',
-            level: 60,
-        },
-        {
-            id: '5',
-            imageLink: '/images/tech-icons/express.png',
-            title: 'Express.js',
-            level: 80,
-        },
-    ]);
+    const [backend, setBackend] = useState<FSkill[]>([]);
+    const { data, isLoading, isError } = useReadBackendSkillsQuery();
+
+    useEffect(() => {
+        if (data && !isLoading) {
+            const transformed: FSkill[] = data.map(skill => ({
+                id: skill._id,
+                imageLink: skill.imageLink,
+                title: skill.title,
+                level: skill.level,
+            }));
+            setBackend(transformed);
+        }
+    }, [data, isLoading]);
+
+    if (isLoading) return <p>...Loading skills</p>
+    if (isError) return <p>Error loading skills</p>
 
     return (
         <div className='mt-5'>

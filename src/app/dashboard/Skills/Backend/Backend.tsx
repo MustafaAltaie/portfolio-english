@@ -1,43 +1,20 @@
 'use client';
-import React, { useState } from 'react';
-import Skill from '../Skill';
+import React, { useEffect, useState } from 'react';
+import Skill from './Skill';
 import { FSkill } from '../../../../../types/Skills';
 import Form from '../Form';
 import SkillTemplate from '../SkillTemplate';
+import {
+    useCreateBackendSkillMutation,
+    useReadBackendSkillsQuery,
+    // useUpdateBackendSkillMutation,
+    useUploadBackendSkillIconMutation,
+    // useChangeBackendSkillIconMutation,
+} from '../../../../../features/skills/skillsApi';
+import { v4 as uuidv4 } from 'uuid';
 
 const Backend = () => {
-    const [backend] = useState<FSkill[]>([
-        {
-            id: '1',
-            imageLink: '/images/tech-icons/node.png',
-            title: 'Node.js',
-            level: 80,
-        },
-        {
-            id: '2',
-            imageLink: '/images/tech-icons/next.png',
-            title: 'Next.js',
-            level: 70,
-        },
-        {
-            id: '3',
-            imageLink: '/images/tech-icons/mongo.png',
-            title: 'MongoDB',
-            level: 80,
-        },
-        {
-            id: '4',
-            imageLink: '/images/tech-icons/postgres.png',
-            title: 'PostgreSQL',
-            level: 60,
-        },
-        {
-            id: '5',
-            imageLink: '/images/tech-icons/express.png',
-            title: 'Express.js',
-            level: 80,
-        },
-    ]);
+    const [backend, setBackend] = useState<FSkill[]>([]);
     const [form, setForm] = useState(false);
     const [skillObj, setSkillObj] = useState<FSkill>({
         id: '',
@@ -46,6 +23,61 @@ const Backend = () => {
         level: '',
     });
     const [fileImage, setFileImage] = useState<File | null>(null);
+    const [createBackendSkill] = useCreateBackendSkillMutation();
+    const { data, isLoading, isError } = useReadBackendSkillsQuery();
+    const [uploadBackendSkillIcon] = useUploadBackendSkillIconMutation();
+    // const [updateBackendSkill] = useUpdateBackendSkillMutation();
+    // const [changeBackendSkillIcon] = useChangeBackendSkillIconMutation();
+
+    useEffect(() => {
+        if (data && !isLoading) {
+            const transformed: FSkill[] = data.map(skill => ({
+                id: skill._id,
+                imageLink: skill.imageLink,
+                title: skill.title,
+                level: skill.level,
+            }));
+            setBackend(transformed);
+        }
+    }, [data, isLoading]);
+
+    if (isLoading) return <p>...Loading skills</p>
+    if (isError) return <p>Error loading skills</p>
+
+    const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        let imageLink = fileImage?.name || skillObj.imageLink;
+        try {
+            if (fileImage) {
+                const ext = fileImage.name.includes('.') ?
+                    fileImage.name.lastIndexOf('.') :
+                    '.png';
+                const newName = `${uuidv4()}${ext}`;
+                const renamedFile = new File([fileImage], newName, { type: fileImage.type });
+                const formData = new FormData();
+                formData.append('image', renamedFile);
+                imageLink = newName;
+                if (skillObj.id) {
+                    //await changeBackendSkillIcon({ formData, oldImage: skillObj.imageLink }).unwrap();
+                } else {
+                    await uploadBackendSkillIcon(formData).unwrap();
+                }
+            }
+            const newItem: FSkill = {
+                ...skillObj,
+                imageLink
+            }
+            if (skillObj.id) {
+                //await updateBackendSkill({ id: skillObj.id, data: newItem }).unwrap();
+            } else {
+                await createBackendSkill(newItem).unwrap();
+            }
+            clearSkillObj();
+        } catch (err) {
+            console.error(err);
+            alert('Error saving skill');
+        }
+    }
 
     const clearSkillObj = () => {
         setSkillObj({
@@ -84,6 +116,7 @@ const Backend = () => {
                 fileImage={fileImage}
                 setFileImage={setFileImage}
                 clearSkillObj={clearSkillObj}
+                handleSave={handleSave}
             />
         </div>
     )

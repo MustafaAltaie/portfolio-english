@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import { FSkill } from '../../../../types/Skills';
+import { FSkill } from '../../../../../types/Skills';
 import { motion } from 'framer-motion';
 
 interface SkillProps {
@@ -13,7 +13,7 @@ const Skill = React.memo(({ skill }: SkillProps) => {
             <div className='flex gap-1 items-center'>
                 {skill.imageLink &&
                 <Image
-                    src={skill.imageLink}
+                    src={`https://res.cloudinary.com/dswmp2omq/image/upload/v1750622928/portfolio/skills/frontend/${skill.imageLink}`}
                     alt='Image'
                     width={20}
                     height={20}

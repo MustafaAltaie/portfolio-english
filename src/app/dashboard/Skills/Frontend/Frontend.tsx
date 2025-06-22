@@ -1,67 +1,20 @@
 'use cLient';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FSkill } from '../../../../../types/Skills';
-import Skill from '../Skill';
+import Skill from './Skill';
 import Form from '../Form';
+import { v4 as uuidv4 } from 'uuid';
 import SkillTemplate from '../SkillTemplate';
+import {
+    useCreateFrontendSkillMutation,
+    useReadFrontendSkillsQuery,
+    // useUpdateFrontendSkillMutation,
+    useUploadFrontendSkillIconMutation,
+    // useChangeFrontendSkillIconMutation,
+} from '../../../../../features/skills/skillsApi';
 
 const Frontend = () => {
-    const [frontend] = useState<FSkill[]>([
-        {
-            id: '1',
-            imageLink: '/images/tech-icons/html.png',
-            title: 'HTML5',
-            level: 90,
-        },
-        {
-            id: '2',
-            imageLink: '/images/tech-icons/css.png',
-            title: 'CSS3',
-            level: 85,
-        },
-        {
-            id: '3',
-            imageLink: '/images/tech-icons/js.png',
-            title: 'JavaScript',
-            level: 80,
-        },
-        {
-            id: '4',
-            imageLink: '/images/tech-icons/ts.png',
-            title: 'TypeScript',
-            level: 80,
-        },
-        {
-            id: '5',
-            imageLink: '/images/tech-icons/next.png',
-            title: 'Next.js',
-            level: 70,
-        },
-        {
-            id: '6',
-            imageLink: '/images/tech-icons/react.png',
-            title: 'React.js',
-            level: 70,
-        },
-        {
-            id: '7',
-            imageLink: '/images/tech-icons/redux.png',
-            title: 'Redux',
-            level: 80,
-        },
-        {
-            id: '8',
-            imageLink: '/images/tech-icons/vue.png',
-            title: 'Vue.js',
-            level: 50,
-        },
-        {
-            id: '9',
-            imageLink: '/images/tech-icons/tailwind.png',
-            title: 'Tailwind',
-            level: 80,
-        },
-    ]);
+    const [frontend, setFrontend] = useState<FSkill[]>([]);
     const [form, setForm] = useState(false);
     const [skillObj, setSkillObj] = useState<FSkill>({
         id: '',
@@ -70,6 +23,61 @@ const Frontend = () => {
         level: '',
     });
     const [fileImage, setFileImage] = useState<File | null>(null);
+    const [createFrontendSkill] = useCreateFrontendSkillMutation();
+    const { data, isLoading, isError } = useReadFrontendSkillsQuery();
+    const [uploadFrontendSkillIcon] = useUploadFrontendSkillIconMutation();
+    // const [updateFrontendSkill] = useUpdateFrontendSkillMutation();
+    // const [changeFrontendSkillIcon] = useChangeFrontendSkillIconMutation();
+
+    useEffect(() => {
+        if (data && !isLoading) {
+            const transformed: FSkill[] = data.map(skill => ({
+                id: skill._id,
+                imageLink: skill.imageLink,
+                title: skill.title,
+                level: skill.level,
+            }));
+            setFrontend(transformed);
+        }
+    }, [data, isLoading]);
+
+    if (isLoading) return <p>...Loading skills</p>
+    if (isError) return <p>Error loading skills</p>
+
+    const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        let imageLink = fileImage?.name || skillObj.imageLink;
+        try {
+            if (fileImage) {
+                const ext = fileImage.name.includes('.') ?
+                    fileImage.name.lastIndexOf('.') :
+                    '.png';
+                const newName = `${uuidv4()}${ext}`;
+                const renamedFile = new File([fileImage], newName, { type: fileImage.type });
+                const formData = new FormData();
+                formData.append('image', renamedFile);
+                imageLink = newName;
+                if (skillObj.id) {
+                    //await changeFrontendSkillIcon({ formData, oldImage: skillObj.imageLink }).unwrap();
+                } else {
+                    await uploadFrontendSkillIcon(formData).unwrap();
+                }
+            }
+            const newItem: FSkill = {
+                ...skillObj,
+                imageLink
+            }
+            if (skillObj.id) {
+                //await updateFrontendSkill({ id: skillObj.id, data: newItem }).unwrap();
+            } else {
+                await createFrontendSkill(newItem).unwrap();
+            }
+            clearSkillObj();
+        } catch (err) {
+            console.error(err);
+            alert('Error saving skill');
+        }
+    }
 
     const clearSkillObj = () => {
         setSkillObj({
@@ -108,6 +116,7 @@ const Frontend = () => {
                 fileImage={fileImage}
                 setFileImage={setFileImage}
                 clearSkillObj={clearSkillObj}
+                handleSave={handleSave}
             />
         </div>
     )
