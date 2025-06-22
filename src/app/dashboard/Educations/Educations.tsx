@@ -46,7 +46,6 @@ const Educations = () => {
 
     useEffect(() => {
         if(!isLoading && data) {
-            console.log(data)
             const transformed: EducationType[] = data.map(edu => ({
                 id: edu._id,
                 location: edu.location,

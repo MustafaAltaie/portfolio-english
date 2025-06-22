@@ -1,34 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Educations.css';
 import { AcademicCapIcon } from '@heroicons/react/24/solid';
 import { EducationType } from '../../../../types/Educations';
 import Education from './Education';
+import { useReadEducationsQuery } from '../../../../features/educations/educationApi';
 
 const Educations = () => {
-    const [educationObj] = useState<EducationType[]>([
-        {
-            id: '1',
-            location: 'Sweden - Linkoping',
-            dateFrom: '2023',
-            dateTo: '2025',
-            school: 'Chas-Academy',
-            title: 'Two-year vocational program in Fullstack JavaScript Development',
-            description: 'I completed a two-year full-time vocational program in Fullstack JavaScript Development at Chas Academy (remote). The program was conducted in both Swedish and English.',
-            logoLink: '/images/chas.png',
-            docLink: '',
-        },
-        {
-            id: '2',
-            location: 'Iraq - Baghdad',
-            dateFrom: '2011',
-            dateTo: '2015',
-            school: 'Alrafidain University',
-            title: "Bachalor's Degree in computer techniques engineering.",
-            description: "I studied for four years at the Faculty of Computer Engineering. The degree has been validated and recognized in Sweden by the Swedish Council for Higher Education (UHR), and is equivalent to a Bachelor's degree in Computer Engineering.",
-            logoLink: '/images/rafidain.png',
-            docLink: '',
-        },
-    ]);
+    const [educationList, setEducationList] = useState<EducationType[]>([]);
+    const { data, isLoading, isError } = useReadEducationsQuery();
+
+    useEffect(() => {
+        if(!isLoading && data) {
+            const transformed: EducationType[] = data.map(edu => ({
+                id: edu._id,
+                location: edu.location,
+                dateFrom: edu.dateFrom,
+                dateTo: edu.dateTo,
+                school: edu.school,
+                title: edu.title,
+                description: edu.description, 
+                logoLink: edu.logoLink,
+                docLink: edu.docLink,
+            }));
+            setEducationList(transformed);
+        }
+    }, [isLoading, data]);
+
+    if (isError) return <p>Error loading experiences</p>
+    if (isLoading) return <p>...Loading experiences</p>
 
     return (
         <section className='educations p-7 flex flex-col gap-5 border-b-thin bg-url-fixed pb-10'>
@@ -39,7 +38,7 @@ const Educations = () => {
             {/* Educations */}
             <div className='educationWrapper flex flex-col lg:flex-row lg:flex-wrap'>
                 {/* card */}
-                {educationObj.map(education =>
+                {educationList.map(education =>
                 <Education key={education.id} education={education} />)}
             </div>
         </section>

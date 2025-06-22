@@ -23,8 +23,8 @@ const Education = ({ education }: EducationProps) => {
                 {education.logoLink &&
                 <div>
                     <Image
-                        src={education.logoLink}
-                        alt='Alrafidain'
+                        src={`https://res.cloudinary.com/dswmp2omq/image/upload/v1750506429/portfolio/educations/logo/${education.logoLink}`}
+                        alt='Logo'
                         width={100}
                         height={100}
                         priority
@@ -36,7 +36,8 @@ const Education = ({ education }: EducationProps) => {
                 </div>
             </div>
             <p className='text-sm'>{education.description}</p>
-            <button className='ml-auto flex items-end gap-2 mt-2 text-blue-500'>See the attchment <ArrowLongRightIcon className='w-5' /></button>
+            {education.docLink &&
+            <button className='ml-auto flex items-end gap-2 mt-2 text-blue-500'>See the attchment <ArrowLongRightIcon className='w-5' /></button>}
         </motion.div>
     )
 }

@@ -1,45 +1,15 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import '../../components/Experiences/Experiences.css';
 import { BriefcaseIcon } from '@heroicons/react/24/solid';
 import Experience from './Experience';
-
 import { Exp } from '../../../../types/Experiences';
 import Form from './Form';
+import { useCreateExpMutation, useReadExpsQuery, useUpdateExpMutation } from '../../../../features/experiences/experienceApi';
+import WaitingModal from '../WaitingModal';
 
 const Experiences = () => {
-    const [expObj] = useState<Exp[]>([
-        {
-            id: '1',
-            dateFrom: '2023-10',
-            dateTo: '',
-            title: 'Programming and IT managment',
-            company: 'Karthago-Matchning-AB',
-            location: 'Sweden - Katrineholm, Flen and Vingåker',
-            description: 'At this company, I build personal portfolio websites for job seekers. Each portfolio includes a dashboard that lets users manage content and features. The project is part of a government initiative by the Migration Labor Office to help unemployed people find jobs.',
-            techStack: ['Next.js', 'TypeScript', 'Tailwind', 'MongoDB', 'Express', 'Node.js', 'CSS3', 'HTML5'],
-        },
-        {
-            id: '2',
-            dateFrom: '2020-03',
-            dateTo: '2021-03',
-            title: 'Full stack developer',
-            company: 'Karthago-Matchning-AB',
-            location: 'Sweden - Katrineholm, Flen and Vingåker',
-            description: 'Developed an app for school students to order food from the school cafeteria. The app includes a dashboard, advanced features, and uses Socket for real-time order updates.',
-            techStack: ['Node.js', 'Express', 'MongoDB', 'JavaScript', 'Socket', 'HTML5', 'CSS3'],
-        },
-        {
-            id: '3',
-            dateFrom: '2018',
-            dateTo: '2020',
-            title: 'Freelancer',
-            company: 'Remotely',
-            location: 'Sweden - Katrineholm, Flen and Vingåker',
-            description: 'I worked as a freelance developer, building apps for various companies. I operated as an independent contractor, sometimes being paid hourly and other times receiving payment upon project completion.',
-            techStack: ['Next.js', 'TypeScript', 'Tailwind', 'MongoDB', 'Express', 'React.js', 'Node.js', 'PostgreSQL', 'MySQL', 'JavaScript', 'CI/CD', 'Scrum', 'CSS3', 'HTML5'],
-        },
-    ]);
+    const [experienceList, setExperienceList] = useState<Exp[]>([]);
     const [form, setForm] = useState(false);
     const [obj, setObj] = useState<Exp>({
         id: '',
@@ -51,9 +21,83 @@ const Experiences = () => {
         description: '',
         techStack: [],
     });
+    const formRef = useRef<HTMLFormElement | null>(null);
+    const [createExp] = useCreateExpMutation();
+    const { data, isLoading, isError } = useReadExpsQuery();
+    const [updateExp] = useUpdateExpMutation();
+    const [busy, setBusy] = useState(false);
+
+    useEffect(() => {
+        if (data && !isLoading) {
+            const transformed: Exp[] = data.map(experience => ({
+                id: experience._id,
+                dateFrom: experience.dateFrom,
+                dateTo: experience.dateTo,
+                title: experience.title,
+                company: experience.company,
+                location: experience.location,
+                description: experience.description,
+                techStack: experience.techStack,
+            }));
+            setExperienceList(transformed);
+        }
+    }, [data, isLoading]);
+
+    useEffect(() => {
+        const currentForm = formRef.current;
+        if (!currentForm) return;
+        if (form) {
+            currentForm.style.height = `${currentForm.scrollHeight}px`;
+            const timeout = setTimeout(() => {
+                currentForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 300);
+            return () => clearTimeout(timeout);
+        } else {
+            setObj({
+                id: '',
+                dateFrom: '',
+                dateTo: '',
+                title: '',
+                company: '',
+                location: '',
+                description: '',
+                techStack: []
+            });
+            currentForm.style.height = '0px';
+        }
+    }, [form, formRef, obj.techStack?.length, setObj]);
+
+    if (isError) return <p>Error loading experiences</p>
+    if (isLoading) return <p>...Loading experiences</p>
+
+    const prepareObj = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setObj(prev => ({
+            ...prev, [name]: value
+        }));
+    }
+
+    const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        try {
+            setBusy(true);
+            if (obj.id) {
+                await updateExp({ id: obj.id, data: obj }).unwrap();
+            } else {
+                await createExp(obj).unwrap();
+            }
+            setForm(false);
+        } catch (err) {
+            console.error(err);
+            alert('Error saving experience');
+        } finally {
+            setBusy(false);
+        }
+    }
 
     return (
         <section className='experiences p-7 flex flex-col gap-5 bg-url-fixed pb-10 border-b-thin'>
+            {busy && <WaitingModal />}
             <div className='flex gap-2'>
                 <BriefcaseIcon className='w-7 text-yellow-600' />
                 <h1 className='text-yellow-600 text-2xl'>Experiences</h1>
@@ -61,12 +105,19 @@ const Experiences = () => {
             {/* Experiences wrapper */}
             <div className='expWrapper flex flex-col lg:flex-row lg:flex-wrap'>
                 {/* Card */}
-                {expObj.map((exp: Exp) => 
+                {experienceList.map((exp: Exp) => 
                     <Experience key={exp.id} exp={exp} setForm={setForm} setObj={setObj}  />
                 )}
             </div>
             <h1 className={`transition-all w-5 h-5 flexCenter pb-2 mx-auto text-4xl ${form ? 'rotate-45' : ''}`} onClick={() => setForm(!form)}>+</h1>
-            <Form form={form} obj={obj} setObj={setObj} />
+            <Form
+                obj={obj}
+                setObj={setObj}
+                handleSave={handleSave}
+                formRef={formRef}
+                prepareObj={prepareObj}
+                busy={busy}
+            />
         </section>
     )
 }

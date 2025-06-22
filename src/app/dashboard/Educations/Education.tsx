@@ -45,7 +45,7 @@ const Education = ({ education, setForm, setObj, setOldDoc, setOldLogo, setBusy 
                 <div>
                     <Image
                         src={`https://res.cloudinary.com/dswmp2omq/image/upload/v1750506429/portfolio/educations/logo/${education.logoLink}`}
-                        alt='Alrafidain'
+                        alt='Logo'
                         width={100}
                         height={100}
                         priority
