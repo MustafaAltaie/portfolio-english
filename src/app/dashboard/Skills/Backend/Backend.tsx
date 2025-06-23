@@ -7,11 +7,14 @@ import SkillTemplate from '../SkillTemplate';
 import {
     useCreateBackendSkillMutation,
     useReadBackendSkillsQuery,
-    // useUpdateBackendSkillMutation,
+    useUpdateBackendSkillMutation,
     useUploadBackendSkillIconMutation,
-    // useChangeBackendSkillIconMutation,
+    useChangeBackendSkillIconMutation,
+    useDeleteBackendSkillMutation,
+    useDeleteBackendSkillIconMutation,
 } from '../../../../../features/skills/skillsApi';
 import { v4 as uuidv4 } from 'uuid';
+import WaitingModal from '../../WaitingModal';
 
 const Backend = () => {
     const [backend, setBackend] = useState<FSkill[]>([]);
@@ -26,8 +29,12 @@ const Backend = () => {
     const [createBackendSkill] = useCreateBackendSkillMutation();
     const { data, isLoading, isError } = useReadBackendSkillsQuery();
     const [uploadBackendSkillIcon] = useUploadBackendSkillIconMutation();
-    // const [updateBackendSkill] = useUpdateBackendSkillMutation();
-    // const [changeBackendSkillIcon] = useChangeBackendSkillIconMutation();
+    const [updateBackendSkill] = useUpdateBackendSkillMutation();
+    const [changeBackendSkillIcon] = useChangeBackendSkillIconMutation();
+    const [deleteBackendSkill] = useDeleteBackendSkillMutation();
+    const [deleteBackendSkillIcon] = useDeleteBackendSkillIconMutation();
+    const [oldName, setOldName] = useState<string>('');
+    const [busy, setBusy] = useState(false);
 
     useEffect(() => {
         if (data && !isLoading) {
@@ -48,6 +55,7 @@ const Backend = () => {
         e.preventDefault();
         let imageLink = fileImage?.name || skillObj.imageLink;
         try {
+            setBusy(true);
             if (fileImage) {
                 const ext = fileImage.name.includes('.') ?
                     fileImage.name.lastIndexOf('.') :
@@ -58,7 +66,7 @@ const Backend = () => {
                 formData.append('image', renamedFile);
                 imageLink = newName;
                 if (skillObj.id) {
-                    //await changeBackendSkillIcon({ formData, oldImage: skillObj.imageLink }).unwrap();
+                    await changeBackendSkillIcon({ formData, oldImage: oldName }).unwrap();
                 } else {
                     await uploadBackendSkillIcon(formData).unwrap();
                 }
@@ -68,7 +76,7 @@ const Backend = () => {
                 imageLink
             }
             if (skillObj.id) {
-                //await updateBackendSkill({ id: skillObj.id, data: newItem }).unwrap();
+                await updateBackendSkill({ id: skillObj.id, data: newItem }).unwrap();
             } else {
                 await createBackendSkill(newItem).unwrap();
             }
@@ -76,6 +84,21 @@ const Backend = () => {
         } catch (err) {
             console.error(err);
             alert('Error saving skill');
+        } finally {
+            setBusy(false);
+        }
+    }
+
+    const handleDelete = async (skill: FSkill) => {
+        try {
+            setBusy(true);
+            if (skill.imageLink) await deleteBackendSkillIcon(skill.imageLink).unwrap();
+            await deleteBackendSkill(skill.id!).unwrap();
+        } catch (err) {
+            console.log(err);
+            alert('Error deleting skill');
+        } finally {
+            setBusy(false);
         }
     }
 
@@ -91,6 +114,7 @@ const Backend = () => {
 
     return (
         <div className='mt-5'>
+            {busy && <WaitingModal />}
             <h1 className='text-xl mb-3'>Backend</h1>
             <div className='backendSkillWrapper flex flex-wrap'>
                 {backend.map((skill: FSkill) =>
@@ -99,6 +123,8 @@ const Backend = () => {
                     skill={skill}
                     setForm={setForm}
                     setSkillObj={setSkillObj}
+                    setOldName={setOldName}
+                    handleDelete={handleDelete}
                 />)}
                 {!skillObj.id &&
                 <SkillTemplate

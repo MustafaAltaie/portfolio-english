@@ -8,10 +8,13 @@ import SkillTemplate from '../SkillTemplate';
 import {
     useCreateFrontendSkillMutation,
     useReadFrontendSkillsQuery,
-    // useUpdateFrontendSkillMutation,
+    useUpdateFrontendSkillMutation,
     useUploadFrontendSkillIconMutation,
-    // useChangeFrontendSkillIconMutation,
+    useChangeFrontendSkillIconMutation,
+    useDeleteFrontendSkillMutation,
+    useDeleteFrontendSkillIconMutation,
 } from '../../../../../features/skills/skillsApi';
+import WaitingModal from '../../WaitingModal';
 
 const Frontend = () => {
     const [frontend, setFrontend] = useState<FSkill[]>([]);
@@ -26,8 +29,12 @@ const Frontend = () => {
     const [createFrontendSkill] = useCreateFrontendSkillMutation();
     const { data, isLoading, isError } = useReadFrontendSkillsQuery();
     const [uploadFrontendSkillIcon] = useUploadFrontendSkillIconMutation();
-    // const [updateFrontendSkill] = useUpdateFrontendSkillMutation();
-    // const [changeFrontendSkillIcon] = useChangeFrontendSkillIconMutation();
+    const [updateFrontendSkill] = useUpdateFrontendSkillMutation();
+    const [changeFrontendSkillIcon] = useChangeFrontendSkillIconMutation();
+    const [deleteFrontendSkill] = useDeleteFrontendSkillMutation();
+    const [deleteFrontendSkillIcon] = useDeleteFrontendSkillIconMutation();
+    const [oldName, setOldName] = useState<string>('');
+    const [busy, setBusy] = useState(false);
 
     useEffect(() => {
         if (data && !isLoading) {
@@ -46,8 +53,9 @@ const Frontend = () => {
 
     const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        let imageLink = fileImage?.name || skillObj.imageLink;
+        let imageLink = fileImage?.name || oldName;
         try {
+            setBusy(true);
             if (fileImage) {
                 const ext = fileImage.name.includes('.') ?
                     fileImage.name.lastIndexOf('.') :
@@ -58,7 +66,7 @@ const Frontend = () => {
                 formData.append('image', renamedFile);
                 imageLink = newName;
                 if (skillObj.id) {
-                    //await changeFrontendSkillIcon({ formData, oldImage: skillObj.imageLink }).unwrap();
+                    await changeFrontendSkillIcon({ formData, oldImage: oldName }).unwrap();
                 } else {
                     await uploadFrontendSkillIcon(formData).unwrap();
                 }
@@ -68,7 +76,7 @@ const Frontend = () => {
                 imageLink
             }
             if (skillObj.id) {
-                //await updateFrontendSkill({ id: skillObj.id, data: newItem }).unwrap();
+                await updateFrontendSkill({ id: skillObj.id, data: newItem }).unwrap();
             } else {
                 await createFrontendSkill(newItem).unwrap();
             }
@@ -76,6 +84,21 @@ const Frontend = () => {
         } catch (err) {
             console.error(err);
             alert('Error saving skill');
+        } finally {
+            setBusy(false);
+        }
+    }
+
+    const handleDelete = async (skill: FSkill) => {
+        try {
+            setBusy(true);
+            if (skill.imageLink) await deleteFrontendSkillIcon(skill.imageLink).unwrap();
+            await deleteFrontendSkill(skill.id!).unwrap();
+        } catch (err) {
+            console.log(err);
+            alert('Error deleting skill');
+        } finally {
+            setBusy(false);
         }
     }
 
@@ -91,6 +114,7 @@ const Frontend = () => {
 
     return (
         <div>
+            {busy && <WaitingModal />}
             <h1 className='text-xl mb-3'>Frontend</h1>
             <div className='frontendSkillWrapper flex flex-wrap'>
                 {frontend.map((skill: FSkill) =>
@@ -99,6 +123,8 @@ const Frontend = () => {
                     skill={skill}
                     setForm={setForm}
                     setSkillObj={setSkillObj}
+                    setOldName={setOldName}
+                    handleDelete={handleDelete}
                 />)}
                 {!skillObj.id &&
                 <SkillTemplate

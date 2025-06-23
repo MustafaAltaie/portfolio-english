@@ -8,10 +8,13 @@ import SkillTemplate from '../SkillTemplate';
 import {
     useCreateOtherSkillMutation,
     useReadOtherSkillsQuery,
-    // useUpdateOtherSkillMutation,
+    useUpdateOtherSkillMutation,
     useUploadOtherSkillIconMutation,
-    // useChangeOtherSkillIconMutation,
+    useChangeOtherSkillIconMutation,
+    useDeleteOtherSkillMutation,
+    useDeleteOtherSkillIconMutation,
 } from '../../../../../features/skills/skillsApi';
+import WaitingModal from '../../WaitingModal';
 
 const Other = () => {
     const [other, setOther] = useState<FSkill[]>([]);
@@ -26,8 +29,12 @@ const Other = () => {
     const [createOtherSkill] = useCreateOtherSkillMutation();
     const { data, isLoading, isError } = useReadOtherSkillsQuery();
     const [uploadOtherSkillIcon] = useUploadOtherSkillIconMutation();
-    // const [updateOtherSkill] = useUpdateOtherSkillMutation();
-    // const [changeOtherSkillIcon] = useChangeOtherSkillIconMutation();
+    const [updateOtherSkill] = useUpdateOtherSkillMutation();
+    const [changeOtherSkillIcon] = useChangeOtherSkillIconMutation();
+    const [deleteOtherSkill] = useDeleteOtherSkillMutation();
+    const [deleteOtherSkillIcon] = useDeleteOtherSkillIconMutation();
+    const [oldName, setOldName] = useState<string>('');
+    const [busy, setBusy] = useState(false);
 
     useEffect(() => {
         if (data && !isLoading) {
@@ -48,6 +55,7 @@ const Other = () => {
         e.preventDefault();
         let imageLink = fileImage?.name || skillObj.imageLink;
         try {
+            setBusy(true);
             if (fileImage) {
                 const ext = fileImage.name.includes('.') ?
                     fileImage.name.lastIndexOf('.') :
@@ -58,7 +66,7 @@ const Other = () => {
                 formData.append('image', renamedFile);
                 imageLink = newName;
                 if (skillObj.id) {
-                    //await changeOtherSkillIcon({ formData, oldImage: skillObj.imageLink }).unwrap();
+                    await changeOtherSkillIcon({ formData, oldImage: oldName }).unwrap();
                 } else {
                     await uploadOtherSkillIcon(formData).unwrap();
                 }
@@ -68,7 +76,7 @@ const Other = () => {
                 imageLink
             }
             if (skillObj.id) {
-                //await updateOtherSkill({ id: skillObj.id, data: newItem }).unwrap();
+                await updateOtherSkill({ id: skillObj.id, data: newItem }).unwrap();
             } else {
                 await createOtherSkill(newItem).unwrap();
             }
@@ -76,6 +84,21 @@ const Other = () => {
         } catch (err) {
             console.error(err);
             alert('Error saving skill');
+        } finally {
+            setBusy(false);
+        }
+    }
+
+     const handleDelete = async (skill: FSkill) => {
+        try {
+            setBusy(true);
+            if (skill.imageLink) await deleteOtherSkillIcon(skill.imageLink).unwrap();
+            await deleteOtherSkill(skill.id!).unwrap();
+        } catch (err) {
+            console.log(err);
+            alert('Error deleting skill');
+        } finally {
+            setBusy(false);
         }
     }
 
@@ -91,6 +114,7 @@ const Other = () => {
 
     return (
         <div className='mt-5'>
+            {busy && <WaitingModal />}
             <h1 className='text-xl mb-3'>Other skills</h1>
             <div className='otherSkillWrapper flex flex-wrap'>
                 {other.map((skill: FSkill) => 
@@ -99,6 +123,8 @@ const Other = () => {
                     skill={skill}
                     setForm={setForm}
                     setSkillObj={setSkillObj}
+                    setOldName={setOldName}
+                    handleDelete={handleDelete}
                 />)}
                 {!skillObj.id &&
                 <SkillTemplate

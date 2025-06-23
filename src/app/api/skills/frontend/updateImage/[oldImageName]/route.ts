@@ -18,8 +18,10 @@ export async function POST(
     const buffer = Buffer.from(await file.arrayBuffer());
     const publicId = file.name.replace(/\.[^/.]+$/, '');
 
-    const oldPublicId = oldImageName.replace(/\.[^/.]+$/, '');
-    await cloudinary.uploader.destroy(`portfolio/skills/frontend/${oldPublicId}`);
+    if (oldImageName && oldImageName !== 'undefined') {
+      const oldPublicId = oldImageName.replace(/\.[^/.]+$/, '');
+      await cloudinary.uploader.destroy(`portfolio/skills/frontend/${oldPublicId}`);
+    }
 
     const uploadResult = await new Promise((resolve, reject) => {
       const uploadStream = cloudinary.uploader.upload_stream(
