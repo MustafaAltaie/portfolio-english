@@ -9,9 +9,18 @@ interface SocialFormProps {
     setSocialForm: React.Dispatch<React.SetStateAction<boolean>>
     socialFormRef: React.RefObject<HTMLFormElement | null>
     handleSaveSocial: (e: React.FormEvent<HTMLFormElement>) => void
+    busy: boolean
 }
 
-const SocialForm = ({ social, prepareSocial, socialForm, setSocialForm, socialFormRef, handleSaveSocial }: SocialFormProps) => {
+const SocialForm = ({
+    social,
+    prepareSocial,
+    socialForm,
+    setSocialForm,
+    socialFormRef,
+    handleSaveSocial,
+    busy,
+}: SocialFormProps) => {
 
     useEffect(() => {
         const currentForm = socialFormRef.current;
@@ -29,21 +38,25 @@ const SocialForm = ({ social, prepareSocial, socialForm, setSocialForm, socialFo
             <div className="formInnerDiv">
                 <label>
                     LinkedIn
-                    <input type="text" placeholder='LinkedIn username' name='linkedIn' value={social.linkedIn} onChange={prepareSocial} />
+                    <input type="text" placeholder='LinkedIn username' autoComplete='off' name='linkedIn' value={social.linkedIn} onChange={prepareSocial} />
                 </label>
                 <label>
                     Mobile
-                    <input type="tel" placeholder='e.g +46712345678' name='mobile' value={social.mobile} onChange={prepareSocial} />
+                    <input type="tel" placeholder='e.g +46712345678' autoComplete='tel' name='mobile' value={social.mobile} onChange={prepareSocial} />
                 </label>
                 <label>
                     Email
-                    <input type="email" placeholder='e.g name@gmail.com' name='email' value={social.email} onChange={prepareSocial} />
+                    <input type="email" placeholder='e.g name@gmail.com' autoComplete='email' name='email' value={social.email} onChange={prepareSocial} />
                 </label>
                 <label>
                     Github
-                    <input type="text" title='Just add the username without https://github/' placeholder='github user name' name='github' value={social.github} onChange={prepareSocial} />
+                    <input type="text" autoComplete='off' title='Just add the username without https://github/' placeholder='github user name' name='github' value={social.github} onChange={prepareSocial} />
                 </label>
-                <button type='submit'>Save</button>
+                <button
+                    type='submit'
+                    style={{ background: busy ? '#888' : '' }}
+                    disabled={busy}
+                >Save</button>
             </div>
         </form>
     )

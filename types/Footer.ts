@@ -1,16 +1,9 @@
 export interface SocialObj {
-    id: string
+    id?: string
     linkedIn?: string
     mobile?: string
     email?: string
     github?: string
-}
-
-export interface Social {
-    linkedIn: string
-    mobile: string
-    email: string
-    github: string
 }
 
 export interface Message {

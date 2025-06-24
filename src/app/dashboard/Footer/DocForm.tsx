@@ -10,6 +10,7 @@ interface DocFormProps {
     setDocName: React.Dispatch<React.SetStateAction<string>>
     setDocFile: React.Dispatch<React.SetStateAction<File | null>>
     docFile: File | null
+    busy: boolean
 }
 
 const DocForm = ({
@@ -21,6 +22,7 @@ const DocForm = ({
     setDocName,
     setDocFile,
     docFile,
+    busy,
 }: DocFormProps) => {
 
     useEffect(() => {
@@ -56,7 +58,11 @@ const DocForm = ({
                     Document name
                     <input type="text" placeholder='e.g. Resume' value={docName} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDocName(e.target.value)} />
                 </label>}
-                <button type='submit'>Save</button>
+                <button
+                    type='submit'
+                    style={{ background: busy ? '#888' : '' }}
+                    disabled={busy}
+                >Save</button>
             </div>
         </form>
     )

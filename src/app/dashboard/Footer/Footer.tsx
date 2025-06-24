@@ -1,32 +1,21 @@
 'use client';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import '../../components/Footer/Footer.css';
 import SocialForm from './SocialForm';
-import { SocialObj, Message, Social } from '../../../../types/Footer';
-import { PencilIcon } from '@heroicons/react/24/outline';
+import { SocialObj, Message } from '../../../../types/Footer';
+import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 import DocForm from './DocForm';
+import { useUpdateSocialMutation, useReadSocialQuery } from '../../../../features/footer/socialApi';
+import { useUploadFooterDocMutation, useReadFooterDocsQuery, useDeleteFooterDocMutation } from '../../../../features/footer/docsApi';
+import WaitingModal from '../WaitingModal';
 
 const Footer = () => {
-    const docList: string[] = [
-        'Bachalors Degree',
-        'Validated Bachalors Degree',
-        'Swedish Vocational Program (Full stack JS)',
-        'Resume (CV)',
-        'Personal Letter',
-    ];
-    const socialList: Social = {
-        linkedIn: 'mustafa-altaie-b35356178',
-        mobile: '+46763122455',
-        email: 'mustafaphoto111@email.com',
-        github: 'MustafaAltaie',
-    }
     const [message, setMessage] = useState<Message>({
         name: '',
         email: '',
         message: '',
     });
     const [social, setSocial] = useState<SocialObj>({
-        id: '',
         linkedIn: '',
         mobile: '',
         email: '',
@@ -38,6 +27,20 @@ const Footer = () => {
     const DocFormRef = useRef<HTMLFormElement | null>(null);
     const [docName, setDocName] = useState<string>('');
     const [docFile, setDocFile] = useState<File | null>(null);
+    const [updateSocial] = useUpdateSocialMutation();
+    const [uploadFooterDoc] = useUploadFooterDocMutation();
+    const { data, isLoading } = useReadFooterDocsQuery();
+    const { data: socials } = useReadSocialQuery();
+    const [deleteFooterDoc] = useDeleteFooterDocMutation();
+    const [busy, setBusy] = useState(false);
+
+    useEffect(() => {
+        if (socials) {
+            setSocial(socials);
+        }
+    }, [socials]);
+
+    if (isLoading) return <p>...Loading documents</p>
 
     const handlePrepareMessage = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -57,38 +60,98 @@ const Footer = () => {
         }));
     }
 
-    const handleSaveSocial = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSaveSocial = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        try {
+            setBusy(true);
+            await updateSocial(social).unwrap();
+            setSocialForm(false);
+        } catch (err) {
+            console.error(err);
+            alert('Error saving social');
+        } finally {
+            setBusy(false);
+        }
     }
 
-    const handleSaveDocs = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSaveDocs = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        if (!docFile) return;
+        try {
+            setBusy(true);
+            const ext = docFile.name.includes('.') ?
+                docFile.name.substring(docFile.name.lastIndexOf('.')) :
+                '.png';
+            const newName = `${docName}${ext}`;
+            const renamedFile = new File([docFile], newName, { type: docFile.type });
+            const formData = new FormData();
+            formData.append('image', renamedFile);
+            await uploadFooterDoc(formData).unwrap();
+            setDocForm(false);
+            setDocFile(null);
+        } catch (err) {
+            console.error(err);
+            alert('Error saving document');
+        } finally {
+            setBusy(false);
+        }
+    }
+
+    const handleDeleteDocs = async (doc: string) => {
+        const rowName = doc.split('/').pop();
+        try {
+            setBusy(true);
+            await deleteFooterDoc(rowName!).unwrap();
+        } catch (err) {
+            console.error(err);
+            alert('Error deleting document');
+        } finally {
+            setBusy(false);
+        }
     }
 
     return (
         <footer className='bg-black px-10'>
+            {busy && <WaitingModal />}
             <div>
                 {/* Upper */}
                 <div className='fotterUpper flex gap-5 justify-center p-3 lg:p-2 border-b-thin mb-2 mt-2'>
-                    <a href={`https://www.linkedin.com/in/${socialList.linkedIn}`} target="_blank" rel="noopener noreferrer" className='flex flex-col items-center gap-1'>
+                    <a
+                        href={`https://www.linkedin.com/in/${social.linkedIn}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`flex flex-col items-center gap-1 ${!social.linkedIn && 'pointer-events-none'}`}
+                    >
                         <div className='w-7 h-7 flexCenter rounded-full'>
                             <i className="fa-brands fa-linkedin-in text-white text-sm"></i>
                         </div>
                         <p className='text-sm'>LinkedIn</p>
                     </a>
-                    <a href={`tel:${socialList.mobile}`} rel="noopener" className='flex flex-col items-center gap-1'>
+                    <a
+                        href={`tel:${social.mobile}`}
+                        rel="noopener"
+                        className={`flex flex-col items-center gap-1 ${!social.mobile && 'pointer-events-none'}`}
+                    >
                         <div className='w-7 h-7 flexCenter rounded-full'>
                             <i className="fa-solid fa-phone text-white text-sm"></i>
                         </div>
                         <p className='text-sm'>Call me</p>
                     </a>
-                    <a href={`mailto:${socialList.email}`} className='flex flex-col items-center gap-1'>
+                    <a
+                        href={`mailto:${social.email}`}
+                        className={`flex flex-col items-center gap-1 ${!social.email && 'pointer-events-none'}`}
+                    >
                         <div className='w-7 h-7 flexCenter rounded-full'>
                             <i className="fa-solid fa-envelope text-white text-sm"></i>
                         </div>
                         <p className='text-sm'>Email me</p>
                     </a>
-                    <a href={`https://github.com/${socialList.github}`} target="_blank" rel="noopener noreferrer" className='flex flex-col items-center gap-1'>
+                    <a
+                        href={`https://github.com/${social.github}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`flex flex-col items-center gap-1 ${!social.github && 'pointer-events-none'}`}
+                    >
                         <div className='w-7 h-7 flexCenter rounded-full'>
                             <i className="fa-brands fa-github text-white text-sm"></i>
                         </div>
@@ -103,12 +166,16 @@ const Footer = () => {
                     setSocialForm={setSocialForm}
                     socialFormRef={socialFormRef}
                     handleSaveSocial={handleSaveSocial}
+                    busy={busy}
                 />
                 {/* Documents */}
                 <div className='border-b-thin pb-2 mb-2'>
                     <p className='mb-3 flex gap-3'><span>You can find all relevant documents below.</span>{!docForm && <PencilIcon className='w-5 lg:w-4' onClick={() => setDocForm(true)} />}</p>
                     <ul className='flex flex-col gap-2'>
-                        {docList.map(doc => <li key={doc} className='italic pl-1 text-sm'>{doc}</li>)}
+                        {data?.map((doc, index) =>
+                            <li key={index} className='italic pl-1 text-sm flex justify-between'>{doc.split('/').pop()} <TrashIcon className='w-5' onClick={() => handleDeleteDocs(doc)} /></li>)}
+                        <li className='italic pl-1 text-sm flex justify-between'>Swedish Vocational Program (Full stack JS)</li>
+                        <li className='italic pl-1 text-sm flex justify-between'>Personal Letter</li>
                     </ul>
                 </div>
                 <DocForm
@@ -120,6 +187,7 @@ const Footer = () => {
                     setDocName={setDocName}
                     setDocFile={setDocFile}
                     docFile={docFile}
+                    busy={busy}
                 />
                 {/* Middle */}
                 <div className='lg:flex lg:gap-20 pb-2 lg:pb-0 border-b-thin'>

@@ -1,27 +1,32 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Footer.css';
-import { Social, Message } from '../../../../types/Footer';
+import { SocialObj, Message } from '../../../../types/Footer';
+import { useReadSocialQuery } from '../../../../features/footer/socialApi';
+import { useReadFooterDocsQuery } from '../../../../features/footer/docsApi';
 
 const Footer = () => {
-    const docList: string[] = [
-        'Bachalors Degree',
-        'Validated Bachalors Degree',
-        'Swedish Vocational Program (Full stack JS)',
-        'Resume (CV)',
-        'Personal Letter',
-    ];
-    const socialList: Social = {
-        linkedIn: 'mustafa-altaie-b35356178',
-        mobile: '+46763122455',
-        email: 'mustafaphoto111@email.com',
-        github: 'MustafaAltaie',
-    }
     const [message, setMessage] = useState<Message>({
         name: '',
         email: '',
         message: '',
     });
+    const [social, setSocial] = useState<SocialObj>({
+            linkedIn: '',
+            mobile: '',
+            email: '',
+            github: '',
+        });
+    const { data, isLoading } = useReadFooterDocsQuery();
+    const { data: socials } = useReadSocialQuery();
+
+    useEffect(() => {
+        if (socials) {
+            setSocial(socials);
+        }
+    }, [socials]);
+
+    if (isLoading) return <p>...Loading documents</p>
 
     const handlePrepareMessage = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -39,25 +44,42 @@ const Footer = () => {
             <div>
                 {/* Upper */}
                 <div className='fotterUpper flex gap-5 justify-center p-3 lg:p-2 border-b-thin mb-2 mt-2'>
-                    <a href={`https://www.linkedin.com/in/${socialList.linkedIn}`} target="_blank" rel="noopener noreferrer" className='flex flex-col items-center gap-1'>
+                    <a
+                        href={`https://www.linkedin.com/in/${social.linkedIn}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`flex flex-col items-center gap-1 ${!social.linkedIn && 'pointer-events-none'}`}
+                    >
                         <div className='w-7 h-7 flexCenter rounded-full'>
                             <i className="fa-brands fa-linkedin-in text-white text-sm"></i>
                         </div>
                         <p className='text-sm'>LinkedIn</p>
                     </a>
-                    <a href={`tel:${socialList.mobile}`} rel="noopener" className='flex flex-col items-center gap-1'>
+                    <a
+                        href={`tel:${social.mobile}`}
+                        rel="noopener"
+                        className={`flex flex-col items-center gap-1 ${!social.mobile && 'pointer-events-none'}`}
+                    >
                         <div className='w-7 h-7 flexCenter rounded-full'>
                             <i className="fa-solid fa-phone text-white text-sm"></i>
                         </div>
                         <p className='text-sm'>Call me</p>
                     </a>
-                    <a href={`mailto:${socialList.email}`} className='flex flex-col items-center gap-1'>
+                    <a
+                        href={`mailto:${social.email}`}
+                        className={`flex flex-col items-center gap-1 ${!social.email && 'pointer-events-none'}`}
+                    >
                         <div className='w-7 h-7 flexCenter rounded-full'>
                             <i className="fa-solid fa-envelope text-white text-sm"></i>
                         </div>
                         <p className='text-sm'>Email me</p>
                     </a>
-                    <a href={`https://github.com/${socialList.github}`} target="_blank" rel="noopener noreferrer" className='flex flex-col items-center gap-1'>
+                    <a
+                        href={`https://github.com/${social.github}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`flex flex-col items-center gap-1 ${!social.github && 'pointer-events-none'}`}
+                    >
                         <div className='w-7 h-7 flexCenter rounded-full'>
                             <i className="fa-brands fa-github text-white text-sm"></i>
                         </div>
@@ -68,7 +90,9 @@ const Footer = () => {
                 <div className='border-b-thin pb-2 mb-2'>
                     <p className='mb-3 flex gap-3'><span>You can find all relevant documents below.</span></p>
                     <ul className='flex flex-col gap-2'>
-                        {docList.map(doc => <li key={doc} className='italic pl-1 text-sm'>{doc}</li>)}
+                        {data?.map(doc => <li key={doc} className='italic pl-1 text-sm'>{doc.split('/').pop()}</li>)}
+                        <li className='italic pl-1 text-sm flex justify-between'>Swedish Vocational Program (Full stack JS)</li>
+                        <li className='italic pl-1 text-sm flex justify-between'>Personal Letter</li>
                     </ul>
                 </div>
                 {/* Middle */}

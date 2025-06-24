@@ -29,7 +29,7 @@ const Form = ({ form, setForm, skillObj, setSkillObj, fileImage, setFileImage, c
     }, [form, formRef]);
 
     return (
-        <form ref={formRef} onSubmit={handleSave}>
+        <form ref={formRef} onSubmit={handleSave} className='h-0'>
             <h1 className='w-fit ml-auto px-5 pt-3'>
                 <XMarkIcon className='w-5' onClick={() => {setForm(false); clearSkillObj()}} />
             </h1>
