@@ -10,9 +10,10 @@ interface SkillProps {
     setSkillObj: React.Dispatch<React.SetStateAction<FSkill>>
     setOldName: React.Dispatch<React.SetStateAction<string>>
     handleDelete: (skill: FSkill) => void
+    setFolder: React.Dispatch<React.SetStateAction<string>>
 }
 
-const Skill = React.memo(({ skill, setForm, setSkillObj, setOldName, handleDelete }: SkillProps) => {
+const Skill = React.memo(({ skill, setForm, setSkillObj, setOldName, handleDelete, setFolder }: SkillProps) => {
     const [setting, setSetting] = useState(false);
     const wrapperRef = useRef<HTMLDivElement | null>(null);
 
@@ -28,14 +29,14 @@ const Skill = React.memo(({ skill, setForm, setSkillObj, setOldName, handleDelet
     }, []);
 
     return (
-        <div ref={wrapperRef} className='skillCard p-3 flex flex-col gap-2 rounded-sm relative' onClick={() => setSetting(!setting)}>
+        <div ref={wrapperRef} className='skillCard p-3 flex flex-col gap-2 rounded-sm relative cursor-pointer' onClick={() => setSetting(!setting)}>
             {!setting && <EllipsisHorizontalIcon className='w-5 absolute top-0 right-0 pointer-events-none' />}
             {setting &&
             <div className='skillSettingsWrapper flex gap-0.5 absolute w-full h-full top-0 left-0'>
-                <div className='w-1/2 flexCenter' onClick={() => {setForm(true); setSkillObj(skill);  setOldName(skill.imageLink || '')}}>
+                <div  className='w-1/2 flexCenter cursor-pointer' title='Edit' onClick={() => {setForm(true); setSkillObj(skill);  setOldName(skill.imageLink || ''); setFolder('frontend')}}>
                     <PencilIcon className='w-5' />
                 </div>
-                <div className='w-1/2 flexCenter' onClick={() => handleDelete(skill)}>
+                <div  className='w-1/2 flexCenter cursor-pointer' title='Delete' onClick={() => handleDelete(skill)}>
                     <TrashIcon className='w-5' />
                 </div>
             </div>}

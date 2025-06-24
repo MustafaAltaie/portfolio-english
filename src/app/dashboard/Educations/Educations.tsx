@@ -43,6 +43,7 @@ const Educations = () => {
     const [oldDoc, setOldDoc] = useState<string | undefined>('');
     const [oldLogo, setOldLogo] = useState<string | undefined>('');
     const [busy, setBusy] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
 
     useEffect(() => {
         if(!isLoading && data) {
@@ -140,9 +141,10 @@ const Educations = () => {
                     setOldDoc={setOldDoc}
                     setOldLogo={setOldLogo}
                     setBusy={setBusy}
+                    setScrolled={setScrolled}
                 />)}
             </div>
-            <h1 className={`transition-all w-5 h-5 flexCenter pb-2 mx-auto text-4xl ${form ? 'rotate-45' : ''}`} onClick={() => setForm(!form)}>+</h1>
+            <h1 className={`transition-all w-5 h-5 flexCenter pb-2 mx-auto text-4xl cursor-pointer ${form ? 'rotate-45' : ''}`} onClick={() => setForm(!form)}>+</h1>
             <Form
                 form={form}
                 setObj={setObj}
@@ -153,6 +155,8 @@ const Educations = () => {
                 doc={doc}
                 setDoc={setDoc}
                 busy={busy}
+                scrolled={scrolled}
+                setScrolled={setScrolled}
             />
         </section>
     )

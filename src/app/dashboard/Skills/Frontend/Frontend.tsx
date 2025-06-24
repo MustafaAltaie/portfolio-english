@@ -16,7 +16,12 @@ import {
 } from '../../../../../features/skills/skillsApi';
 import WaitingModal from '../../WaitingModal';
 
-const Frontend = () => {
+interface FrontendProps {
+    setFolder: React.Dispatch<React.SetStateAction<string>>
+    folder: string
+}
+
+const Frontend = ({  setFolder, folder }: FrontendProps) => {
     const [frontend, setFrontend] = useState<FSkill[]>([]);
     const [form, setForm] = useState(false);
     const [skillObj, setSkillObj] = useState<FSkill>({
@@ -125,6 +130,7 @@ const Frontend = () => {
                     setSkillObj={setSkillObj}
                     setOldName={setOldName}
                     handleDelete={handleDelete}
+                    setFolder={setFolder}
                 />)}
                 {!skillObj.id &&
                 <SkillTemplate
@@ -143,6 +149,7 @@ const Frontend = () => {
                 setFileImage={setFileImage}
                 clearSkillObj={clearSkillObj}
                 handleSave={handleSave}
+                folder={folder}
             />
         </div>
     )

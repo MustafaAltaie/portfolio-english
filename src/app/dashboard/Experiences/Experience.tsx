@@ -10,9 +10,10 @@ interface ExperienceProps {
     exp: Exp
     setObj: React.Dispatch<React.SetStateAction<Exp>>
     setForm: React.Dispatch<React.SetStateAction<boolean>>
+    setScrolled: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const Experience = ({ exp, setObj, setForm }: ExperienceProps) => {
+const Experience = ({ exp, setObj, setForm, setScrolled }: ExperienceProps) => {
     const [deleteExp] = useDeleteExpMutation();
     const [busy, setBusy] = useState(false);
 
@@ -33,8 +34,8 @@ const Experience = ({ exp, setObj, setForm }: ExperienceProps) => {
             {busy && <WaitingModal />}
             <div className='flex gap-5 items-center justify-between'>
                 <div className='flex gap-5'>
-                    <PencilIcon className='w-5' onClick={() => {setForm(true); setObj(exp)}} />
-                    <TrashIcon className='w-5' onClick={() => handleDelete(exp.id!)} />
+                    <PencilIcon className='w-5 cursor-pointer' title='Edit' onClick={() => {setForm(true); setObj(exp); setScrolled(false)}} />
+                    <TrashIcon className='w-5 cursor-pointer' title='Delete' onClick={() => handleDelete(exp.id!)} />
                 </div>
                 <BriefcaseIcon className='w-7 bg-blue-600 text-white rounded-full p-1.5' />
                 <p className='text-sm text-blue-500 font-bold'>{exp.dateFrom} - {exp.dateTo ? exp.dateTo : 'Ongoing'}</p>

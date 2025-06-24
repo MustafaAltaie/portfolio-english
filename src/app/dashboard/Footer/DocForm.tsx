@@ -37,7 +37,7 @@ const DocForm = ({
 
     return (
         <form ref={DocFormRef} onSubmit={handleSaveDocs} className={`${docForm && 'mb-5'}`}>
-            <XMarkIcon className='w-9 ml-auto p-2' onClick={() => {setDocForm(false); setDocFile(null); setDocName('')}} />
+            <XMarkIcon className='w-9 ml-auto p-2 cursor-pointer' onClick={() => {setDocForm(false); setDocFile(null); setDocName('')}} />
             <div className="formInnerDiv">
                 <label>
                     <span className='flex gap-3'>Upload image document {docFile && <DocumentCheckIcon className='w-5' />}</span>

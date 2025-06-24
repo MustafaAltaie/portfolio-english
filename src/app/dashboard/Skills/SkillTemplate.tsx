@@ -10,7 +10,7 @@ interface SkillProps {
 
 const Skill = ({ form, setForm, skillObj, fileImage }: SkillProps) => {
     return (
-        <div className='skillCardTemp p-3 flex flex-col gap-2 rounded-sm relative'>
+        <div className='skillCardTemp p-3 flex flex-col gap-2 rounded-sm relative cursor-pointer' title='Add skill'>
             {form &&
             <>
             <div className='flex gap-1 items-center'>

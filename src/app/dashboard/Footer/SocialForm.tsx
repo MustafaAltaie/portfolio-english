@@ -34,7 +34,7 @@ const SocialForm = ({
 
     return (
         <form ref={socialFormRef} onSubmit={handleSaveSocial} className={`${socialForm && 'mb-5'}`}>
-            <XMarkIcon className='w-9 ml-auto p-2' onClick={() => setSocialForm(false)} />
+            <XMarkIcon className='w-9 ml-auto p-2 cursor-pointer' onClick={() => setSocialForm(false)} />
             <div className="formInnerDiv">
                 <label>
                     LinkedIn

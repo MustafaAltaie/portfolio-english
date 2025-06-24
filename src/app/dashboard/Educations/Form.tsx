@@ -14,9 +14,23 @@ interface FormProps {
     doc: File | null
     setDoc: React.Dispatch<React.SetStateAction<File | null>>
     busy: boolean
+    setScrolled: React.Dispatch<React.SetStateAction<boolean>>
+    scrolled: boolean
 }
 
-const Form = ({ form, setObj, obj, handleSave, logo, setLogo, doc, setDoc, busy }: FormProps) => {
+const Form = ({
+    form,
+    setObj,
+    obj,
+    handleSave,
+    logo,
+    setLogo,
+    doc,
+    setDoc,
+    busy,
+    setScrolled,
+    scrolled,
+}: FormProps) => {
     const formRef = useRef<HTMLFormElement>(null);
 
     useEffect(() => {
@@ -41,7 +55,10 @@ const Form = ({ form, setObj, obj, handleSave, logo, setLogo, doc, setDoc, busy 
 
         if (form) {
             currentForm.style.height = `${currentForm.scrollHeight}px`;
-            currentForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            if (!scrolled) {
+                currentForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                setScrolled(true);
+            }
         } else {
             currentForm.style.height = '0px';
             clearObj();

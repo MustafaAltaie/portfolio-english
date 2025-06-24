@@ -36,8 +36,10 @@ const Education = ({ education }: EducationProps) => {
                 </div>
             </div>
             <p className='text-sm'>{education.description}</p>
-            {education.docLink &&
-            <button className='ml-auto flex items-end gap-2 mt-2 text-blue-500'>See the attchment <ArrowLongRightIcon className='w-5' /></button>}
+            <button
+                className={`ml-auto flex items-end gap-2 mt-2 text-blue-500 cursor-pointer ${!education.docLink && 'pointer-events-none text-neutral-500'}`}
+                onClick={() => window.open(`https://res.cloudinary.com/dswmp2omq/image/upload/v1750506429/portfolio/educations/doc/${education.docLink}`)}
+            >See the attchment <ArrowLongRightIcon className='w-5' /></button>
         </motion.div>
     )
 }

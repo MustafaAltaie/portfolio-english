@@ -157,7 +157,7 @@ const Footer = () => {
                         </div>
                         <p className='text-sm'>Github</p>
                     </a>
-                    {!socialForm && <PencilIcon className='w-10 lg:w-8 p-2 absolute right-5' onClick={() => setSocialForm(true)} />}
+                    {!socialForm && <PencilIcon className='w-10 lg:w-8 p-2 absolute right-5 cursor-pointer' title='Edit' onClick={() => setSocialForm(true)} />}
                 </div>
                 <SocialForm
                     social={social}
@@ -170,10 +170,10 @@ const Footer = () => {
                 />
                 {/* Documents */}
                 <div className='border-b-thin pb-2 mb-2'>
-                    <p className='mb-3 flex gap-3'><span>You can find all relevant documents below.</span>{!docForm && <PencilIcon className='w-5 lg:w-4' onClick={() => setDocForm(true)} />}</p>
+                    <p className='mb-3 flex gap-3'><span>You can find all relevant documents below.</span>{!docForm && <PencilIcon className='w-5 lg:w-4 cursor-pointer' onClick={() => setDocForm(true)} />}</p>
                     <ul className='flex flex-col gap-2'>
                         {data?.map((doc, index) =>
-                            <li key={index} className='italic pl-1 text-sm flex justify-between'>{doc.split('/').pop()} <TrashIcon className='w-5' onClick={() => handleDeleteDocs(doc)} /></li>)}
+                            <li key={index} className='italic pl-1 text-sm flex justify-between'>{doc.split('/').pop()} <TrashIcon className='w-5' onClick={() => handleDeleteDocs(doc)} title='Delete' /></li>)}
                         <li className='italic pl-1 text-sm flex justify-between'>Swedish Vocational Program (Full stack JS)</li>
                         <li className='italic pl-1 text-sm flex justify-between'>Personal Letter</li>
                     </ul>
@@ -203,7 +203,7 @@ const Footer = () => {
                         <input className='p-2 rounded-lg lg:p-1 text-sm' type="text" name='name' placeholder='Name' value={message.name} onChange={handlePrepareMessage} />
                         <input className='p-2 rounded-lg lg:p-1 text-sm' type="text" name='email' placeholder='Email' value={message.email} onChange={handlePrepareMessage} />
                         <textarea className='p-2 rounded-lg lg:p-1 text-sm' name="message" placeholder='Message' value={message.message} onChange={handlePrepareMessage}></textarea>
-                        <button type='submit' className='bg-blue-800 p-2 text-white rounded-lg text-sm'>Send</button>
+                        <button type='submit' className='bg-blue-800 p-2 text-white rounded-lg text-sm cursor-pointer'>Send</button>
                     </form>
                 </div>
                 {/* Lower */}

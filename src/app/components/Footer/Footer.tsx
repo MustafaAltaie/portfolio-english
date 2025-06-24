@@ -90,7 +90,12 @@ const Footer = () => {
                 <div className='border-b-thin pb-2 mb-2'>
                     <p className='mb-3 flex gap-3'><span>You can find all relevant documents below.</span></p>
                     <ul className='flex flex-col gap-2'>
-                        {data?.map(doc => <li key={doc} className='italic pl-1 text-sm'>{doc.split('/').pop()}</li>)}
+                        {data?.map(doc =>
+                            <li
+                                key={doc}
+                                className='italic pl-1 text-sm'
+                                onClick={() => window.open(`https://res.cloudinary.com/dswmp2omq/image/upload/${encodeURIComponent(doc)}`)}
+                            >{doc.split('/').pop()}</li>)}
                         <li className='italic pl-1 text-sm flex justify-between'>Swedish Vocational Program (Full stack JS)</li>
                         <li className='italic pl-1 text-sm flex justify-between'>Personal Letter</li>
                     </ul>

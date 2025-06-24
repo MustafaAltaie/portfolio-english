@@ -16,7 +16,12 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 import WaitingModal from '../../WaitingModal';
 
-const Backend = () => {
+interface BackendProps {
+    setFolder: React.Dispatch<React.SetStateAction<string>>
+    folder: string
+}
+
+const Backend = ({  setFolder, folder }: BackendProps) => {
     const [backend, setBackend] = useState<FSkill[]>([]);
     const [form, setForm] = useState(false);
     const [skillObj, setSkillObj] = useState<FSkill>({
@@ -125,6 +130,7 @@ const Backend = () => {
                     setSkillObj={setSkillObj}
                     setOldName={setOldName}
                     handleDelete={handleDelete}
+                    setFolder={setFolder}
                 />)}
                 {!skillObj.id &&
                 <SkillTemplate
@@ -143,6 +149,7 @@ const Backend = () => {
                 setFileImage={setFileImage}
                 clearSkillObj={clearSkillObj}
                 handleSave={handleSave}
+                folder={folder}
             />
         </div>
     )
