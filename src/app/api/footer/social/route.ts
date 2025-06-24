@@ -5,8 +5,7 @@ export async function PATCH(req: Request) {
   try {
     await dbConnect();
     const body = await req.json();
-    const { id, ...rest } = body;
-    const updatedRecord = await Social.findOneAndUpdate({ id: 'singleton_footer_social_media' }, { $set: rest },
+    const updatedRecord = await Social.findOneAndUpdate({ id: 'singleton_footer_social_media' }, { $set: body },
       { new: true, upsert: true, setDefaultsOnInsert: true }
     );
     return new Response(JSON.stringify(updatedRecord), { status: 200 });
