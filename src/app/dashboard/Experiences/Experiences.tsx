@@ -66,7 +66,7 @@ const Experiences = () => {
             });
             currentForm.style.height = '0px';
         }
-    }, [form, formRef, obj.techStack?.length, setObj]);
+    }, [form, formRef, obj.techStack?.length, setObj, setScrolled]);
 
     if (isError) return <p>Error loading experiences</p>
     if (isLoading) return <p>...Loading experiences</p>
