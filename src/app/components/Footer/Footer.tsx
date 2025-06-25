@@ -5,7 +5,9 @@ import { SocialObj, Message } from '../../../../types/Footer';
 import { useReadSocialQuery } from '../../../../features/footer/socialApi';
 import { useReadFooterDocsQuery } from '../../../../features/footer/docsApi';
 
-const Footer = forwardRef<HTMLElement, {}>((_, ref) => {
+interface FooterProps {}
+
+const Footer = forwardRef<HTMLElement, FooterProps>((_, ref) => {
     const [message, setMessage] = useState<Message>({
         name: '',
         email: '',

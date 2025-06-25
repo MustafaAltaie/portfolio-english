@@ -5,7 +5,9 @@ import Frontend from './Frontend/Frontend';
 import Backend from './Backend/Backend';
 import Other from './Other/Other';
 
-const Skills = forwardRef<HTMLElement, {}>((_, ref) => {
+interface SkillsProps {}
+
+const Skills = forwardRef<HTMLElement, SkillsProps>((_, ref) => {
     return (
         <section ref={ref} className='skills py-7 px-3 pb-10 bg-url-fixed'>
             <div className='flex gap-2 mb-3 pb-3'>
