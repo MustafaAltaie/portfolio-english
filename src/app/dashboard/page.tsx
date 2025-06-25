@@ -1,5 +1,3 @@
-'use client';
-
 import Header from "./Header/Header";
 import Profile from "./Profile/Profile";
 import Educations from "./Educations/Educations";
@@ -8,7 +6,6 @@ import Skills from "./Skills/Skills";
 import Footer from "./Footer/Footer";
 
 const Dashboard = () => {
-
   return (
     <main>
       <Header />

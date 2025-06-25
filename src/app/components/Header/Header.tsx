@@ -3,8 +3,45 @@ import React, { useEffect, useState } from 'react';
 import './Header.css';
 import { SunIcon, MoonIcon } from '@heroicons/react/24/solid';
 
-const Header = () => {
-    const liList: string[] = ['Home', 'About', 'Contact us', 'Experiences', 'Skills'];
+interface HeaderProps {
+    scrollToEducations: () => void
+    scrollToExperiences: () => void
+    scrollToSkills: () => void
+    scrollToContact: () => void
+}
+
+interface LiList {
+    title: string
+    target: () => void
+}
+
+const Header = ({ scrollToEducations, scrollToExperiences, scrollToSkills, scrollToContact }: HeaderProps) => {
+    const scrollToHome = () => {
+        window.scrollTo({ top: 0, behavior: "smooth" })
+    }
+
+    const liList: LiList[] = [
+        {
+            title: 'Home',
+            target: scrollToHome,
+        },
+        {
+            title: 'Educations',
+            target: scrollToEducations
+        },
+        {
+            title: 'Experiences',
+            target: scrollToExperiences
+        },
+        {
+            title: 'Skills',
+            target: scrollToSkills
+        },
+        {
+            title: 'Contact',
+            target: scrollToContact
+        },
+    ]
     const [dark, setDark] = useState(true);
     const [hideNav, setHideNav] = useState(false);
     const [hasMonted, setHasMounted] = useState(false);
@@ -52,8 +89,8 @@ const Header = () => {
             </div>
             <nav className={`overflow-hidden transition-all duration-700 ${hideNav ? 'max-h-0' : 'max-h-100'}`}>
                 <ul className='flex flex-col lg:flex-row text-center lg:border-b-0'>
-                    {liList.map((li: string) =>
-                    <li key={li} className='p-5 whitespace-nowrap lg:border-t-0 cursor-pointer'>{li}</li>)}
+                    {liList.map(li =>
+                    <li key={li.title} onClick={() => {li.target(); setHideNav(true)}} className='p-5 whitespace-nowrap lg:border-t-0 cursor-pointer'>{li.title}</li>)}
                 </ul>
             </nav>
         </header>

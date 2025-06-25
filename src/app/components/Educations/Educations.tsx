@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, forwardRef } from 'react';
 import './Educations.css';
 import { AcademicCapIcon } from '@heroicons/react/24/solid';
 import { EducationType } from '../../../../types/Educations';
 import Education from './Education';
 import { useReadEducationsQuery } from '../../../../features/educations/educationApi';
 
-const Educations = () => {
+const Educations = forwardRef<HTMLElement, {}>((_, ref) => {
     const [educationList, setEducationList] = useState<EducationType[]>([]);
     const { data, isLoading, isError } = useReadEducationsQuery();
 
@@ -30,7 +30,7 @@ const Educations = () => {
     if (isLoading) return <p>...Loading experiences</p>
 
     return (
-        <section className='educations p-7 flex flex-col gap-5 border-b-thin bg-url-fixed pb-10'>
+        <section ref={ref} className='educations p-7 flex flex-col gap-5 border-b-thin bg-url-fixed pb-10'>
             <div className='flex items-center gap-2'>
                 <AcademicCapIcon className='w-7 text-yellow-600' />
                 <h1 className='text-2xl text-yellow-600'>Educations</h1>
@@ -43,6 +43,8 @@ const Educations = () => {
             </div>
         </section>
     )
-}
+});
+
+Educations.displayName = 'Educations';
 
 export default Educations;

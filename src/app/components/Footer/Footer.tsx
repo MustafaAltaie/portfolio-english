@@ -1,11 +1,11 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, forwardRef } from 'react';
 import './Footer.css';
 import { SocialObj, Message } from '../../../../types/Footer';
 import { useReadSocialQuery } from '../../../../features/footer/socialApi';
 import { useReadFooterDocsQuery } from '../../../../features/footer/docsApi';
 
-const Footer = () => {
+const Footer = forwardRef<HTMLElement, {}>((_, ref) => {
     const [message, setMessage] = useState<Message>({
         name: '',
         email: '',
@@ -40,7 +40,7 @@ const Footer = () => {
     }
 
     return (
-        <footer className='bg-black px-10'>
+        <footer ref={ref} className='bg-black px-10'>
             <div>
                 {/* Upper */}
                 <div className='fotterUpper flex gap-5 justify-center p-3 lg:p-2 border-b-thin mb-2 mt-2'>
@@ -130,6 +130,8 @@ const Footer = () => {
             </div>
         </footer>
     )
-}
+});
+
+Footer.displayName = 'Footer';
 
 export default Footer;
