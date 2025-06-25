@@ -6,7 +6,7 @@ import Experience from './Experience';
 import { useReadExpsQuery } from '../../../../features/experiences/experienceApi';
 import { Exp } from '../../../../types/Experiences';
 
-interface ExperiencesProps {}
+type ExperiencesProps = React.HTMLAttributes<HTMLElement>;
 
 const Experiences = forwardRef<HTMLElement, ExperiencesProps>((_, ref) => {
     const [experienceList, setExperienceList] = useState<Exp[]>([]);

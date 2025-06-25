@@ -5,7 +5,7 @@ import { EducationType } from '../../../../types/Educations';
 import Education from './Education';
 import { useReadEducationsQuery } from '../../../../features/educations/educationApi';
 
-interface EducationsProps {}
+type EducationsProps = React.HTMLAttributes<HTMLElement>;
 
 const Educations = forwardRef<HTMLElement, EducationsProps>((_, ref) => {
     const [educationList, setEducationList] = useState<EducationType[]>([]);

@@ -5,7 +5,7 @@ import Frontend from './Frontend/Frontend';
 import Backend from './Backend/Backend';
 import Other from './Other/Other';
 
-interface SkillsProps {}
+type SkillsProps = React.HTMLAttributes<HTMLElement>;
 
 const Skills = forwardRef<HTMLElement, SkillsProps>((_, ref) => {
     return (
