@@ -92,9 +92,9 @@ const Footer = forwardRef<HTMLElement, FooterProps>((_, ref) => {
                         <p className='text-sm'>Github</p>
                     </a>
                 </div>
-                <div className='lg:flex items-center lg:border-b-1 lg:border-[#ffffff55]'>
+                <div className='lg:flex items-center lg:border-b-1 lg:border-[#ffffff55] gap-10'>
                     {/* Documents */}
-                    <div className='border-b-1 border-[#ffffff55] lg:border-b-0 pb-2 mb-2 lg:w-1/2'>
+                    <div className='border-b-1 border-[#ffffff55] lg:border-b-0 pb-2 mb-2 lg:w-1/2 border-r-1 pr-10'>
                         <p className='mb-3 flex gap-3'><span>You can find all relevant documents below.</span></p>
                         <ul className='flex flex-col gap-2'>
                             {data?.map(doc =>
@@ -122,7 +122,6 @@ const Footer = forwardRef<HTMLElement, FooterProps>((_, ref) => {
                         </form>
                     </div>  
                 </div>
-                
                 {/* Lower */}
                 <div>
                     <p className='border-b-thin pb-2 mt-2 text-sm'>This portfolio is built using modern technologies such as

@@ -168,15 +168,35 @@ const Footer = () => {
                     handleSaveSocial={handleSaveSocial}
                     busy={busy}
                 />
-                {/* Documents */}
-                <div className='border-b-thin pb-2 mb-2'>
-                    <p className='mb-3 flex gap-3'><span>You can find all relevant documents below.</span>{!docForm && <PencilIcon className='w-5 lg:w-4 cursor-pointer' onClick={() => setDocForm(true)} />}</p>
-                    <ul className='flex flex-col gap-2'>
-                        {data?.map((doc, index) =>
-                            <li key={index} className='italic pl-1 text-sm flex justify-between'>{doc.split('/').pop()} <TrashIcon className='w-5' onClick={() => handleDeleteDocs(doc)} title='Delete' /></li>)}
-                        <li className='italic pl-1 text-sm flex justify-between'>Swedish Vocational Program (Full stack JS)</li>
-                        <li className='italic pl-1 text-sm flex justify-between'>Personal Letter</li>
-                    </ul>
+                <div className='lg:flex items-center lg:border-b-1 lg:border-[#ffffff55] gap-10'>
+                    {/* Documents */}
+                    <div className='border-b-1 border-[#ffffff55] lg:border-b-0 pb-2 mb-2 lg:w-1/2 border-r-1 pr-10'>
+                        <p className='mb-3 flex gap-3'><span>You can find all relevant documents below.</span>{!docForm && <PencilIcon className='w-5 lg:w-4 cursor-pointer' onClick={() => setDocForm(true)} />}</p>
+                        <ul className='flex flex-col gap-2'>
+                            {data?.map((doc, index) =>
+                                <li
+                                    key={index}
+                                    className='italic pl-1 text-sm flex justify-between'>{doc.split('/').pop()} <TrashIcon className='w-4'
+                                    onClick={() => handleDeleteDocs(doc)} title='Delete'
+                                /></li>)}
+                            <li className='italic pl-1 text-sm flex justify-between'>Swedish Vocational Program (Full stack JS)</li>
+                            <li className='italic pl-1 text-sm flex justify-between'>Personal Letter</li>
+                        </ul>
+                    </div>
+                    {/* Middle */}
+                    <div className='pb-2 border-b-1 border-[#ffffff55] lg:border-b-0 lg:w-1/2'>
+                        <p className='mb-2 text-sm'>Have an idea or a job opportunity? Do not hesitate to get in touch — I am fluent in
+                            <span> English, </span>
+                            <span>Swedish</span> and
+                            <span> Arabic.</span>
+                        </p>
+                        <form onSubmit={handleSendMessage} className='contactForm flex flex-col gap-2 lg:gap-1 mb-2 lg:w-1/2'>
+                            <input className='p-2 rounded-lg lg:p-1 text-sm' type="text" name='name' placeholder='Name' value={message.name} onChange={handlePrepareMessage} />
+                            <input className='p-2 rounded-lg lg:p-1 text-sm' type="text" name='email' placeholder='Email' value={message.email} onChange={handlePrepareMessage} />
+                            <textarea className='p-2 rounded-lg lg:p-1 text-sm' name="message" placeholder='Message' value={message.message} onChange={handlePrepareMessage}></textarea>
+                            <button type='submit' className='bg-blue-800 p-2 text-white rounded-lg text-sm cursor-pointer'>Send</button>
+                        </form>
+                    </div>
                 </div>
                 <DocForm
                     DocFormRef={DocFormRef}
@@ -189,29 +209,13 @@ const Footer = () => {
                     docFile={docFile}
                     busy={busy}
                 />
-                {/* Middle */}
-                <div className='lg:flex lg:gap-20 pb-2 lg:pb-0 border-b-thin'>
-                    <div className='lg:w-1/2 lg:flex lg:flex-col lg:justify-center'>
-                        <p className='mb-2 pb-2 border-b-thin text-sm'>Dedicated to delivering top results, always eager to grow through new challenges — available for remote or on-site opportunities.</p>
-                        <p className='mb-2 text-sm'>Have an idea or a job opportunity? Do not hesitate to get in touch — I am fluent in
-                            <span> English, </span>
-                            <span>Swedish</span> and
-                            <span> Arabic.</span>
-                        </p>
-                    </div>
-                    <form onSubmit={handleSendMessage} className='flex flex-col gap-2 lg:gap-1 mb-2 lg:w-1/2'>
-                        <input className='p-2 rounded-lg lg:p-1 text-sm' type="text" name='name' placeholder='Name' value={message.name} onChange={handlePrepareMessage} />
-                        <input className='p-2 rounded-lg lg:p-1 text-sm' type="text" name='email' placeholder='Email' value={message.email} onChange={handlePrepareMessage} />
-                        <textarea className='p-2 rounded-lg lg:p-1 text-sm' name="message" placeholder='Message' value={message.message} onChange={handlePrepareMessage}></textarea>
-                        <button type='submit' className='bg-blue-800 p-2 text-white rounded-lg text-sm cursor-pointer'>Send</button>
-                    </form>
-                </div>
                 {/* Lower */}
                 <div>
                     <p className='border-b-thin pb-2 mt-2 text-sm'>This portfolio is built using modern technologies such as
                         <span> Next.js, </span>
                         <span>TypeScript, </span>
-                        <span>RTK-Query </span>and
+                        <span>Tailwind CSS, </span>
+                        <span>RTK Query </span>and
                         <span> Resend.</span>
                     </p>
                     <h5 className='py-3 text-center text-sm'>© 2025 Mustafa Altaie. Alla rättigheter förbehållna.</h5>
