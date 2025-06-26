@@ -4,7 +4,7 @@ import '../../components/Header/Header.css';
 import { SunIcon, MoonIcon } from '@heroicons/react/24/solid';
 
 const Header = () => {
-    const liList: string[] = ['Home', 'About', 'Contact us', 'Experiences', 'Skills'];
+    const liList: string[] = ['Home', 'Educations', 'Experiences', 'Skills', 'Contact'];
     const [dark, setDark] = useState(true);
     const [hideNav, setHideNav] = useState(false);
     const [hasMonted, setHasMounted] = useState(false);
