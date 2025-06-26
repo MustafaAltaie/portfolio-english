@@ -4,8 +4,9 @@ import Profile from "./components/Profile/Profile";
 import Educations from "./components/Educations/Educations";
 import Experiences from "./components/Experiences/Experiences";
 import Skills from "./components/Skills/Skills";
-import Footer from "./components/Footer/Footer";
 import { useRef } from "react";
+import dynamic from 'next/dynamic';
+const Footer = dynamic(() => import('./components/Footer/Footer'), { ssr: false });
 
 const Home = () => {
   const educationRef = useRef<HTMLElement | null>(null);
