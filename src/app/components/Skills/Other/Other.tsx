@@ -20,7 +20,7 @@ const Other = () => {
         }
     }, [data, isLoading]);
 
-    if (isLoading) return <p>...Loading skills</p>
+    if (isLoading) return null;
     if (isError) return <p>Error loading skills</p>
 
     return (
