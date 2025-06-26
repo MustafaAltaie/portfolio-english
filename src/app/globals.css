@@ -249,7 +249,8 @@ form input[type='file'] {
         width: 50%;
         margin: 0 auto;
     }
-    .section1 form {
+    .section1 form,
+    .contactForm {
         width: 100%;
     }
 }
