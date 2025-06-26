@@ -2,32 +2,31 @@
 import React, { useEffect, useState } from 'react';
 import { FSkill } from '../../../../../types/Skills';
 import Skill from './Skill';
-import { useReadOtherSkillsQuery } from '../../../../../features/skills/skillsApi';
 
-const Other = () => {
-    const [other, setOther] = useState<FSkill[]>([]);
-    const { data, isLoading, isError } = useReadOtherSkillsQuery();
+interface OtherProps {
+    other: FSkill[] | undefined
+}
+
+const Other = ({ other }: OtherProps) => {
+    const [otherSkills, setOtherSkills] = useState<FSkill[]>([]);
 
     useEffect(() => {
-        if (data && !isLoading) {
-            const transformed: FSkill[] = data.map(skill => ({
+        if (other) {
+            const transformed: FSkill[] = other.map(skill => ({
                 id: skill._id,
                 imageLink: skill.imageLink,
                 title: skill.title,
                 level: skill.level,
             }));
-            setOther(transformed);
+            setOtherSkills(transformed);
         }
-    }, [data, isLoading]);
-
-    if (isLoading) return null;
-    if (isError) return <p>Error loading skills</p>
+    }, [other]);
 
     return (
         <div className='mt-5'>
             <h1 className='text-xl mb-3'>Other skills</h1>
             <div className='otherSkillWrapper flex flex-wrap'>
-                {other.map((skill: FSkill) => 
+                {otherSkills.map((skill: FSkill) => 
                 <Skill key={skill.id} skill={skill} />
                 )}
             </div>

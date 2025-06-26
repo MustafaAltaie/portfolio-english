@@ -2,12 +2,13 @@
 import React, { useState, useEffect, forwardRef } from 'react';
 import './Footer.css';
 import { SocialObj, Message } from '../../../../types/Footer';
-import { useReadSocialQuery } from '../../../../features/footer/socialApi';
 import { useReadFooterDocsQuery } from '../../../../features/footer/docsApi';
 
-type FooterProps = React.HTMLAttributes<HTMLElement>;
+interface FooterProps {
+    socials: SocialObj | undefined
+}
 
-const Footer = forwardRef<HTMLElement, FooterProps>((_, ref) => {
+const Footer = forwardRef<HTMLElement, FooterProps>(({ socials }, ref) => {
     const [message, setMessage] = useState<Message>({
         name: '',
         email: '',
@@ -20,17 +21,12 @@ const Footer = forwardRef<HTMLElement, FooterProps>((_, ref) => {
             github: '',
         });
     const { data, isLoading } = useReadFooterDocsQuery();
-    const { data: socials } = useReadSocialQuery();
 
     useEffect(() => {
         if (socials) {
             setSocial(socials);
         }
     }, [socials]);
-
-    useEffect(() => {
-        console.log("Fetched Docs:", data);
-    }, [data]);
 
     if (isLoading) return <p>...Loading documents</p>
 

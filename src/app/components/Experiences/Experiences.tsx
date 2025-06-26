@@ -3,18 +3,18 @@ import React, { useState, useEffect, forwardRef } from 'react';
 import './Experiences.css';
 import { BriefcaseIcon, ArrowLongRightIcon } from '@heroicons/react/24/solid';
 import Experience from './Experience';
-import { useReadExpsQuery } from '../../../../features/experiences/experienceApi';
 import { Exp } from '../../../../types/Experiences';
 
-type ExperiencesProps = React.HTMLAttributes<HTMLElement>;
+interface ExperiencesProps {
+    experiences: Exp[] | undefined
+}
 
-const Experiences = forwardRef<HTMLElement, ExperiencesProps>((_, ref) => {
+const Experiences = forwardRef<HTMLElement, ExperiencesProps>(({ experiences }, ref) => {
     const [experienceList, setExperienceList] = useState<Exp[]>([]);
-    const { data, isLoading, isError } = useReadExpsQuery();
 
     useEffect(() => {
-        if (data && !isLoading) {
-            const transformed: Exp[] = data.map(experience => ({
+        if (experiences) {
+            const transformed: Exp[] = experiences.map(experience => ({
                 id: experience._id,
                 dateFrom: experience.dateFrom,
                 dateTo: experience.dateTo,
@@ -26,10 +26,7 @@ const Experiences = forwardRef<HTMLElement, ExperiencesProps>((_, ref) => {
             }));
             setExperienceList(transformed);
         }
-    }, [data, isLoading]);
-
-    if (isError) return <p>Error loading experiences</p>
-    if (isLoading) return <p>...Loading experiences</p>
+    }, [experiences]);
 
     return (
         <section ref={ref} className='experiences p-7 flex flex-col gap-5 bg-url-fixed pb-10 border-b-thin'>

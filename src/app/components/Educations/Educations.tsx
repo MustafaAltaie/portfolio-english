@@ -3,17 +3,17 @@ import './Educations.css';
 import { AcademicCapIcon } from '@heroicons/react/24/solid';
 import { EducationType } from '../../../../types/Educations';
 import Education from './Education';
-import { useReadEducationsQuery } from '../../../../features/educations/educationApi';
 
-type EducationsProps = React.HTMLAttributes<HTMLElement>;
+interface EducationsProps {
+    educations: EducationType[] | undefined
+}
 
-const Educations = forwardRef<HTMLElement, EducationsProps>((_, ref) => {
+const Educations = forwardRef<HTMLElement, EducationsProps>(({ educations }, ref) => {
     const [educationList, setEducationList] = useState<EducationType[]>([]);
-    const { data, isLoading, isError } = useReadEducationsQuery();
 
     useEffect(() => {
-        if(!isLoading && data) {
-            const transformed: EducationType[] = data.map(edu => ({
+        if(educations) {
+            const transformed: EducationType[] = educations.map(edu => ({
                 id: edu._id,
                 location: edu.location,
                 dateFrom: edu.dateFrom,
@@ -26,10 +26,7 @@ const Educations = forwardRef<HTMLElement, EducationsProps>((_, ref) => {
             }));
             setEducationList(transformed);
         }
-    }, [isLoading, data]);
-
-    if (isError) return <p>Error loading experiences</p>
-    if (isLoading) return <p>...Loading experiences</p>
+    }, [educations]);
 
     return (
         <section ref={ref} className='educations p-7 flex flex-col gap-5 border-b-thin bg-url-fixed pb-10'>

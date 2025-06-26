@@ -4,10 +4,15 @@ import './Skills.css';
 import Frontend from './Frontend/Frontend';
 import Backend from './Backend/Backend';
 import Other from './Other/Other';
+import { FSkill } from '../../../../types/Skills';
 
-type SkillsProps = React.HTMLAttributes<HTMLElement>;
+interface SkillsProps {
+    backend: FSkill[] | undefined
+    frontend: FSkill[] | undefined
+    other: FSkill[] | undefined
+}
 
-const Skills = forwardRef<HTMLElement, SkillsProps>((_, ref) => {
+const Skills = forwardRef<HTMLElement, SkillsProps>(({ backend, frontend, other }, ref) => {
     return (
         <section ref={ref} className='skills py-7 px-3 pb-10 bg-url-fixed'>
             <div className='flex gap-2 mb-3 pb-3'>
@@ -16,9 +21,9 @@ const Skills = forwardRef<HTMLElement, SkillsProps>((_, ref) => {
             </div>
             {/* skills main wrapper */}
             <div>
-                <Frontend />
-                <Backend />
-                <Other />
+                <Backend backend={backend} />
+                <Frontend frontend={frontend} />
+                <Other other={other} />
             </div>
         </section>
     )

@@ -3,20 +3,19 @@ import Image from 'next/image';
 import './Profile.css';
 import { UserCircleIcon } from '@heroicons/react/24/solid';
 import { motion } from 'framer-motion';
-import { useReadProfileQuery } from '../../../../features/profile/profileApi';
 
-const Section1 = () => {
-    const { data: profile, isLoading, isError } = useReadProfileQuery();
+interface Section1Props {
+    profile: string | undefined
+}
+
+const Section1 = ({ profile }: Section1Props) => {
     const [text, setText] = useState<string>('');
 
     useEffect(() => {
-        if (!isLoading && profile) {
-            setText(profile.profile);
+        if (profile) {
+            setText(profile || '');
         }
-    }, [profile, isLoading]);
-
-    if (isLoading) return <p>...Loading profile</p>
-    if (isError) return <p>Error loading profile</p>
+    }, [profile]);
 
     return (
         <section className='section1 overflow-x-hidden flex flex-col lg:flex-row pt-10'>
