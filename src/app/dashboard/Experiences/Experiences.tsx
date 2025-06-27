@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useRef, useEffect } from 'react';
 import '../../components/Experiences/Experiences.css';
-import { BriefcaseIcon, ArrowLongRightIcon } from '@heroicons/react/24/solid';
+import { BriefcaseIcon } from '@heroicons/react/24/solid';
 import Experience from './Experience';
 import { Exp } from '../../../../types/Experiences';
 import Form from './Form';
@@ -110,7 +110,6 @@ const Experiences = () => {
                     <Experience key={exp.id} exp={exp} setForm={setForm} setObj={setObj} setScrolled={setScrolled} />
                 )}
             </div>
-            <p className='flex gap-1 items-end cursor-pointer' onClick={() => window.open('https://github.com/MustafaAltaie', '_blank', 'noopener,noreferrer')}>Check out these and other applications on GitHub <ArrowLongRightIcon className='w-5' /></p>
             <h1 className={`transition-all w-5 h-5 flexCenter pb-2 mx-auto text-4xl cursor-pointer ${form ? 'rotate-45' : ''}`} onClick={() => setForm(!form)}>+</h1>
             <Form
                 obj={obj}

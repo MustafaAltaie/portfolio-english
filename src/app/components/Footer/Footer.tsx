@@ -174,9 +174,10 @@ const Footer = forwardRef<HTMLElement, FooterProps>(({ socials }, ref) => {
                 {/* Lower */}
                 <div>
                     <p className='border-b-thin pb-2 mt-2 text-sm'>This portfolio is built using modern technologies such as
-                        <span> Next.js, </span>
+                        <span> React.js (Next.js), </span>
                         <span>TypeScript, </span>
                         <span>Tailwind CSS, </span>
+                        <span>Cloudinary, </span><br />
                         <span>RTK Query </span>and
                         <span> Resend.</span>
                     </p>

@@ -20,12 +20,6 @@
     color: #059;
     border: solid 0.5px #00559988;
 }
-.expStachList {
-    scrollbar-width: none;
-}
-.darkMode .expText {
-    background: #222222ee;
-}
 
 @media (min-width: 1024px) {
     .experiences {

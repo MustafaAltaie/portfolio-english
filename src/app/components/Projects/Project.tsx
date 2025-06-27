@@ -29,18 +29,17 @@ const Project = ({ app }: ProjectProps) => {
             ref={projectRef}
             title={app.description}
             className='project relative p-3 flex flex-col justify-between gap-2 rounded-xl'
-            onClick={() => setClicked(!clicked)}
+            onClick={() => setClicked(true)}
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.4 }}
             viewport={{ once: true, amount: 0.3 }}
         >
-            {clicked && <div className='projectText absolute w-full h-full left-0 top-0 p-2'>{app.description}</div>}
             <div>
-                <h1 className='font-bold text-sm mb-2'>{app.title}</h1>
-                <p className='text-sm border-b-thin mb-1 pb-2'>{app.description.slice(0, 40)}...</p>
+                <h1 className='font-bold text-sm mb-2'>{clicked ? app.title : app.title.slice(0, 15) + '...'}</h1>
+                <p className='text-sm mb-1 pb-2 border-b-thin'>{clicked ? app.description : app.description.slice(0, 40)}...</p>
             </div>
-            <ul className='flex flex-wrap gap-1 border-b-thin pb-3'>
+            <ul className={`flex flex-wrap gap-1 ${!clicked && 'max-h-10 overflow-hidden'}`}>
                 {app.techList.map(tech =>
                 <Tech key={tech} tech={tech} />
                 )}
