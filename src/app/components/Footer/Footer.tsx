@@ -75,6 +75,7 @@ const Footer = forwardRef<HTMLElement, FooterProps>(({ socials }, ref) => {
             setSuccessMsg('Message sent!');
             setFormData({ name: '', email: '', message: '' });
         } catch (err) {
+            console.error(err);
             setErrorMsg('Could not send the message.');
         } finally {
             setDisableButton(false);
