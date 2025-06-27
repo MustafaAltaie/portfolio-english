@@ -4,10 +4,7 @@
     overflow-x: hidden;
 }
 .projectWrapper {
-    gap: 10px;
-}
-.project {
-    width: calc(100%/2 - 10px/2);
+    gap: 20px;
 }
 .darkMode .project {
     background: #1f1f1f;
@@ -33,9 +30,41 @@
     color: #fff;
 }
 
+.projectMark {
+    top: -7px;
+    right: 20px;
+    clip-path: polygon(-30% -30%, 130% -30%, 100% 100%, 50% 80%, 0 100%);
+}
+.darkMode .projectMark {
+    background: #058;
+}
+.lightMode .projectMark {
+    background: #a70;
+}
+.projectMark::before,
+.projectMark::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 7px;
+    height: 7px;
+    background: #640;
+    transform: translateX(-99%);
+    clip-path: polygon(0 100%, 100% 0, 100% 100%);
+}
+.projectMark::after {
+    left: unset;
+    right: 0;
+    transform: translateX(99%);
+    clip-path: polygon(0 0, 100% 100%, 0 100%);
+}
+
 @media (min-width: 1024px) {
     .projects {
         width: 80%;
         margin: 0 auto;
+    }
+    .project {
+        width: calc(100%/3 - 40px/3);
     }
 }

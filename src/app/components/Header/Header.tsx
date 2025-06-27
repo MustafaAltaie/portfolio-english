@@ -75,7 +75,7 @@ const Header = ({ scrollToEducations, scrollToExperiences, scrollToSkills, scrol
                         <div className="flex gap-2">
                             <SunIcon className='w-5 text-yellow-600 cursor-pointer' onClick={() => setDark(false)} />
                             <div onClick={() => setDark(!dark)} className="noTouchAction w-9 h-6 relative rounded-full border-thin cursor-pointer">
-                                <div className={`bg-yellow-600 w-5 h-5 rounded-full centeredY transition-all ${!dark ? 'left-0.5' : 'left-3'}`}></div>
+                                <div className={`bg-yellow-600 w-5 h-5 rounded-full centeredY transition-all ${!dark ? 'left-[1.2px]' : 'left-[13px]'}`}></div>
                             </div>
                             <MoonIcon className='w-5 text-yellow-600 cursor-pointer' onClick={() => setDark(true)}  />
                         </div>

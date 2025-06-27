@@ -8,7 +8,7 @@ interface TechProps {
 const Tech = ({ tech }: TechProps) => {
     return (
         <motion.li
-            className='text-sm rounded-lg px-1'
+            className='rounded-lg px-1.5 py-1'
             initial={{ opacity: 0, scale: 0 }}
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8 }}

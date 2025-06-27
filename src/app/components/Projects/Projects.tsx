@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import './Projects.css';
-import { CodeBracketIcon, ArrowLongRightIcon } from '@heroicons/react/24/solid';
+import { CodeBracketIcon, ArrowLongRightIcon, BriefcaseIcon } from '@heroicons/react/24/solid';
 import { ProjectType } from '../../../../types/Projects';
 import Project from './Project';
 
@@ -65,10 +65,11 @@ const Projects = () => {
 
     return (
         <section className='projects bg-url-fixed py-7 px-3'>
-            <div className='flex gap-2 mb-3 pb-3'>
+            <div className='flex gap-2 pb-3'>
                 <CodeBracketIcon className='w-7 text-yellow-600' />
                 <h1 className='text-2xl text-yellow-600'>My projects</h1>
             </div>
+            <p className='flex gap-1 mb-4'>Projects with a briefcase icon <BriefcaseIcon className='w-4' /> indicate professional work.</p>
             {/* wrapper */}
             <div className='projectWrapper flex flex-wrap'>
                 {/* card */}
