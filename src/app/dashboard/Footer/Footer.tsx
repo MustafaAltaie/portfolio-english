@@ -115,14 +115,14 @@ const Footer = () => {
             {busy && <WaitingModal />}
             <div>
                 {/* Upper */}
-                <div className='fotterUpper flex gap-5 justify-center p-3 lg:p-2 border-b-thin mb-2 mt-2'>
+                <div className='fotterUpper flex gap-5 lg:gap-10 justify-center p-3 lg:p-2 border-b-thin mb-2 mt-2'>
                     <a
                         href={`https://www.linkedin.com/in/${social.linkedIn}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className={`flex flex-col items-center gap-1 ${!social.linkedIn && 'pointer-events-none'}`}
                     >
-                        <div className='w-7 h-7 flexCenter rounded-full'>
+                        <div className='w-8 h-8 flexCenter rounded-full'>
                             <i className="fa-brands fa-linkedin-in text-white text-sm"></i>
                         </div>
                         <p className='text-sm'>LinkedIn</p>
@@ -132,7 +132,7 @@ const Footer = () => {
                         rel="noopener"
                         className={`flex flex-col items-center gap-1 ${!social.mobile && 'pointer-events-none'}`}
                     >
-                        <div className='w-7 h-7 flexCenter rounded-full'>
+                        <div className='w-8 h-8 flexCenter rounded-full'>
                             <i className="fa-solid fa-phone text-white text-sm"></i>
                         </div>
                         <p className='text-sm'>Call me</p>
@@ -141,7 +141,7 @@ const Footer = () => {
                         href={`mailto:${social.email}`}
                         className={`flex flex-col items-center gap-1 ${!social.email && 'pointer-events-none'}`}
                     >
-                        <div className='w-7 h-7 flexCenter rounded-full'>
+                        <div className='w-8 h-8 flexCenter rounded-full'>
                             <i className="fa-solid fa-envelope text-white text-sm"></i>
                         </div>
                         <p className='text-sm'>Email me</p>
@@ -152,7 +152,7 @@ const Footer = () => {
                         rel="noopener noreferrer"
                         className={`flex flex-col items-center gap-1 ${!social.github && 'pointer-events-none'}`}
                     >
-                        <div className='w-7 h-7 flexCenter rounded-full'>
+                        <div className='w-8 h-8 flexCenter rounded-full'>
                             <i className="fa-brands fa-github text-white text-sm"></i>
                         </div>
                         <p className='text-sm'>Github</p>
@@ -170,7 +170,7 @@ const Footer = () => {
                 />
                 <div className='lg:flex items-center lg:border-b-1 lg:border-[#ffffff55] gap-10'>
                     {/* Documents */}
-                    <div className='border-b-1 border-[#ffffff55] lg:border-b-0 pb-2 mb-2 lg:w-1/2 border-r-1 pr-10'>
+                    <div className='border-b-1 border-[#ffffff55] lg:border-b-0 pb-2 mb-2 lg:w-1/2 lg:border-r-1 pr-10'>
                         <p className='mb-3 flex gap-3'><span>You can find all relevant documents below.</span>{!docForm && <PencilIcon className='w-5 lg:w-4 cursor-pointer' onClick={() => setDocForm(true)} />}</p>
                         <ul className='flex flex-col gap-2'>
                             {data?.map((doc, index) =>

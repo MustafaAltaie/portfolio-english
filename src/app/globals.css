@@ -21,10 +21,6 @@ body.lightMode,
     color: #000;
 }
 
-section {
-    min-height: 50vh;
-}
-
 img {
     pointer-events: none;
 }

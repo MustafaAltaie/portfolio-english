@@ -90,7 +90,7 @@ const Footer = forwardRef<HTMLElement, FooterProps>(({ socials }, ref) => {
                 </div>
                 <div className='lg:flex items-center lg:border-b-1 lg:border-[#ffffff55] gap-10'>
                     {/* Documents */}
-                    <div className='border-b-1 border-[#ffffff55] lg:border-b-0 pb-2 mb-2 lg:w-1/2 border-r-1 pr-10'>
+                    <div className='border-b-1 border-[#ffffff55] lg:border-b-0 pb-2 mb-2 lg:w-1/2 lg:border-r-1 pr-10'>
                         <p className='mb-3 flex gap-3'><span>You can find all relevant documents below.</span></p>
                         <ul className='flex flex-col gap-2'>
                             {data?.map(doc =>

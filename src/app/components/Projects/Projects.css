@@ -1,0 +1,59 @@
+.projects {
+    background-image: url('/images/nodejs.png');
+    border-top: solid 0.5px;
+    overflow-x: hidden;
+}
+.projectWrapper {
+    gap: 10px;
+}
+.project {
+    width: calc(100%/2 - 10px/2);
+}
+.darkMode .project {
+    background: #1f1f1f;
+}
+.lightMode .project {
+    background: #e1e1e1;
+}
+.darkMode .project h1 {
+    color: #08b;
+}
+.lightMode .project h1 {
+    color: #a70;
+}
+.project ul {
+    max-height: 55px;
+    overflow-y: scroll;
+    scrollbar-width: none;
+}
+.project ul > li {
+    font-size: 12px;
+}
+.darkMode .project ul > li {
+    background: #6f4411;
+    color: #ffffffaa;
+}
+.lightMode .project ul > li {
+    background: #58b;
+    color: #fff;
+}
+
+.projectText {
+    max-height: 100%;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    font-size: 12px;
+}
+.darkMode .projectText {
+    background: #1f1f1fee;
+}
+.lightMode .projectText {
+    background: #e1e1e1ee;
+}
+
+@media (min-width: 1024px) {
+    .projects {
+        width: 80%;
+        margin: 0 auto;
+    }
+}

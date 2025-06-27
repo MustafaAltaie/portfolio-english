@@ -39,7 +39,7 @@ const Section1 = ({ profile }: Section1Props) => {
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.8 }}
                     viewport={{ once: true, amount: 0 }}
-                >{text}</motion.p>
+                >{text === 'hello' || 'Full-Stack JavaScript Developer with a strong focus on frontend development in React/Preact and experience in building modern user interfaces.  I’m urrently learning about secure coding practices and video streaming technologies to strengthen knowledge in TV platforms.  Team player with a problem-solving mindset. Adaptable and eager to learn new technologies.'}</motion.p>
             </div>
         </section>
     )

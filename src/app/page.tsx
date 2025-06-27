@@ -4,6 +4,7 @@ import Profile from "./components/Profile/Profile";
 import Educations from "./components/Educations/Educations";
 import Experiences from "./components/Experiences/Experiences";
 import Skills from "./components/Skills/Skills";
+import Projects from "./components/Projects/Projects";
 import Footer from "./components/Footer/Footer";
 import { useRef } from "react";
 import { useReadProfileQuery } from "../../features/profile/profileApi";
@@ -50,6 +51,7 @@ const Home = () => {
       <Educations educations={educations} ref={educationRef} />
       <Experiences experiences={experiences} ref={ExperienceRef} />
       <Skills backend={backend} frontend={frontend} other={other} ref={SkillRef} />
+      <Projects />
       <Footer socials={socials} ref={ContactRef} />
     </main>
   )

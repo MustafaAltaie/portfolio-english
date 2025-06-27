@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useEffect, forwardRef } from 'react';
 import './Experiences.css';
-import { BriefcaseIcon, ArrowLongRightIcon } from '@heroicons/react/24/solid';
+import { BriefcaseIcon } from '@heroicons/react/24/solid';
 import Experience from './Experience';
 import { Exp } from '../../../../types/Experiences';
 
@@ -41,7 +41,6 @@ const Experiences = forwardRef<HTMLElement, ExperiencesProps>(({ experiences }, 
                     <Experience key={exp.id} exp={exp} />
                 )}
             </div>
-            <p className='flex gap-1 items-end cursor-pointer' onClick={() => window.open('https://github.com/MustafaAltaie', '_blank', 'noopener,noreferrer')}>Check out these and other applications on GitHub <ArrowLongRightIcon className='w-5' /></p>
         </section>
     )
 });
