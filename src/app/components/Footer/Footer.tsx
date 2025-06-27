@@ -99,7 +99,7 @@ const Footer = forwardRef<HTMLElement, FooterProps>(({ socials }, ref) => {
                         rel="noopener noreferrer"
                         className={`flex flex-col items-center gap-1 ${!social.linkedIn && 'pointer-events-none'}`}
                     >
-                        <div className='w-7 h-7 flexCenter rounded-full'>
+                        <div className='w-8 h-8 flexCenter rounded-full'>
                             <i className="fa-brands fa-linkedin-in text-white text-sm"></i>
                         </div>
                         <p className='text-sm'>LinkedIn</p>
@@ -109,7 +109,7 @@ const Footer = forwardRef<HTMLElement, FooterProps>(({ socials }, ref) => {
                         rel="noopener"
                         className={`flex flex-col items-center gap-1 ${!social.mobile && 'pointer-events-none'}`}
                     >
-                        <div className='w-7 h-7 flexCenter rounded-full'>
+                        <div className='w-8 h-8 flexCenter rounded-full'>
                             <i className="fa-solid fa-phone text-white text-sm"></i>
                         </div>
                         <p className='text-sm'>Call me</p>
@@ -118,7 +118,7 @@ const Footer = forwardRef<HTMLElement, FooterProps>(({ socials }, ref) => {
                         href={`mailto:${social.email}`}
                         className={`flex flex-col items-center gap-1 ${!social.email && 'pointer-events-none'}`}
                     >
-                        <div className='w-7 h-7 flexCenter rounded-full'>
+                        <div className='w-8 h-8 flexCenter rounded-full'>
                             <i className="fa-solid fa-envelope text-white text-sm"></i>
                         </div>
                         <p className='text-sm'>Email me</p>
@@ -129,7 +129,7 @@ const Footer = forwardRef<HTMLElement, FooterProps>(({ socials }, ref) => {
                         rel="noopener noreferrer"
                         className={`flex flex-col items-center gap-1 ${!social.github && 'pointer-events-none'}`}
                     >
-                        <div className='w-7 h-7 flexCenter rounded-full'>
+                        <div className='w-8 h-8 flexCenter rounded-full'>
                             <i className="fa-brands fa-github text-white text-sm"></i>
                         </div>
                         <p className='text-sm'>Github</p>
