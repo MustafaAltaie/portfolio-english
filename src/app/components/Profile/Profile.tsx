@@ -39,7 +39,7 @@ const Section1 = ({ profile }: Section1Props) => {
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.8 }}
                     viewport={{ once: true, amount: 0 }}
-                >{!text.includes('4435966') ? text : 'Full-Stack JavaScript Developer with a strong focus on frontend development in React and experience in building modern user interfaces.  I am currently learning about secure coding practices and video streaming technologies to strengthen knowledge in TV platforms.  Team player with a problem-solving mindset. Adaptable and eager to learn new technologies.'}</motion.p>
+                >{text || 'I am a fullstack JavaScript developer focused on building scalable and responsive web applications using Next.js with TypeScript and the MERN stack (MongoDB, Express, React, Node.js). I write clean, optimized code that follows best practices, and I work with modern tools like Tailwind CSS, Next.js, and TypeScript. I am always eager to learn new technologies and quickly adapt to new challenges.'}</motion.p>
             </div>
         </section>
     )
