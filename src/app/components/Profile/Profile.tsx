@@ -18,7 +18,7 @@ const Section1 = ({ profile }: Section1Props) => {
     }, [profile]);
 
     return (
-        <section className='section1 overflow-x-hidden flex flex-col lg:flex-row pt-10'>
+        <section className='section1 overflow-x-hidden flex flex-col lg:flex-row pt-20'>
             <div className="mainImageWrapper flex items-end lg:items-end justify-center overflow-hidden lg:w-1/2">
                 <Image
                     className='lg:object-contain'
