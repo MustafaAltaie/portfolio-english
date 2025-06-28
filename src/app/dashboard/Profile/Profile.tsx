@@ -35,7 +35,7 @@ const Section1 = () => {
     }
 
     return (
-        <section className='section1 overflow-x-hidden flex flex-col lg:flex-row pt-20'>
+        <section className='section1 overflow-x-hidden flex flex-col lg:flex-row'>
             {isLoading && <WaitingModal />}
             {busy && <WaitingModal />}
             <div className="mainImageWrapper flex items-end justify-center overflow-hidden lg:w-1/2">
