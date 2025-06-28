@@ -38,7 +38,7 @@ const Section1 = () => {
         <section className='section1 overflow-x-hidden flex flex-col lg:flex-row pt-10'>
             {isLoading && <WaitingModal />}
             {busy && <WaitingModal />}
-            <div className="mainImageWrapper flex items-start justify-center overflow-hidden lg:w-1/2">
+            <div className="mainImageWrapper flex items-end justify-center overflow-hidden lg:w-1/2">
                 <Image
                     className='lg:object-contain'
                     src='/images/empty.png'

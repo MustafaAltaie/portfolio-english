@@ -19,7 +19,7 @@ const Section1 = ({ profile }: Section1Props) => {
 
     return (
         <section className='section1 overflow-x-hidden flex flex-col lg:flex-row pt-10'>
-            <div className="mainImageWrapper flex items-start lg:items-end justify-center overflow-hidden lg:w-1/2">
+            <div className="mainImageWrapper flex items-end lg:items-end justify-center overflow-hidden lg:w-1/2">
                 <Image
                     className='lg:object-contain'
                     src='/images/empty.png'
