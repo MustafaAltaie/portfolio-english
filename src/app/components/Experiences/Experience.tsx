@@ -39,7 +39,14 @@ const Experience = ({ exp }: ExperienceProps) => {
             </div>}
             <p>{exp.title} in <span className='italic'>{exp.company}</span></p>
             <p className='text-yellow-600'>{exp.location}</p>
-            {clicked && <p className='text-sm text-neutral-500'>{exp.description}</p>}
+            {clicked &&
+            <motion.p
+                className='text-sm text-neutral-500'
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.4 }}
+                viewport={{ once: true, amount: 0 }}
+            >{exp.description}</motion.p>}
             {exp.techStack?.length !== 0 && clicked &&
             <motion.p
                 className='mt-1 text-sm flex items-end gap-1'
