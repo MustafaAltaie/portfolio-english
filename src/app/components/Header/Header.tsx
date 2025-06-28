@@ -8,6 +8,7 @@ interface HeaderProps {
     scrollToExperiences: () => void
     scrollToSkills: () => void
     scrollToContact: () => void
+    scrollToProject: () => void
 }
 
 interface LiList {
@@ -15,7 +16,7 @@ interface LiList {
     target: () => void
 }
 
-const Header = ({ scrollToEducations, scrollToExperiences, scrollToSkills, scrollToContact }: HeaderProps) => {
+const Header = (props: HeaderProps) => {
     const scrollToHome = () => {
         window.scrollTo({ top: 0, behavior: "smooth" })
     }
@@ -27,19 +28,23 @@ const Header = ({ scrollToEducations, scrollToExperiences, scrollToSkills, scrol
         },
         {
             title: 'Educations',
-            target: scrollToEducations
+            target: props.scrollToEducations
         },
         {
             title: 'Experiences',
-            target: scrollToExperiences
+            target: props.scrollToExperiences
         },
         {
             title: 'Skills',
-            target: scrollToSkills
+            target: props.scrollToSkills
+        },
+        {
+            title: 'Projects',
+            target: props.scrollToProject
         },
         {
             title: 'Contact',
-            target: scrollToContact
+            target: props.scrollToContact
         },
     ]
     const [dark, setDark] = useState(true);

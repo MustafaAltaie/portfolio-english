@@ -4,6 +4,7 @@ import Educations from "./Educations/Educations";
 import Experiences from "./Experiences/Experiences";
 import Skills from "./Skills/Skills";
 import Footer from "./Footer/Footer";
+import Projects from "./Projects/Projects";
 
 const Dashboard = () => {
   return (
@@ -13,6 +14,7 @@ const Dashboard = () => {
       <Educations />
       <Experiences />
       <Skills />
+      <Projects />
       <Footer />
     </main>
   )

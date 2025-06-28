@@ -37,8 +37,8 @@ const Project = ({ app }: ProjectProps) => {
         >
             {app.isProfessional && <div className='projectMark absolute w-8 h-8'><BriefcaseIcon className='absolute top-1 left-1/2 -translate-x-1/2 w-5' /></div>}
             <div>
-                <h1 className='mb-2'>{app.title}</h1>
-                <p className='text-sm mb-1 pb-2 border-b-thin'>{clicked ? app.description : app.description.slice(0, 60)}...</p>
+                <h1 className='mb-2 font-bold'>{app.title}</h1>
+                <p className={`text-sm ${app.link && 'mb-1 pb-2 border-b-thin'}`}>{clicked ? app.description : app.description.slice(0, 50) + '...'}</p>
             </div>
             <ul className='flex flex-wrap gap-2'>
                 {app.techList.map(tech =>
@@ -46,7 +46,16 @@ const Project = ({ app }: ProjectProps) => {
                 )}
             </ul>
             <p className='text-[10px] absolute bottom-1 right-2 opacity-40'>{app.date}</p>
-            <p className='flex text-sm items-end gap-1 text-[#58b]' onClick={() => window.open(app.link, '_blank', 'noopener,noreferrer')}>See project in github<ArrowLongRightIcon className='w-4.5' /></p>
+            {clicked && app.link &&
+            <motion.p
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.4 }}
+                viewport={{ once: true, amount: 0 }}
+                className='flex text-sm items-end gap-1 text-[#58b]'
+                onClick={() => window.open(app.link, '_blank', 'noopener,noreferrer')}
+            >See project in github<ArrowLongRightIcon className='w-4.5' />
+            </motion.p>}
         </motion.div>
     )
 }

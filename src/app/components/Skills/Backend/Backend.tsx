@@ -23,7 +23,7 @@ const Backend = ({ backend }: BackendProps) => {
     }, [backend]);
 
     return (
-        <div className='mt-5'>
+        <div className='mt-3'>
             <h1 className='text-xl mb-3'>Backend</h1>
             <div className='backendSkillWrapper flex flex-wrap'>
                 {backendTasks.map((skill: FSkill) =>

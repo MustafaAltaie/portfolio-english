@@ -37,11 +37,18 @@ const Experience = ({ exp }: ExperienceProps) => {
                 <BriefcaseIcon className='w-7 bg-blue-600 text-white rounded-full p-1.5' />
                 <p className='text-sm text-blue-500 font-bold'>{exp.dateFrom} - {exp.dateTo ? exp.dateTo : 'Present'}</p>
             </div>}
-            <p>{clicked ? exp.title : exp.title.slice(0, 10) + '...'} in <span className='italic'>{exp.company}</span></p>
+            <p>{exp.title} in <span className='italic'>{exp.company}</span></p>
             <p className='text-yellow-600'>{exp.location}</p>
-            <p className='text-sm text-neutral-500'>{clicked ? exp.description : exp.description?.slice(0, 40) + '...'}</p>
-            {exp.techStack?.length !== 0 && <p className='mt-1 text-sm flex items-end gap-1'>I worked with the following tech stack <ArrowLongRightIcon className='w-4' /></p>}
-            <div className={`expStachList flex flex-wrap gap-2 ${clicked ? '' : 'max-h-12'} overflow-y-hidden`}>
+            {clicked && <p className='text-sm text-neutral-500'>{exp.description}</p>}
+            {exp.techStack?.length !== 0 && clicked &&
+            <motion.p
+                className='mt-1 text-sm flex items-end gap-1'
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.4 }}
+                viewport={{ once: true, amount: 0 }}
+            >I worked with the following tech stack <ArrowLongRightIcon className='w-4' /></motion.p>}
+            <div className={`expStachList flex flex-wrap gap-2 ${clicked ? '' : 'max-h-8'} overflow-y-hidden`}>
                 {exp.techStack?.map((tech: string) => 
                 <p key={tech} className='expTech px-2 py-1 rounded-xl text-sm'>{tech}</p>
                 )}

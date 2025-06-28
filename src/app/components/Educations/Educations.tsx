@@ -29,13 +29,14 @@ const Educations = forwardRef<HTMLElement, EducationsProps>(({ educations }, ref
     }, [educations]);
 
     return (
-        <section ref={ref} className='educations p-7 flex flex-col gap-5 border-b-thin bg-url-fixed pb-10'>
-            <div className='flex items-center gap-2'>
+        <section ref={ref} className='educations p-7 flex flex-col border-b-thin bg-url-fixed pb-10'>
+            <div className='flex items-center gap-2 font-bold'>
                 <AcademicCapIcon className='w-7 text-yellow-600' />
                 <h1 className='text-2xl text-yellow-600'>Educations</h1>
             </div>
+            <p className='opacity-50 my-2'>* Click any card to expand full details</p>
             {/* Educations */}
-            <div className='educationWrapper flex flex-col lg:flex-row lg:flex-wrap'>
+            <div className='educationWrapper flex flex-col lg:flex-row lg:flex-wrap lg:items-start'>
                 {/* card */}
                 {educationList.map(education =>
                 <Education key={education.id} education={education} />)}

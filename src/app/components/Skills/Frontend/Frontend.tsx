@@ -23,7 +23,7 @@ const Frontend = ({ frontend }: FrontendProps) => {
     }, [frontend]);
 
     return (
-        <div>
+        <div className='mt-5'>
             <h1 className='text-xl mb-3'>Frontend</h1>
             <div className='frontendSkillWrapper flex flex-wrap'>
                 {frontendSkills.map((skill: FSkill) =>

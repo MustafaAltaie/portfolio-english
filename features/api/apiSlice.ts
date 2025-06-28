@@ -12,6 +12,7 @@ export const api = createApi({
     'skills',
     'social',
     'documents',
+    'projects',
   ],
   endpoints: () => ({}),
 });

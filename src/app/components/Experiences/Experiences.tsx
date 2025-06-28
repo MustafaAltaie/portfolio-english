@@ -29,13 +29,14 @@ const Experiences = forwardRef<HTMLElement, ExperiencesProps>(({ experiences }, 
     }, [experiences]);
 
     return (
-        <section ref={ref} className='experiences p-7 flex flex-col gap-5 bg-url-fixed pb-10 border-b-thin'>
-            <div className='flex gap-2'>
+        <section ref={ref} className='experiences p-7 flex flex-col bg-url-fixed pb-10 border-b-thin'>
+            <div className='flex gap-2 font-bold'>
                 <BriefcaseIcon className='w-7 text-yellow-600' />
                 <h1 className='text-yellow-600 text-2xl'>Experiences</h1>
             </div>
+            <p className='opacity-50 my-2'>* Click any card to expand full details</p>
             {/* Experiences wrapper */}
-            <div className='expWrapper flex flex-col lg:flex-row lg:flex-wrap'>
+            <div className='expWrapper flex flex-col lg:flex-row lg:flex-wrap lg:items-start'>
                 {/* Card */}
                 {experienceList.map((exp: Exp) => 
                     <Experience key={exp.id} exp={exp} />
