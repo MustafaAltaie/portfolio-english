@@ -1,10 +1,10 @@
 'use client';
 import React, { useEffect, useState, useRef } from 'react';
-import './Projects.css';
+import '../../components/Projects/Projects.css';
 import { CodeBracketIcon } from '@heroicons/react/24/solid';
 import { ProjectType } from '../../../../types/Projects';
 import Project from './Project';
-import { useReadProjectsQuery, useCreateProjectMutation } from '../../../../features/projects/projectsApi';
+import { useReadProjectsQuery, useCreateProjectMutation, useUpdateProjectMutation, useDeleteProjectMutation } from '../../../../features/projects/projectsApi';
 import Form from './Form';
 import WaitingModal from '../WaitingModal';
 
@@ -26,6 +26,8 @@ const Projects = () => {
     const [thisTech, setThisTech] = useState<string | undefined>('');
     const techRef = useRef<HTMLInputElement | null>(null);
     const [createProject] = useCreateProjectMutation();
+    const [updateProject] = useUpdateProjectMutation();
+    const [deleteProject] = useDeleteProjectMutation();
 
     useEffect(() => {
         if (projects) {
@@ -71,7 +73,7 @@ const Projects = () => {
             return;
         }
         setObj(prev => ({
-            ...prev, techList: [...prev.techList!, trimmed]
+            ...prev, techList: [...prev.techList || [], trimmed]
         }));
         setTechText('');
         techRef.current?.focus();
@@ -81,13 +83,43 @@ const Projects = () => {
         e.preventDefault();
         try {
             setBusy(true);
-            await createProject(obj).unwrap();
+            if (obj.id) {
+                await updateProject({id: obj.id, data: obj}).unwrap();
+            } else {
+                await createProject(obj).unwrap();
+            }
         } catch(err) {
             console.error(err);
             alert('Error while saving project');
         } finally {
             setBusy(false);
             clearObj();
+        }
+    }
+
+    const prepareUpdate = (app: ProjectType) => {
+        setObj({
+            id: app.id,
+            title: app.title,
+            description: app.description,
+            date: app.date,
+            isProfessional: app.isProfessional,
+            techList: app.techList,
+            link: app.link,
+        });
+        setForm(true);
+    }
+
+    const handleDelete = async (id: string) => {
+        if (!id) return;
+        try {
+            setBusy(true);
+            await deleteProject(id).unwrap();
+        } catch (err) {
+            console.error(err);
+            alert('Error deleting project');
+        } finally {
+            setBusy(false);
         }
     }
 
@@ -115,10 +147,15 @@ const Projects = () => {
             <div className='projectWrapper flex flex-wrap'>
                 {/* card */}
                 {list.map(app =>
-                <Project key={app.id} app={app}  />
+                <Project
+                    key={app.id}
+                    app={app}
+                    handleDelete={handleDelete}
+                    prepareUpdate={prepareUpdate}
+                />
                 )}
             </div>
-            <h1 className={`transition-all w-5 h-5 flexCenter pb-2 mx-auto text-4xl cursor-pointer ${form ? 'rotate-45' : ''}`} onClick={() => {setForm(!form); clearObj()}}>+</h1>
+            <h1 className={`transition-all w-5 h-5 flexCenter pb-2 mx-auto mt-5 text-4xl cursor-pointer ${form ? 'rotate-45' : ''}`} onClick={() => {setForm(!form); clearObj()}}>+</h1>
             {form &&
             <Form
                 handleSave={handleSave}

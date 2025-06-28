@@ -183,6 +183,17 @@ const Footer = () => {
                             <li className='italic pl-1 text-sm flex justify-between'>Personal Letter</li>
                         </ul>
                     </div>
+                    <DocForm
+                        DocFormRef={DocFormRef}
+                        handleSaveDocs={handleSaveDocs}
+                        docForm={docForm}
+                        setDocForm={setDocForm}
+                        docName={docName}
+                        setDocName={setDocName}
+                        setDocFile={setDocFile}
+                        docFile={docFile}
+                        busy={busy}
+                    />
                     {/* Middle */}
                     <div className='pb-2 border-b-1 border-[#ffffff55] lg:border-b-0 lg:w-1/2'>
                         <p className='mb-2 text-sm'>Have an idea or a job opportunity? Do not hesitate to get in touch — I am fluent in
@@ -198,17 +209,6 @@ const Footer = () => {
                         </form>
                     </div>
                 </div>
-                <DocForm
-                    DocFormRef={DocFormRef}
-                    handleSaveDocs={handleSaveDocs}
-                    docForm={docForm}
-                    setDocForm={setDocForm}
-                    docName={docName}
-                    setDocName={setDocName}
-                    setDocFile={setDocFile}
-                    docFile={docFile}
-                    busy={busy}
-                />
                 {/* Lower */}
                 <div>
                     <p className='border-b-thin pb-2 mt-2 text-sm'>This portfolio is built using modern technologies such as

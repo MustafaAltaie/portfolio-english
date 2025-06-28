@@ -101,7 +101,7 @@ const Experiences = () => {
             {busy && <WaitingModal />}
             <div className='flex gap-2'>
                 <BriefcaseIcon className='w-7 text-yellow-600' />
-                <h1 className='text-yellow-600 text-2xl'>Experiences</h1>
+                <h1 className='text-yellow-600 text-2xl font-bold'>Experiences</h1>
             </div>
             {/* Experiences wrapper */}
             <div className='expWrapper flex flex-col lg:flex-row lg:flex-wrap'>

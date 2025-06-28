@@ -129,7 +129,7 @@ const Educations = () => {
             {busy && <WaitingModal />}
             <div className='flex items-center gap-2'>
                 <AcademicCapIcon className='w-7 text-yellow-600' />
-                <h1 className='text-2xl text-yellow-600'>Educations</h1>
+                <h1 className='text-2xl text-yellow-600 font-bold'>Educations</h1>
             </div>
             <div className='educationWrapper flex flex-col lg:flex-row lg:flex-wrap'>
                 {educationList.map(education =>
