@@ -56,6 +56,11 @@ const Header = (props: HeaderProps) => {
         if(window.innerWidth < 1024) {
             setHideNav(true);
         }
+
+        const stored = localStorage.getItem('isMustafaCvDark');
+        if (stored) {
+            setDark(JSON.parse(stored));
+        }
     }, []);
 
     useEffect(() => {
@@ -67,6 +72,8 @@ const Header = (props: HeaderProps) => {
             bodyClasses.add('lightMode');
             bodyClasses.remove('darkMode');
         }
+        if (!hasMonted) return;
+        localStorage.setItem('isMustafaCvDark', JSON.stringify(dark));
     }, [dark]);
 
     if(!hasMonted) return null;

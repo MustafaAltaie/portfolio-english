@@ -9,7 +9,7 @@ const Tech = ({ tech }: TechProps) => {
     return (
         <motion.li
             className='rounded-lg px-1.5 py-1'
-            initial={{ opacity: 0, scale: 0 }}
+            initial={{ opacity: 0, scale: 1.8 }}
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true, amount: 0 }}

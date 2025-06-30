@@ -6,7 +6,7 @@ import Experiences from "./components/Experiences/Experiences";
 import Skills from "./components/Skills/Skills";
 import Projects from "./components/Projects/Projects";
 import Footer from "./components/Footer/Footer";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useReadProfileQuery } from "../../features/profile/profileApi";
 import { useReadEducationsQuery } from "../../features/educations/educationApi";
 import { useReadExpsQuery } from "../../features/experiences/experienceApi";
@@ -26,6 +26,20 @@ const Home = () => {
   const { data: other, isLoading: otherLoading } = useReadOtherSkillsQuery();
   const { data: projects, isLoading: projectsLoading } = useReadProjectsQuery();
   const { data: socials, isLoading: sociLoading } = useReadSocialQuery();
+
+  useEffect(() => {
+    const stored = localStorage.getItem('mustafaCvScroll');
+    if (stored) {
+      setTimeout(() => {
+        window.scrollTo({ behavior: 'smooth', top: JSON.parse(stored) });
+      }, 1200);
+    }
+    const scrollAmount = () => {
+      localStorage.setItem('mustafaCvScroll', JSON.stringify(window.scrollY));
+    }
+    window.addEventListener('scroll', scrollAmount);
+    return () => window.removeEventListener('scroll', scrollAmount);
+  }, []);
 
   const isDataLoading = proLoading || eduLoading || expLoading || backLoading || frontLoading || otherLoading || projectsLoading || sociLoading;
 
