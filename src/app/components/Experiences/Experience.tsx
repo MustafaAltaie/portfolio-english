@@ -38,7 +38,7 @@ const Experience = ({ exp }: ExperienceProps) => {
                 <p className='text-sm text-blue-500 font-bold'>{exp.dateFrom} - {exp.dateTo ? exp.dateTo : 'Present'}</p>
             </div>}
             <p>{exp.title} in <span className='italic'>{exp.company}</span></p>
-            <p className='text-yellow-600'>{exp.location}</p>
+            <p className='mainColor'>{exp.location}</p>
             {clicked &&
             <motion.p
                 className='text-sm text-neutral-500'

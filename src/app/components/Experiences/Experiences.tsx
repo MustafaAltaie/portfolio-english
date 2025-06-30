@@ -31,8 +31,8 @@ const Experiences = forwardRef<HTMLElement, ExperiencesProps>(({ experiences }, 
     return (
         <section ref={ref} className='experiences p-7 flex flex-col bg-url-fixed pb-10 border-b-thin'>
             <div className='flex gap-2 font-bold'>
-                <BriefcaseIcon className='w-7 text-yellow-600' />
-                <h1 className='text-yellow-600 text-2xl'>Experiences</h1>
+                <BriefcaseIcon className='w-7 mainColor' />
+                <h1 className='mainColor text-2xl'>Experiences</h1>
             </div>
             <p className='opacity-50 my-2'>* Click any card to expand full details</p>
             {/* Experiences wrapper */}

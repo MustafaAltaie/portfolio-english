@@ -31,8 +31,8 @@ const Educations = forwardRef<HTMLElement, EducationsProps>(({ educations }, ref
     return (
         <section ref={ref} className='educations p-7 flex flex-col border-b-thin bg-url-fixed pb-10'>
             <div className='flex items-center gap-2 font-bold'>
-                <AcademicCapIcon className='w-7 text-yellow-600' />
-                <h1 className='text-2xl text-yellow-600'>Educations</h1>
+                <AcademicCapIcon className='w-7 mainColor' />
+                <h1 className='text-2xl mainColor'>Educations</h1>
             </div>
             <p className='opacity-50 my-2'>* Click any card to expand full details</p>
             {/* Educations */}

@@ -31,8 +31,8 @@ const Projects = forwardRef<HTMLElement, ProjectProps>(({ projects }, ref) => {
     return (
         <section ref={ref} className='projects bg-url-fixed p-7'>
             <div className='flex gap-2 pb-3 items-end'>
-                <CodeBracketIcon className='w-7 text-yellow-600' />
-                <h1 className='text-2xl text-yellow-600 font-bold'>My projects</h1>
+                <CodeBracketIcon className='w-7 mainColor' />
+                <h1 className='text-2xl mainColor font-bold'>My projects</h1>
             </div>
             <p className='flex gap-1'>* Projects with <BriefcaseIcon className='w-4' /> indicate professional work.</p>
             <p className='opacity-50 mb-2'>* Click any card to expand full details</p>

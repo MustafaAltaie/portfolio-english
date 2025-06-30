@@ -21,6 +21,13 @@ body.lightMode,
     color: #000;
 }
 
+.mainColor {
+    color: #b80;
+}
+.mainBgColor {
+    background: #b80;
+}
+
 img {
     pointer-events: none;
 }

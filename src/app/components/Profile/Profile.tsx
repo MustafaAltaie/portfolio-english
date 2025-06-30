@@ -19,7 +19,13 @@ const Section1 = ({ profile }: Section1Props) => {
 
     return (
         <section className='section1 overflow-x-hidden flex flex-col lg:flex-row'>
-            <div className="mainImageWrapper flex items-end lg:items-end justify-center overflow-hidden lg:w-1/2">
+            <motion.div
+                className="mainImageWrapper flex items-end lg:items-end justify-center overflow-hidden mt-10 lg:w-1/2"
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
+                viewport={{ once: true, amount: 0 }}
+            >
                 <Image
                     className='lg:object-contain'
                     src='/images/empty.png'
@@ -28,11 +34,11 @@ const Section1 = ({ profile }: Section1Props) => {
                     height={400}
                     priority
                 />
-            </div>
+            </motion.div>
             <div className="profileWrapper p-7 lg:w-1/2 lg:p-30 border-b-1 lg:border-b-0">
                 <div className='flex items-center gap-2 pb-4 font-bold'>
-                    <h1><UserCircleIcon className='w-7 text-yellow-600' /></h1>
-                    <span className='text-2xl text-yellow-600'>Profile</span>
+                    <h1><UserCircleIcon className='w-7 mainColor' /></h1>
+                    <span className='text-2xl mainColor'>Profile</span>
                 </div>
                 <motion.p
                     initial={{ opacity: 0, x: -50 }}
