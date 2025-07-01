@@ -11,9 +11,22 @@ interface ExperienceProps {
     setObj: React.Dispatch<React.SetStateAction<Exp>>
     setForm: React.Dispatch<React.SetStateAction<boolean>>
     setScrolled: React.Dispatch<React.SetStateAction<boolean>>
+    handleDragStart: (index: number) => void
+    handleDragOver: (event: React.DragEvent<HTMLDivElement>, index: number) => void
+    handleDrop: () => void
+    index: number
 }
 
-const Experience = ({ exp, setObj, setForm, setScrolled }: ExperienceProps) => {
+const Experience = ({
+    exp,
+    setObj,
+    setForm,
+    setScrolled,
+    handleDragStart,
+    handleDragOver,
+    handleDrop,
+    index,
+}: ExperienceProps) => {
     const [deleteExp] = useDeleteExpMutation();
     const [busy, setBusy] = useState(false);
 
@@ -30,7 +43,13 @@ const Experience = ({ exp, setObj, setForm, setScrolled }: ExperienceProps) => {
     }
 
     return (
-        <div className='experienceCard border-thin-2 flex flex-col gap-2 p-5 rounded-xl'>
+        <div
+            className='experienceCard border-thin-2 flex flex-col gap-2 p-5 rounded-xl'
+            draggable
+            onDragStart={() => handleDragStart(index)}
+            onDragOver={e => handleDragOver(e, index)}
+            onDrop={handleDrop}
+        >
             {busy && <WaitingModal />}
             <div className='flex gap-5 items-center justify-between'>
                 <div className='flex gap-5'>

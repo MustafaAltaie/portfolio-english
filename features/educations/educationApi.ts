@@ -47,6 +47,11 @@ export const educationApi = api.injectEndpoints({
             query: (filename) => ({ url: `/api/educations/deleteImages/doc/${filename}`, method: 'DELETE' }),
             invalidatesTags: ['educations']
         }),
+        // handle drag and drop
+        updateEducationsList: builder.mutation<EducationType[], EducationType[]>({
+            query: (data) => ({ url: 'api/educations', method: 'PUT', body: data }),
+            invalidatesTags: ['educations']
+        }),
     }),
     overrideExisting: true
 });
@@ -62,4 +67,5 @@ export const {
     useDeleteEducationMutation,
     useDeleteEducationLogoMutation,
     useDeleteEducationDocMutation,
+    useUpdateEducationsListMutation,
 } = educationApi;

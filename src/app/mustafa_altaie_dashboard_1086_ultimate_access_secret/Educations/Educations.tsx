@@ -6,6 +6,7 @@ import { AcademicCapIcon } from '@heroicons/react/24/solid';
 import { EducationType } from '../../../../types/Educations';
 import Education from './Education';
 import Form from './Form';
+import { useUpdateEducationsListMutation } from '../../../../features/educations/educationApi';
 import {
     useCreateEducationMutation,
     useUploadEducationDocMutation,
@@ -44,6 +45,8 @@ const Educations = () => {
     const [oldLogo, setOldLogo] = useState<string | undefined>('');
     const [busy, setBusy] = useState(false);
     const [scrolled, setScrolled] = useState(false);
+    const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
+    const [updateEducationsList] = useUpdateEducationsListMutation();
 
     useEffect(() => {
         if(!isLoading && data) {
@@ -64,6 +67,26 @@ const Educations = () => {
 
     if (isLoading) return <p>...Loading</p>
     if (isError) return <p>Error loading educations</p>
+
+    const handleDragStart = (index: number) => {
+        setDraggedIndex(index);
+    }
+
+    const handleDragOver = (event: React.DragEvent<HTMLDivElement>, index: number) => {
+        event.preventDefault();
+        if (draggedIndex === null || draggedIndex === index) return;
+        const newList = [...educationList];
+        const draggedItem = newList[draggedIndex];
+        newList.splice(draggedIndex, 1);
+        newList.splice(index, 0, draggedItem);
+        setDraggedIndex(index);
+        setEducationList(newList);
+    }
+
+    const handleDrop = async () => {
+        setDraggedIndex(null);
+        await updateEducationsList(educationList).unwrap();
+    }
 
     const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -132,7 +155,7 @@ const Educations = () => {
                 <h1 className='text-2xl text-yellow-600 font-bold'>Educations</h1>
             </div>
             <div className='educationWrapper flex flex-col lg:flex-row lg:flex-wrap'>
-                {educationList.map(education =>
+                {educationList.map((education, index) =>
                 <Education
                     key={education.id}
                     education={education}
@@ -142,6 +165,10 @@ const Educations = () => {
                     setOldLogo={setOldLogo}
                     setBusy={setBusy}
                     setScrolled={setScrolled}
+                    handleDragStart={handleDragStart}
+                    handleDragOver={handleDragOver}
+                    handleDrop={handleDrop}
+                    index={index}
                 />)}
             </div>
             <h1 className={`transition-all w-5 h-5 flexCenter pb-2 mx-auto text-4xl cursor-pointer ${form ? 'rotate-45' : ''}`} onClick={() => setForm(!form)}>+</h1>

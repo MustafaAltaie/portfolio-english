@@ -13,6 +13,7 @@ import {
     useChangeOtherSkillIconMutation,
     useDeleteOtherSkillMutation,
     useDeleteOtherSkillIconMutation,
+    useUpdateOtherListMutation,
 } from '../../../../../features/skills/skillsApi';
 import WaitingModal from '../../WaitingModal';
 
@@ -40,6 +41,8 @@ const Other = ({  setFolder, folder }: OtherProps) => {
     const [deleteOtherSkillIcon] = useDeleteOtherSkillIconMutation();
     const [oldName, setOldName] = useState<string>('');
     const [busy, setBusy] = useState(false);
+    const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
+    const [updateOtherList] = useUpdateOtherListMutation();
 
     useEffect(() => {
         if (data && !isLoading) {
@@ -55,6 +58,26 @@ const Other = ({  setFolder, folder }: OtherProps) => {
 
     if (isLoading) return <p>...Loading skills</p>
     if (isError) return <p>Error loading skills</p>
+
+    const handleDragStart = (index: number) => {
+        setDraggedIndex(index);
+    }
+
+    const handleDragOver = (event: React.DragEvent<HTMLDivElement>, index: number) => {
+        event.preventDefault();
+        if (draggedIndex === null || draggedIndex === index) return;
+        const newList = [...other];
+        const draggedItem = newList[draggedIndex];
+        newList.splice(draggedIndex, 1);
+        newList.splice(index, 0, draggedItem);
+        setDraggedIndex(index);
+        setOther(newList);
+    }
+
+    const handleDrop = async () => {
+        setDraggedIndex(null);
+        await updateOtherList(other).unwrap();
+    }
 
     const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -122,7 +145,7 @@ const Other = ({  setFolder, folder }: OtherProps) => {
             {busy && <WaitingModal />}
             <h1 className='text-xl mb-3'>Other skills</h1>
             <div className='otherSkillWrapper flex flex-wrap'>
-                {other.map((skill: FSkill) => 
+                {other.map((skill: FSkill, index) => 
                 <Skill
                     key={skill.id}
                     skill={skill}
@@ -131,6 +154,10 @@ const Other = ({  setFolder, folder }: OtherProps) => {
                     setOldName={setOldName}
                     handleDelete={handleDelete}
                     setFolder={setFolder}
+                    index={index}
+                    handleDragStart={handleDragStart}
+                    handleDragOver={handleDragOver}
+                    handleDrop={handleDrop}
                 />)}
                 {!skillObj.id &&
                 <SkillTemplate

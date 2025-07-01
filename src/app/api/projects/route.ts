@@ -14,3 +14,11 @@ export async function GET() {
   const items = await Project.find({});
   return new Response(JSON.stringify(items), { status: 200 });
 }
+
+export async function PUT(req: Request) {
+    await dbConnect();
+    const updatedProject = await req.json();
+    await Project.deleteMany({});
+    const insertedProject = await Project.insertMany(updatedProject);
+    return new Response(JSON.stringify(insertedProject), { status: 200 });
+}

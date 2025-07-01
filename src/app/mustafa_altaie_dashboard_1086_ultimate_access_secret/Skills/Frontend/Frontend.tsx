@@ -13,6 +13,7 @@ import {
     useChangeFrontendSkillIconMutation,
     useDeleteFrontendSkillMutation,
     useDeleteFrontendSkillIconMutation,
+    useUpdateFrontendListMutation,
 } from '../../../../../features/skills/skillsApi';
 import WaitingModal from '../../WaitingModal';
 
@@ -40,6 +41,8 @@ const Frontend = ({  setFolder, folder }: FrontendProps) => {
     const [deleteFrontendSkillIcon] = useDeleteFrontendSkillIconMutation();
     const [oldName, setOldName] = useState<string>('');
     const [busy, setBusy] = useState(false);
+    const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
+    const [updateFrontendList] = useUpdateFrontendListMutation();
 
     useEffect(() => {
         if (data && !isLoading) {
@@ -55,6 +58,26 @@ const Frontend = ({  setFolder, folder }: FrontendProps) => {
 
     if (isLoading) return <p>...Loading skills</p>
     if (isError) return <p>Error loading skills</p>
+
+    const handleDragStart = (index: number) => {
+        setDraggedIndex(index);
+    }
+
+    const handleDragOver = (event: React.DragEvent<HTMLDivElement>, index: number) => {
+        event.preventDefault();
+        if (draggedIndex === null || draggedIndex === index) return;
+        const newList = [...frontend];
+        const draggedItem = newList[draggedIndex];
+        newList.splice(draggedIndex, 1);
+        newList.splice(index, 0, draggedItem);
+        setDraggedIndex(index);
+        setFrontend(newList);
+    }
+
+    const handleDrop = async () => {
+        setDraggedIndex(null);
+        await updateFrontendList(frontend).unwrap();
+    }
 
     const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -122,7 +145,7 @@ const Frontend = ({  setFolder, folder }: FrontendProps) => {
             {busy && <WaitingModal />}
             <h1 className='text-xl mb-3'>Frontend</h1>
             <div className='frontendSkillWrapper flex flex-wrap'>
-                {frontend.map((skill: FSkill) =>
+                {frontend.map((skill: FSkill, index) =>
                 <Skill
                     key={skill.id}
                     skill={skill}
@@ -131,6 +154,10 @@ const Frontend = ({  setFolder, folder }: FrontendProps) => {
                     setOldName={setOldName}
                     handleDelete={handleDelete}
                     setFolder={setFolder}
+                    index={index}
+                    handleDragStart={handleDragStart}
+                    handleDragOver={handleDragOver}
+                    handleDrop={handleDrop}
                 />)}
                 {!skillObj.id &&
                 <SkillTemplate

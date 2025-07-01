@@ -19,6 +19,10 @@ export const projectApi = api.injectEndpoints({
             query: (id) => ({ url: `/api/projects/${id}`, method: 'DELETE' }),
             invalidatesTags: ['projects']
         }),
+        updateProjectList: builder.mutation<ProjectType[], ProjectType[]>({
+            query: (data) => ({ url: 'api/projects', method: 'PUT', body: data }),
+            invalidatesTags: ['projects']
+        }),
     }),
     overrideExisting: true
 });
@@ -28,4 +32,5 @@ export const {
     useReadProjectsQuery,
     useUpdateProjectMutation,
     useDeleteProjectMutation,
+    useUpdateProjectListMutation,
 } = projectApi;

@@ -12,9 +12,25 @@ interface EducationProps {
     setOldLogo: React.Dispatch<React.SetStateAction<string | undefined>>
     setBusy: React.Dispatch<React.SetStateAction<boolean>>
     setScrolled: React.Dispatch<React.SetStateAction<boolean>>
+    handleDragStart: (index: number) => void
+    handleDragOver: (event: React.DragEvent<HTMLDivElement>, index: number) => void
+    handleDrop: () => void
+    index: number
 }
 
-const Education = ({ education, setForm, setObj, setOldDoc, setOldLogo, setBusy, setScrolled }: EducationProps) => {
+const Education = ({
+    education,
+    setForm,
+    setObj,
+    setOldDoc,
+    setOldLogo,
+    setBusy,
+    setScrolled,
+    handleDragStart,
+    handleDragOver,
+    handleDrop,
+    index,
+}: EducationProps) => {
     const [deleteEducation] = useDeleteEducationMutation();
     const [deleteEducationDoc] = useDeleteEducationDocMutation();
     const [deleteEducationLogo] = useDeleteEducationLogoMutation();
@@ -34,7 +50,13 @@ const Education = ({ education, setForm, setObj, setOldDoc, setOldLogo, setBusy,
     }
 
     return (
-        <div className='educationCard border-thin-2 p-5 relative flex flex-col justify-between'>
+        <div
+            className='educationCard border-thin-2 p-5 relative flex flex-col justify-between'
+            draggable
+            onDragStart={() => handleDragStart(index)}
+            onDragOver={e => handleDragOver(e, index)}
+            onDrop={handleDrop}
+        >
             <p className='educationDate text-sm absolute'>{education.dateFrom} - {education.dateTo || 'Ongoing'}</p>
             <div className='flex gap-5 border-b-thin pb-4 mb-4'>
                 <PencilIcon className='w-5 cursor-pointer' title='Update' onClick={() => {setForm(true); setObj(education); setOldDoc(education.docLink); setOldLogo(education.logoLink); setScrolled(false)}} />

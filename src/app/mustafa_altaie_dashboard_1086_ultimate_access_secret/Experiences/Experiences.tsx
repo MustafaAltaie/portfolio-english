@@ -5,7 +5,7 @@ import { BriefcaseIcon } from '@heroicons/react/24/solid';
 import Experience from './Experience';
 import { Exp } from '../../../../types/Experiences';
 import Form from './Form';
-import { useCreateExpMutation, useReadExpsQuery, useUpdateExpMutation } from '../../../../features/experiences/experienceApi';
+import { useCreateExpMutation, useReadExpsQuery, useUpdateExpMutation, useUpdateExpListMutation } from '../../../../features/experiences/experienceApi';
 import WaitingModal from '../WaitingModal';
 
 const Experiences = () => {
@@ -27,6 +27,8 @@ const Experiences = () => {
     const [updateExp] = useUpdateExpMutation();
     const [busy, setBusy] = useState(false);
     const [scrolled, setScrolled] = useState(false);
+    const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
+    const [updateExpList] = useUpdateExpListMutation();
 
     useEffect(() => {
         if (data && !isLoading) {
@@ -71,6 +73,26 @@ const Experiences = () => {
     if (isError) return <p>Error loading experiences</p>
     if (isLoading) return <p>...Loading experiences</p>
 
+    const handleDragStart = (index: number) => {
+        setDraggedIndex(index);
+    }
+
+    const handleDragOver = (event: React.DragEvent<HTMLDivElement>, index: number) => {
+        event.preventDefault();
+        if (draggedIndex === null || draggedIndex === index) return;
+        const newList = [...experienceList];
+        const draggedItem = newList[draggedIndex];
+        newList.splice(draggedIndex, 1);
+        newList.splice(index, 0, draggedItem);
+        setDraggedIndex(index);
+        setExperienceList(newList);
+    }
+
+    const handleDrop = async () => {
+        setDraggedIndex(null);
+        await updateExpList(experienceList).unwrap();
+    }
+
     const prepareObj = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setObj(prev => ({
@@ -106,8 +128,18 @@ const Experiences = () => {
             {/* Experiences wrapper */}
             <div className='expWrapper flex flex-col lg:flex-row lg:flex-wrap'>
                 {/* Card */}
-                {experienceList.map((exp: Exp) => 
-                    <Experience key={exp.id} exp={exp} setForm={setForm} setObj={setObj} setScrolled={setScrolled} />
+                {experienceList.map((exp: Exp, index) => 
+                    <Experience
+                        key={exp.id}
+                        exp={exp}
+                        setForm={setForm}
+                        setObj={setObj}
+                        setScrolled={setScrolled}
+                        index={index}
+                        handleDragStart={handleDragStart}
+                        handleDragOver={handleDragOver}
+                        handleDrop={handleDrop}
+                    />
                 )}
             </div>
             <h1 className={`transition-all w-5 h-5 flexCenter pb-2 mx-auto text-4xl cursor-pointer ${form ? 'rotate-45' : ''}`} onClick={() => setForm(!form)}>+</h1>

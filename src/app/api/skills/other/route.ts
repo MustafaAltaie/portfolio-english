@@ -14,3 +14,11 @@ export async function GET() {
   const items = await OtherSkill.find({});
   return new Response(JSON.stringify(items), { status: 200 });
 }
+
+export async function PUT(req: Request) {
+    await dbConnect();
+    const updatedOtherSkill = await req.json();
+    await OtherSkill.deleteMany({});
+    const insertedOtherSkill = await OtherSkill.insertMany(updatedOtherSkill);
+    return new Response(JSON.stringify(insertedOtherSkill), { status: 200 });
+}

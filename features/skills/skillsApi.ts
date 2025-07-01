@@ -32,6 +32,10 @@ export const skillsApi = api.injectEndpoints({
             query: (filename) => ({ url: `/api/skills/frontend/deleteImages/${filename}`, method: 'DELETE' }),
             invalidatesTags: ['skills']
         }),
+        updateFrontendList: builder.mutation<FSkill[], FSkill[]>({
+            query: (data) => ({ url: 'api/skills/frontend', method: 'PUT', body: data }),
+            invalidatesTags: ['skills']
+        }),
         // backend
         createBackendSkill: builder.mutation<FSkill, Partial<FSkill>>({
             query: (data) => ({ url: '/api/skills/backend', method: 'POST', body: data }),
@@ -59,6 +63,10 @@ export const skillsApi = api.injectEndpoints({
         }),
         deleteBackendSkillIcon: builder.mutation<void, string>({
             query: (filename) => ({ url: `/api/skills/backend/deleteImages/${filename}`, method: 'DELETE' }),
+            invalidatesTags: ['skills']
+        }),
+        updateBackendList: builder.mutation<FSkill[], FSkill[]>({
+            query: (data) => ({ url: 'api/skills/backend', method: 'PUT', body: data }),
             invalidatesTags: ['skills']
         }),
         // other
@@ -90,6 +98,10 @@ export const skillsApi = api.injectEndpoints({
             query: (filename) => ({ url: `/api/skills/other/deleteImages/${filename}`, method: 'DELETE' }),
             invalidatesTags: ['skills']
         }),
+        updateOtherList: builder.mutation<FSkill[], FSkill[]>({
+            query: (data) => ({ url: 'api/skills/other', method: 'PUT', body: data }),
+            invalidatesTags: ['skills']
+        }),
     }),
     overrideExisting: true
 });
@@ -103,6 +115,7 @@ export const {
     useChangeFrontendSkillIconMutation,
     useDeleteFrontendSkillMutation,
     useDeleteFrontendSkillIconMutation,
+    useUpdateFrontendListMutation,
     // backend
     useCreateBackendSkillMutation,
     useUploadBackendSkillIconMutation,
@@ -111,6 +124,7 @@ export const {
     useChangeBackendSkillIconMutation,
     useDeleteBackendSkillMutation,
     useDeleteBackendSkillIconMutation,
+    useUpdateBackendListMutation,
     // other
     useCreateOtherSkillMutation,
     useUploadOtherSkillIconMutation,
@@ -119,4 +133,5 @@ export const {
     useChangeOtherSkillIconMutation,
     useDeleteOtherSkillMutation,
     useDeleteOtherSkillIconMutation,
+    useUpdateOtherListMutation,
 } = skillsApi;

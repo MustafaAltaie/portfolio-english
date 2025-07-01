@@ -6,11 +6,30 @@ interface ProjectProps {
     app: ProjectType
     handleDelete: (id: string) => void
     prepareUpdate: (app: ProjectType) => void
+    handleDragStart: (index: number) => void
+    handleDragOver: (event: React.DragEvent<HTMLDivElement>, index: number) => void
+    handleDrop: () => void
+    index: number
 }
 
-const Project = ({ app, handleDelete, prepareUpdate }: ProjectProps) => {
+const Project = ({
+    app,
+    handleDelete,
+    prepareUpdate,
+    handleDragStart,
+    handleDragOver,
+    handleDrop,
+    index,
+}: ProjectProps) => {
     return (
-        <div title={app.description} className='project relative p-3 flex flex-col justify-between gap-2 rounded-xl w-full'>
+        <div
+            title={app.description}
+            className='project relative p-3 flex flex-col justify-between gap-2 rounded-xl w-full'
+            draggable
+            onDragStart={() => handleDragStart(index)}
+            onDragOver={e => handleDragOver(e, index)}
+            onDrop={handleDrop}
+        >
             {app.isProfessional && <div className='projectMark absolute w-8 h-8 right-5'><BriefcaseIcon className='absolute top-1 left-1/2 -translate-x-1/2 w-5' /></div>}
             <div>
                 <h1 className={`mb-2 font-bold flex gap-5 ${!app.isProfessional && 'justify-between'}`}>{app.title}

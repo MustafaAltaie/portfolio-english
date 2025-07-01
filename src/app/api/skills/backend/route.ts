@@ -14,3 +14,11 @@ export async function GET() {
   const items = await BackendSkill.find({});
   return new Response(JSON.stringify(items), { status: 200 });
 }
+
+export async function PUT(req: Request) {
+    await dbConnect();
+    const updatedBackendSkill = await req.json();
+    await BackendSkill.deleteMany({});
+    const insertedBackendSkill = await BackendSkill.insertMany(updatedBackendSkill);
+    return new Response(JSON.stringify(insertedBackendSkill), { status: 200 });
+}

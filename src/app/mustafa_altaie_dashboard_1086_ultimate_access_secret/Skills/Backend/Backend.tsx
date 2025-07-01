@@ -12,6 +12,7 @@ import {
     useChangeBackendSkillIconMutation,
     useDeleteBackendSkillMutation,
     useDeleteBackendSkillIconMutation,
+    useUpdateBackendListMutation,
 } from '../../../../../features/skills/skillsApi';
 import { v4 as uuidv4 } from 'uuid';
 import WaitingModal from '../../WaitingModal';
@@ -40,6 +41,8 @@ const Backend = ({  setFolder, folder }: BackendProps) => {
     const [deleteBackendSkillIcon] = useDeleteBackendSkillIconMutation();
     const [oldName, setOldName] = useState<string>('');
     const [busy, setBusy] = useState(false);
+    const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
+    const [updateBackendList] = useUpdateBackendListMutation();
 
     useEffect(() => {
         if (data && !isLoading) {
@@ -55,6 +58,26 @@ const Backend = ({  setFolder, folder }: BackendProps) => {
 
     if (isLoading) return <p>...Loading skills</p>
     if (isError) return <p>Error loading skills</p>
+
+    const handleDragStart = (index: number) => {
+        setDraggedIndex(index);
+    }
+
+    const handleDragOver = (event: React.DragEvent<HTMLDivElement>, index: number) => {
+        event.preventDefault();
+        if (draggedIndex === null || draggedIndex === index) return;
+        const newList = [...backend];
+        const draggedItem = newList[draggedIndex];
+        newList.splice(draggedIndex, 1);
+        newList.splice(index, 0, draggedItem);
+        setDraggedIndex(index);
+        setBackend(newList);
+    }
+
+    const handleDrop = async () => {
+        setDraggedIndex(null);
+        await updateBackendList(backend).unwrap();
+    }
 
     const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -122,7 +145,7 @@ const Backend = ({  setFolder, folder }: BackendProps) => {
             {busy && <WaitingModal />}
             <h1 className='text-xl mb-3'>Backend</h1>
             <div className='backendSkillWrapper flex flex-wrap'>
-                {backend.map((skill: FSkill) =>
+                {backend.map((skill: FSkill, index) =>
                 <Skill
                     key={skill.id}
                     skill={skill}
@@ -131,6 +154,10 @@ const Backend = ({  setFolder, folder }: BackendProps) => {
                     setOldName={setOldName}
                     handleDelete={handleDelete}
                     setFolder={setFolder}
+                    index={index}
+                    handleDragStart={handleDragStart}
+                    handleDragOver={handleDragOver}
+                    handleDrop={handleDrop}
                 />)}
                 {!skillObj.id &&
                 <SkillTemplate

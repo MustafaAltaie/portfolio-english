@@ -19,6 +19,10 @@ export const experienceApi = api.injectEndpoints({
             query: (id) => ({ url: `/api/experiences/${id}`, method: 'DELETE' }),
             invalidatesTags: ['experiences']
         }),
+        updateExpList: builder.mutation<Exp[], Exp[]>({
+            query: (data) => ({ url: 'api/experiences', method: 'PUT', body: data }),
+            invalidatesTags: ['experiences']
+        }),
     }),
     overrideExisting: true
 });
@@ -28,4 +32,5 @@ export const {
     useReadExpsQuery,
     useUpdateExpMutation,
     useDeleteExpMutation,
+    useUpdateExpListMutation,
 } = experienceApi;

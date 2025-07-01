@@ -4,7 +4,13 @@ import '../../components/Projects/Projects.css';
 import { CodeBracketIcon } from '@heroicons/react/24/solid';
 import { ProjectType } from '../../../../types/Projects';
 import Project from './Project';
-import { useReadProjectsQuery, useCreateProjectMutation, useUpdateProjectMutation, useDeleteProjectMutation } from '../../../../features/projects/projectsApi';
+import {
+    useReadProjectsQuery,
+    useCreateProjectMutation,
+    useUpdateProjectMutation,
+    useDeleteProjectMutation,
+    useUpdateProjectListMutation,
+} from '../../../../features/projects/projectsApi';
 import Form from './Form';
 import WaitingModal from '../WaitingModal';
 
@@ -28,6 +34,8 @@ const Projects = () => {
     const [createProject] = useCreateProjectMutation();
     const [updateProject] = useUpdateProjectMutation();
     const [deleteProject] = useDeleteProjectMutation();
+    const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
+    const [updateProjectList] = useUpdateProjectListMutation();
 
     useEffect(() => {
         if (projects) {
@@ -43,6 +51,26 @@ const Projects = () => {
             setList(transformed);
         }
     }, [projects]);
+
+    const handleDragStart = (index: number) => {
+        setDraggedIndex(index);
+    }
+
+    const handleDragOver = (event: React.DragEvent<HTMLDivElement>, index: number) => {
+        event.preventDefault();
+        if (draggedIndex === null || draggedIndex === index) return;
+        const newList = [...list];
+        const draggedItem = newList[draggedIndex];
+        newList.splice(draggedIndex, 1);
+        newList.splice(index, 0, draggedItem);
+        setDraggedIndex(index);
+        setList(newList);
+    }
+
+    const handleDrop = async () => {
+        setDraggedIndex(null);
+        await updateProjectList(list).unwrap();
+    }
 
     const prepareObj = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -146,12 +174,16 @@ const Projects = () => {
             {/* wrapper */}
             <div className='projectWrapper flex flex-wrap'>
                 {/* card */}
-                {list.map(app =>
+                {list.map((app, index) =>
                 <Project
                     key={app.id}
                     app={app}
                     handleDelete={handleDelete}
                     prepareUpdate={prepareUpdate}
+                    index={index}
+                    handleDragStart={handleDragStart}
+                    handleDragOver={handleDragOver}
+                    handleDrop={handleDrop}
                 />
                 )}
             </div>

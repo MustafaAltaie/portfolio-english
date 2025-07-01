@@ -14,3 +14,11 @@ export async function GET() {
   const items = await FrontendSkill.find({});
   return new Response(JSON.stringify(items), { status: 200 });
 }
+
+export async function PUT(req: Request) {
+    await dbConnect();
+    const updatedFrontendSkill = await req.json();
+    await FrontendSkill.deleteMany({});
+    const insertedFrontendSkill = await FrontendSkill.insertMany(updatedFrontendSkill);
+    return new Response(JSON.stringify(insertedFrontendSkill), { status: 200 });
+}

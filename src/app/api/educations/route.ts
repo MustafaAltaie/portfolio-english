@@ -14,3 +14,11 @@ export async function GET() {
   const items = await Education.find({});
   return new Response(JSON.stringify(items), { status: 200 });
 }
+
+export async function PUT(req: Request) {
+    await dbConnect();
+    const updatedEducation = await req.json();
+    await Education.deleteMany({});
+    const insertedEducation = await Education.insertMany(updatedEducation);
+    return new Response(JSON.stringify(insertedEducation), { status: 200 });
+}

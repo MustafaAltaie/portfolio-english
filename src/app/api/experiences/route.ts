@@ -14,3 +14,11 @@ export async function GET() {
   const items = await Experience.find({});
   return new Response(JSON.stringify(items), { status: 200 });
 }
+
+export async function PUT(req: Request) {
+    await dbConnect();
+    const updatedExperience = await req.json();
+    await Experience.deleteMany({});
+    const insertedExperience = await Experience.insertMany(updatedExperience);
+    return new Response(JSON.stringify(insertedExperience), { status: 200 });
+}
