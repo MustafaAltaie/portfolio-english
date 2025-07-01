@@ -15,7 +15,7 @@ import { useReadFrontendSkillsQuery } from "../../features/skills/skillsApi";
 import { useReadOtherSkillsQuery } from "../../features/skills/skillsApi";
 import { useReadProjectsQuery } from "../../features/projects/projectsApi";
 import { useReadSocialQuery } from "../../features/footer/socialApi";
-import WaitingModal from "./dashboard/WaitingModal";
+import WaitingModal from "./mustafa_altaie_dashboard_1086_ultimate_access_secret/WaitingModal";
 
 const Home = () => {
   const { data: profile, isLoading: proLoading } = useReadProfileQuery();

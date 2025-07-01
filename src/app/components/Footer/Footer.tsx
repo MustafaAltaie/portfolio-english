@@ -4,7 +4,8 @@ import './Footer.css';
 import { SocialObj, Message } from '../../../../types/Footer';
 import { useReadFooterDocsQuery } from '../../../../features/footer/docsApi';
 import { useSendContactEmailMutation } from '../../../../features/contact/contactApi';
-import WaitingModal from '@/app/dashboard/WaitingModal';
+import WaitingModal from '@/app/mustafa_altaie_dashboard_1086_ultimate_access_secret/WaitingModal';
+import { DocumentIcon } from '@heroicons/react/24/solid';
 
 interface FooterProps {
     socials: SocialObj | undefined
@@ -143,11 +144,10 @@ const Footer = forwardRef<HTMLElement, FooterProps>(({ socials }, ref) => {
                             {data?.map(doc =>
                                 <li
                                     key={doc}
-                                    className='italic pl-1 text-sm'
+                                    className='italic text-sm flex gap-1'
                                     onClick={() => window.open(`https://res.cloudinary.com/dswmp2omq/image/upload/${encodeURIComponent(doc)}`)}
-                                >{doc.split('/').pop()}</li>)}
-                            <li className='italic pl-1 text-sm flex justify-between'>Swedish Vocational Program (Full stack JS)</li>
-                            <li className='italic pl-1 text-sm flex justify-between'>Personal Letter</li>
+                                ><DocumentIcon className='w-5' />{doc.split('/').pop()}</li>)}
+                            <li className='italic text-sm flex gap-1'><DocumentIcon className='w-5' />Swedish Vocational Program (Full stack JS)</li>
                         </ul>
                     </div>
                     {/* Middle */}
