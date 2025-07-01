@@ -181,7 +181,7 @@ const Footer = forwardRef<HTMLElement, FooterProps>(({ socials }, ref) => {
                         <span>RTK Query </span>and
                         <span> Resend.</span>
                     </p>
-                    <h5 className='py-3 text-center text-sm'>© 2025 Mustafa Altaie. Alla rättigheter förbehållna.</h5>
+                    <h5 className='py-4 text-center text-sm'>© 2025 Mustafa Altaie. Alla rättigheter förbehållna.</h5>
                 </div>
             </div>
         </footer>

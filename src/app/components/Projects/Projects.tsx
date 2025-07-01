@@ -50,7 +50,7 @@ const Projects = forwardRef<HTMLElement, ProjectProps>(({ projects }, ref) => {
                 viewport={{ once: true, amount: 0.5 }}
                 className='flex gap-1 items-end cursor-pointer mt-5'
                 onClick={() => window.open('https://github.com/MustafaAltaie', '_blank', 'noopener,noreferrer')}
-            >Check out these and other applications on GitHub <ArrowLongRightIcon className='w-5' /></motion.p>
+            >Check out several other applications on GitHub <ArrowLongRightIcon className='w-5' /></motion.p>
         </section>
     )
 });
