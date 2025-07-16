@@ -38,7 +38,7 @@ const Project = ({ app }: ProjectProps) => {
             {app.isProfessional && <div className='projectMark absolute w-8 h-8 right-5'><BriefcaseIcon className='absolute top-1 left-1/2 -translate-x-1/2 w-5' /></div>}
             <div>
                 <h1 className='mb-2 font-bold'>{app.title}</h1>
-                <p className={`text-sm ${app.link && 'mb-1 pb-2 border-b-thin'}`}>{clicked ? app.description : app.description.slice(0, 50) + '...'}</p>
+                <p className={`text-sm ${app.link && 'mb-1 pb-2 border-b-thin'} ${clicked ? '' : 'line-clamp-2'}`}>{app.description}</p>
             </div>
             <ul className='flex flex-wrap gap-2'>
                 {app.techList.map(tech =>
