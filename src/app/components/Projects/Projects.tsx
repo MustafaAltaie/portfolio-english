@@ -37,7 +37,7 @@ const Projects = forwardRef<HTMLElement, ProjectProps>(({ projects }, ref) => {
             <p className='flex gap-1'>* Projects with <BriefcaseIcon className='w-4' /> indicate professional work.</p>
             <p className='opacity-50 mb-2'>* Click any card to expand full details</p>
             {/* wrapper */}
-            <div className='projectWrapper flex flex-wrap'>
+            <div className='projectWrapper flex flex-wrap lg:items-start'>
                 {/* card */}
                 {list.map(app =>
                 <Project key={app.id} app={app}  />

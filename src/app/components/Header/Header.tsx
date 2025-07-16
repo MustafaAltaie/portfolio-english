@@ -74,7 +74,7 @@ const Header = (props: HeaderProps) => {
         }
         if (!hasMonted) return;
         localStorage.setItem('isMustafaCvDark', JSON.stringify(dark));
-    }, [dark]);
+    }, [dark, hasMonted]);
 
     if(!hasMonted) return null;
 
