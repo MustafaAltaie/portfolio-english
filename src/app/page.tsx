@@ -16,6 +16,7 @@ import { useReadOtherSkillsQuery } from "../../features/skills/skillsApi";
 import { useReadProjectsQuery } from "../../features/projects/projectsApi";
 import { useReadSocialQuery } from "../../features/footer/socialApi";
 import WaitingModal from "./mustafa_altaie_dashboard_1086_ultimate_access_secret/WaitingModal";
+import Gallery from "./components/gallery/Gallery";
 
 const Home = () => {
   const { data: profile, isLoading: proLoading } = useReadProfileQuery();
@@ -71,6 +72,7 @@ const Home = () => {
       <Experiences experiences={experiences} ref={experienceRef} />
       <Skills backend={backend} frontend={frontend} other={other} ref={skillRef} />
       <Projects projects={projects} ref={projectRef} />
+      <Gallery />
       <Footer socials={socials} ref={contactRef} />
     </main>
   )
