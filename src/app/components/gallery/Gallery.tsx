@@ -2,7 +2,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { XMarkIcon } from '@heroicons/react/24/solid';
 
 const Gallery = () => {
     const [images, setImages] = useState<string[]>([]);
@@ -17,7 +16,7 @@ const Gallery = () => {
 
     useEffect(() => {
         const loadedImages = [];
-        for (let i = 1; i <= 33; i++) {
+        for (let i = 1; i <= 50; i++) {
             loadedImages.push(`/images/design/${i}.png`);
         }
         setImages(loadedImages);
@@ -54,22 +53,23 @@ const Gallery = () => {
             {column1.length > 0 && !loading && <button className='px-5 py-2 rounded-xl m-6 bg-[#966900] text-white' onClick={() => {setColumn1([]); setColumn2([]); setColumn3([])}}>Hide images</button>}
             {selected &&
             <motion.div
-                className='w-full px-6 pt-3 pb-6 fixed top-1/2 -translate-y-1/2 bg-[#aaaaaa77]'
+                className='w-full h-full z-[1000] flex justify-center px-6 pt-3 pb-6 fixed top-1/2 -translate-y-1/2 bg-[#aaaaaaaa]'
                 initial={{ opacity: 0, x: -100 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5 }}
                 viewport={{ once: true, amount: 0 }}
+                onClick={() => setSelected('')}
             >
-                <XMarkIcon className='w-5 mb-3 ml-auto text-white' onClick={() => setSelected('')} />
                 <Image
+                    className='object-contain'
                     src={selected}
                     alt='Image'
-                    width={500}
-                    height={500}
+                    width={2000}
+                    height={2000}
                     priority
                 />
             </motion.div>}
-            <div className={`flex items-start gap-1 ${column1.length ? 'p-5' : ''} bg-[#aaa]`}>
+            <div className={`flex items-start gap-1 lg:w-[500px] lg:mx-auto ${column1.length ? 'p-5' : ''} bg-[#aaa]`}>
                 <div ref={column1Ref} className={`w-1/2 ${column1.length ? 'p-1' : ''} flex flex-col gap-3`}>
                     {column1.map((img, index) =>
                     <motion.div
